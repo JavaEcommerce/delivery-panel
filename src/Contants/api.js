@@ -5,7 +5,7 @@
 
 // Base API URLs for different services
 export const apiBaseUrl =
-  "https://agosp5xnypwn.share.zrok.io";
+  "https://s64mdc953b51.share.zrok.io/";
 
 // Order Endpoints
 export const getAllNewOrders = "/orderAssignments/newOrders/";
