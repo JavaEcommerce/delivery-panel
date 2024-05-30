@@ -5,14 +5,14 @@
 
 // Base API URLs for different services
 export const apiBaseUrl =
-  "https://s64mdc953b51.share.zrok.io/";
+  "https://i3eek47p18zv.share.zrok.io";
 
 // Order Endpoints
 export const getAllNewOrders = "/orderAssignments/newOrders/";
 export const getAllActiveOrders = "/orderAssignments/activeOrders/";
+export const updateNewOrdersStatus = "/orderAssignments/status/";
+export const getOrderHistory = "/orderAssignments/workHistory/3";
 
-// Customer Endpoints
-export const findByCustomerId = "/customer/findById/1";
 
 // Authentication Endpoints
 export const signup = "api/auth/v1/signup";
@@ -20,6 +20,7 @@ export const signin = "api/auth/v1/signin";
 
 // Profile Endpoints
 export const getProfileById = "/api/v1/delivery/profile/";
+export const addDeliveryPerson = "/api/v1/delivery/";
 export const updateProfileById = "/api/v1/delivery/update/";
 
 

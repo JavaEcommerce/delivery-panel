@@ -1,45 +1,87 @@
-import { React, useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, RefreshControl, FlatList } from 'react-native';
-import { Box, Skeleton, Button, View, ScrollView } from 'native-base';
+import React, { useCallback, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, RefreshControl, FlatList, ActivityIndicator } from 'react-native';
+import { Box, Skeleton, View, ScrollView } from 'native-base';
 import color from '../../Contants/color';
 import routes from '../../Contants/routes';
 import axios from 'axios';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { apiBaseUrl, getAllActiveOrders } from '../../Contants/api';
+import { useFocusEffect } from '@react-navigation/native';
+
+const deliveryPersonId = 3;
+
 const ActiveOrders = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
-  const [data, setData] = useState()
-  const [loading, setloading] = useState(false)
+  const [loading, setLoading] = useState(true);
 
   const onRefresh = () => {
     setRefreshing(true);
     setTimeout(() => {
-      fetchActiveOrder();
+      refetch();
     }, 500);
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [])
+  );
 
-  useEffect(() => {
-    fetchActiveOrder()
-  }, [data])
-
-
-
-  const fetchActiveOrder = async () => {
+  const fetchActiveOrder = async ({ deliveryPersonId, pageNumber, pageSize }) => {
     try {
-      const res = await axios.get(`${apiBaseUrl}${getAllActiveOrders}5`);
-      const data = res.data;
-      setData(data);
-      console.log(data,'++++++')
+      const res = await axios.get(`${apiBaseUrl}${getAllActiveOrders}${deliveryPersonId}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+      if (res.data && res.data.assignedOrders) {
+        const data = res.data.assignedOrders;
+        return {
+          orders: data,
+          totalPages: res.data.totalPages || 0,
+        };
+      }
     } catch (error) {
-      console.log(error);
+      return {
+        orders: [],
+        totalPages: 0,
+      };
     } finally {
+      setLoading(false);
       setRefreshing(false);
-      setloading(true)
+    }
+  };
+
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+    error,
+    isError,
+    refetch,
+  } = useInfiniteQuery({
+    queryKey: ['activeOrders', deliveryPersonId],
+    queryFn: ({ pageParam = 0 }) =>
+      fetchActiveOrder({
+        deliveryPersonId,
+        pageNumber: pageParam,
+        pageSize: 10,
+      }),
+    enabled: !!deliveryPersonId,
+    getNextPageParam: (lastPage, pages) => {
+      if (!lastPage || typeof lastPage.totalPages !== 'number') {
+        return undefined;
+      }
+      const currentPage = pages.length;
+      return currentPage < lastPage.totalPages ? currentPage : undefined;
+    },
+  });
+
+  const loadMore = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
     }
   };
 
   const renderOrderItem = ({ item }) => {
-
     const parseDateTime = (dateTimeString) => {
       const dateTime = new Date(dateTimeString);
       const date = dateTime.toLocaleDateString();
@@ -47,35 +89,34 @@ const ActiveOrders = ({ navigation }) => {
       return { date, time };
     };
 
-    const { date: orderDate, time: orderTime } = parseDateTime(item.orderDate);
-    const { date: assignmentDate, time: assignmentTime } = parseDateTime(item.assignmentTime);
+    const { date: orderDate } = parseDateTime(item?.orderDate);
+    const { date: assignmentDate } = parseDateTime(item?.assignmentTime);
 
     return (
-      <Box style={{ backgroundColor: 'white', borderWidth: 0.17, borderColor: color.primary, width: '90%', marginBottom: 15, borderRadius: 20, justifyContent: 'center', alignSelf: 'center' }}>
+      <Box style={styles.orderContainer}>
         <TouchableOpacity onPress={() => navigation.navigate(routes.ORDER_DETAIL, { item })}>
-          <Box style={{ padding: 10, width: '100%', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <Box style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Box style={{ backgroundColor: color.primary, padding: 5, width: '30%', borderRadius: 15 }}>
-                <Text style={{ color: "white", textAlign: 'center', fontWeight: '900' }}>#{item.orderId}</Text>
+          <Box style={styles.orderContent}>
+            <Box style={styles.orderHeader}>
+              <Box style={styles.orderId}>
+                <Text style={styles.orderIdText}>#{item?.orderId}</Text>
               </Box>
-              <Box style={{ padding: 5 }}>
-                <Text style={{ color: "black", textAlign: 'center', fontWeight: '900' }}>{item.status}</Text>
+              <Box style={styles.orderStatus}>
+                <Text style={styles.orderStatusText}>{item?.status}</Text>
               </Box>
             </Box>
-            <Box style={{ gap: 10, marginTop: 10 }}>
-              <Text style={{ color: "black", fontWeight: '700', width: '95%' }} numberOfLines={4}>
-                🏠 : {item.customerAddress.houseNo ? `H-${item.customerAddress.houseNo}` : ''}
-                {item.customerAddress.flatNo ? `, F-${item.customerAddress.flatNo},` : ''}
-                {item.customerAddress.addressLine1}
+            <Box style={styles.orderDetails}>
+              <Text style={styles.orderAddress} numberOfLines={4}>
+                🏠 : {item?.customerAddress?.houseNo ? `H-${item?.customerAddress?.houseNo}` : ''}
+                {item?.customerAddress?.flatNo ? `, F-${item?.customerAddress?.flatNo},` : ''}
+                {item?.customerAddress?.addressLine1}
               </Text>
-              <Text style={{ color: "black", fontWeight: '700' }}>🗓️ : {orderDate}</Text>
-              {/* <Text style={{ color: "black", fontWeight: '700' }}>Order Time: {orderTime}</Text> */}
-              <Text style={{ color: "black", fontWeight: '700' }}>📱 : {item.customerAddress.pocPhoneNo}</Text>
+              <Text style={styles.orderDate}>🗓️ : {orderDate}</Text>
+              <Text style={styles.orderPhone}>📱 : {item?.customerAddress?.pocPhoneNo}</Text>
             </Box>
-            <Box style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderRadius: 20 }}>
-              <Text style={{ fontSize: 18, color: "black", textAlign: 'center', fontWeight: '700' }}> Total Amount :</Text>
-              <Box style={{ width: '40%', alignSelf: 'center', backgroundColor: color.primary, padding: 15, borderRadius: 20 }}>
-                <Text style={{ color: "white", textAlign: 'center', fontWeight: '900' }}>$ {item.totalAmount}</Text>
+            <Box style={styles.orderAmountContainer}>
+              <Text style={styles.orderAmountLabel}> Total Amount :</Text>
+              <Box style={styles.orderAmount}>
+                <Text style={styles.orderAmountText}>$ {item?.totalAmount}</Text>
               </Box>
             </Box>
           </Box>
@@ -84,43 +125,61 @@ const ActiveOrders = ({ navigation }) => {
     );
   };
 
-  if (!loading) {
+  if (loading) {
     return (
       <View bg={'white'} flex={1} alignItems={'center'} py={3}>
-        <ScrollView w={'90%'} scrollIndicatorInsets={false} >
+        <ScrollView w={'90%'} scrollIndicatorInsets={false}>
           <Skeleton borderRadius={10} h={200} />
           <Skeleton borderRadius={10} mt={3} h={200} />
           <Skeleton borderRadius={10} mt={3} h={200} />
           <Skeleton borderRadius={10} mt={3} h={200} />
           <Skeleton borderRadius={10} mt={3} h={200} />
           <Skeleton borderRadius={10} mt={3} h={200} />
-
         </ScrollView>
       </View>
-
     );
-  } else {
-    return (
-      <View style={styles.container}>
-        <FlatList
-          data={data}
-          renderItem={renderOrderItem}
-          keyExtractor={item => item.orderId}
-          style={styles.flatList}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-              colors={['red']}
-            />
-          }
-        />
-      </View>
-    )
   }
 
+  if (isError) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text>Error: {error.message}</Text>
+      </View>
+    );
+  }
 
-}
+  const orders = data?.pages?.flatMap((page) => page.orders) || [];
+
+  if (orders.length === 0) {
+    return (
+      <View style={styles.noDataContainer}>
+        <Text>No active orders available.</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={orders}
+        renderItem={renderOrderItem}
+        keyExtractor={(item, index) => index.toString()}
+        style={styles.flatList}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.8}
+        scrollEventThrottle={20}
+        ListFooterComponent={
+          isFetchingNextPage ? (
+            <ActivityIndicator style={styles.loader} color={color.primary} size={'large'} />
+          ) : null
+        }
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['red']} />
+        }
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -130,43 +189,103 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingTop: 15,
   },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
   flatList: {
     width: '100%',
   },
-  orderItem: {
+  orderContainer: {
+    backgroundColor: 'white',
+    borderWidth: 0.17,
+    borderColor: color.primary,
+    width: '90%',
+    marginBottom: 15,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  orderContent: {
     padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    width: '100%',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  orderHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
   },
-  orderText: {
-    fontSize: 16,
-    marginBottom: 5,
+  orderId: {
+    backgroundColor: color.primary,
+    padding: 5,
+    width: '30%',
+    borderRadius: 15,
   },
-  acceptButton: {
-    backgroundColor: 'green',
-    padding: 10,
-    borderRadius: 5,
-  },
-  buttonText: {
+  orderIdText: {
     color: 'white',
-    fontWeight: 'bold',
+    textAlign: 'center',
+    fontWeight: '900',
+  },
+  orderStatus: {
+    padding: 5,
+  },
+  orderStatusText: {
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: '900',
+  },
+  orderDetails: {
+    gap: 10,
+    marginTop: 10,
+  },
+  orderAddress: {
+    color: 'black',
+    fontWeight: '700',
+    width: '95%',
+  },
+  orderDate: {
+    color: 'black',
+    fontWeight: '700',
+  },
+  orderPhone: {
+    color: 'black',
+    fontWeight: '700',
+  },
+  orderAmountContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderRadius: 20,
+  },
+  orderAmountLabel: {
+    fontSize: 18,
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: '700',
+  },
+  orderAmount: {
+    width: '40%',
+    alignSelf: 'center',
+    backgroundColor: color.primary,
+    padding: 15,
+    borderRadius: 20,
+  },
+  orderAmountText: {
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: '900',
+  },
+  loader: {
+    marginVertical: 10,
+  },
+  errorContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  noDataContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
 export default ActiveOrders;
-
-
-
-
-
-
-
-

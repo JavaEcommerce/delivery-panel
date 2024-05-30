@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import { apiBaseUrl,getProfileById } from '../Contants/api';
+import { addDeliveryPerson, apiBaseUrl, getProfileById } from '../Contants/api';
+
 const ProfileContext = createContext();
 
 export const useProfile = () => {
@@ -13,11 +14,19 @@ export const ProfileProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   const fetchProfileData = async () => {
+    setLoading(true);
+    setError(null);
     try {
       const response = await axios.get(`${apiBaseUrl}${getProfileById}3`);
-      setProfileData(response.data);
+      if (response?.data) {
+        setProfileData(response.data);
+      } else {
+        setProfileData(null);
+        setError('No data found');
+      }
     } catch (error) {
-      setError(error.message);
+      setProfileData(null);
+      setError(error.message || 'An error occurred');
     } finally {
       setLoading(false);
     }
@@ -31,9 +40,18 @@ export const ProfileProvider = ({ children }) => {
     fetchProfileData();
   };
 
+  const addDeliveryPerson = async (personData) => {
+    try {
+      const response = await axios.post(`${apiBaseUrl}${addDeliveryPerson}`, personData);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.message || 'Failed to add delivery person');
+    }
+  };
+
   return (
-    <ProfileContext.Provider value={{ profileData, loading, error, refreshProfileData }}>
-      {children}
-    </ProfileContext.Provider>
+    <ProfileContext.Provider value={{ profileData, loading, error, refreshProfileData, addDeliveryPerson }}>
+    {children}
+  </ProfileContext.Provider>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, StyleSheet, Alert } from 'react-native';
+import { TextInput, StyleSheet, Alert,TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import { Button, Pressable, Text, View, } from 'native-base';
 import { apiBaseUrl, updateProfileById } from '../../Contants/api';
@@ -9,105 +9,204 @@ import { Entypo } from '@expo/vector-icons';
 export default function PersonalDetails({ route, navigation }) {
   const { profileData } = route.params;
   const [name, setName] = useState(profileData.name);
-  const [email, setEmail] = useState(profileData.email);
   const [firstMobileNumber, setFirstMobileNumber] = useState(profileData.firstMobileNumber);
+  const [city, setCityName] = useState(profileData.city.cityName);
   const [secondMobileNumber, setSecondMobileNumber] = useState(profileData.secondMobileNumber);
-  const [city, setCity] = useState(profileData.city.cityName);
-  const [country, setCountry] = useState(profileData.city.countryId.countryName);
   const [pincode, setPincode] = useState(profileData.pincode);
+  const [longitude, setLongitute] = useState(profileData.longitude);
   const [latitude, setLatitude] = useState(profileData.latitude);
-  const [longitude, setLongitude] = useState(profileData.longitude);
+  const [houseNo, setHouseNo] = useState(profileData.houseNo);
+  const [flateNo, setFlateNo] = useState(profileData.flateNo);
+  const [addressLine, setaddressLine] = useState(profileData.addressLine);
+  const [emailError, setEmailError] = useState("")
+  const [nameError, setNameError] = useState("")
 
   const handleUpdate = async () => {
-    const updatedProfileData = {
+    const updatedDetails = {
       name,
       firstMobileNumber,
       secondMobileNumber,
       city: {
-        cityId: profileData.city.cityId,
+        cityId: profileData.city.cityId
       },
       pincode,
-      latitude,
       longitude,
-    };
+      latitude,
+      houseNo,
+      flateNo,
+      addressLine
+
+    }
 
     try {
-      const response = await axios.put(`${apiBaseUrl}${updateProfileById}${3}`, updatedProfileData);
-      Alert.alert("Profile Updated");
+      const res = await axios.put(`${apiBaseUrl}${updateProfileById}3`, updatedDetails)
+
+      alert('Profile updated successfully');
       navigation.goBack();
-    } catch (error) {
-      console.error('Error', error);
-      Alert.alert("Update Failed", "Please try again.");
+    }
+    catch (error) {
+      console.log(error, error.message);
+      alert('Failed to updating profile', error);
+      console.log(error)
+    }
+  };
+
+
+  const validateEmail = (text) => {
+    setEmail(text);
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(text)) {
+      setEmailError('Invalid email format');
+    } else {
+      setEmailError('');
+    }
+  };
+  const validateName = (text) => {
+    const alphabetic = /^[A-Za-z\s]*$/;
+    setName(text);
+    if (!alphabetic.test(text)) {
+      setNameError('Please enter only alphabetic characters.');
+    } else {
+      setNameError('');
     }
   };
 
   return (
-    <View style={styles.container}>
-      <Text p={2} color={color.primary} fontWeight={'700'}>Your ID : #{profileData.deliveryPersonId}</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter Full Name"
-        value={name}
-        onChangeText={setName}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter Your Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter First Mobile Number"
-        value={firstMobileNumber}
-        onChangeText={setFirstMobileNumber}
-        keyboardType="phone-pad"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter Second Mobile Number"
-        value={secondMobileNumber}
-        onChangeText={setSecondMobileNumber}
-        keyboardType="phone-pad"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter Your City Name"
-        value={city}
-        onChangeText={setCity}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter Country Name"
-        value={country}
-        onChangeText={setCountry}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter Pincode"
-        value={pincode}
-        onChangeText={setPincode}
-        keyboardType="number-pad"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter Your Location Latitude"
-        value={latitude.toString()}
-        onChangeText={text => setLatitude(parseFloat(text))}
-        keyboardType="numeric"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter Your Location Longitude"
-        value={longitude.toString()}
-        onChangeText={text => setLongitude(parseFloat(text))}
-        keyboardType="numeric"
-      />
-      <Pressable onPress={handleUpdate} style={styles.button}>
-        <Text style={styles.buttonText}>Save All Changes</Text>
-        <Entypo name="save" size={18} color="white" />
-      </Pressable>
+    <View style={{ width: "100%", justifyContent: "center", alignItems: "center", flex: 1, backgroundColor: color.white }}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: "100%",
+            height: "100%"
+
+          }}
+        >
+
+          <View
+            style={{
+              backgroundColor: 'white',
+              padding: 20,
+              borderRadius: 10,
+              elevation: 5,
+              width: "100%",
+              height: "100%"
+
+            }}
+
+          >
+
+
+            <TextInput
+              style={styles.input}
+              placeholder="Name"
+              value={name}
+
+              onChangeText={validateName}
+
+            />
+            {nameError ? <Text style={{ color: "red", paddingVertical: 3 }}>{nameError}</Text> : null}
+            {/* <TextInput
+              style={styles.input}
+              placeholder="Email"
+              value={profileData.email}
+              onChangeText={validateEmail}
+
+              keyboardType="email-address"
+            />
+            {emailError ? <Text style={{ color: "red", paddingVertical: 3 }}>{emailError}</Text> : null} */}
+            <TextInput
+             style={styles.input}
+              placeholder="First Number"
+              value={firstMobileNumber}
+              onChangeText={setFirstMobileNumber}
+              maxLength={10}
+
+
+              keyboardType="phone-pad"
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Last Number"
+              value={secondMobileNumber}
+              maxLength={10}
+              onChangeText={setSecondMobileNumber}
+              keyboardType="phone-pad"
+
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="House No"
+              value={houseNo}
+              onChangeText={setHouseNo}
+
+
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Flate No"
+              value={flateNo}
+              onChangeText={setFlateNo}
+
+            />
+            <TextInput
+              style={styles.input}
+              placeholder=" Address Line"
+              value={addressLine}
+              onChangeText={setaddressLine}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="City Name"
+              value={city}
+              onChangeText={setCityName}
+
+
+            />
+
+            <TextInput
+              style={styles.input}
+              placeholder="Pincode"
+              value={pincode}
+              onChangeText={setPincode}
+              keyboardType="phone-pad"
+
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Longitude"
+              value={latitude}
+              onChangeText={setLatitude}
+              keyboardType="phone-pad"
+
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Latitude"
+              value={longitude}
+              onChangeText={setLongitute}
+              keyboardType="phone-pad"
+
+            />
+
+
+
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginTop: 10,
+              }}
+            >
+
+              <TouchableOpacity onPress={handleUpdate} style={{ width: "100%", justifyContent: "center", backgroundColor: color.primary, padding: 8, borderRadius: 5, alignItems: "center" }}><Text style={{ width: 80, color: color.white, fontSize: 20 }}>Update</Text></TouchableOpacity>
+
+
+            </View>
+          </View>
+        </View>
+      
     </View>
   );
 }
@@ -120,7 +219,6 @@ const styles = StyleSheet.create({
     gap: 3
   },
   input: {
-    // height: 40,
     borderColor: color.primary,
     color: 'black',
     fontWeight: '600',
@@ -133,16 +231,18 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: color.primary,
     width: '100%',
-    padding:15,
-    flexDirection:'row',
-    gap:13,
+    padding: 15,
+    flexDirection: 'row',
+    gap: 13,
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-},
-buttonText: {
+  },
+  buttonText: {
     color: "white",
     fontSize: 16,
-    fontWeight:700
-},
+    fontWeight: 700
+  },
 });
+
+

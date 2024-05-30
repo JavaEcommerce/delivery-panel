@@ -1,18 +1,25 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { SafeAreaView, Text } from 'react-native';
 import AuthNavigator from './src/Navigations/AuthNavigation';
 import { NativeBaseProvider, Box } from "native-base";
 import { ProfileProvider } from './src/Context/ProfileContext';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { OrderHistoryProvider } from './src/Context/OrderContext';
 
+const queryClient = new QueryClient()
 export default function App() {
+
   return (
-    <ProfileProvider>
-      <NativeBaseProvider>
-        <NavigationContainer>
-          <AuthNavigator />
-        </NavigationContainer>
-      </NativeBaseProvider>
-    </ProfileProvider>
+    <NativeBaseProvider>
+      <NavigationContainer>
+        <QueryClientProvider client={queryClient}>
+          <ProfileProvider>
+            <OrderHistoryProvider>
+              <AuthNavigator />
+            </OrderHistoryProvider>
+          </ProfileProvider>
+        </QueryClientProvider>
+      </NavigationContainer>
+    </NativeBaseProvider>
   );
 }
