@@ -8,15 +8,21 @@ import { Ionicons } from '@expo/vector-icons';
 import { useProfile } from '../../Context/ProfileContext';
 import HomeProfileCard from '../../Components/HomeProfileCard';
 
-const Profile = ({ navigation }) => {
+const Profile = ({ navigation,route }) => {
   const { profileData, loading, error, refreshProfileData } = useProfile();
   const toast = useToast();
 
+
   useFocusEffect(
     useCallback(() => {
-      refreshProfileData();
+      // if(route.params??.back=="profile"){
+        refreshProfileData()
+      // }
     }, [])
   );
+  // useEffect(()=>{
+  //   refreshProfileData()
+  // },[profileData])
 
   if (loading) {
     return (
@@ -45,7 +51,7 @@ const Profile = ({ navigation }) => {
       <SafeAreaView style={styles.container}>
         <HomeProfileCard navigation={navigation} profileData={profileData} />
         <Box shadow={1} alignItems={'center'} gap={3} justifyContent={'center'}>
-          <Pressable onPress={() => navigation.navigate(routes.PROFILE_PERSONAL_DETAILS, { profileData })} style={styles.pressable}>
+          <Pressable onPress={() => navigation.navigate(routes.PROFILE_PERSONAL_DETAILS, { profileData },) } style={styles.pressable}>
             <Text fontWeight={'bold'}>Personal Detail</Text>
             <FontAwesome name="angle-right" size={24} color="black" />
           </Pressable>

@@ -34,6 +34,11 @@ const OrderHistoryProvider = ({ children }) => {
       return pages.length < lastPage.totalPages ? pages.length : undefined;
     },
   });
+  const reFetchOrderHistory=()=>{
+    fetchOrderHistory()
+  }
+  
+
 
   return (
     <OrderHistoryContext.Provider
@@ -46,6 +51,8 @@ const OrderHistoryProvider = ({ children }) => {
         hasNextPage,
         isFetchingNextPage,
         refetch,
+        reFetchOrderHistory
+       
       }}
     >
       {children}

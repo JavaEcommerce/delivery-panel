@@ -59,7 +59,7 @@ export default function Home({ navigation }) {
         <FlatList
           data={displayedOrderItems}
           renderItem={renderOrderItem}
-          keyExtractor={item => item.id}
+          keyExtractor={(item, index) => index.toString()}
           style={styles.flatList}/>
       </SafeAreaView>
     );
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     marginBottom: -20
   },
   recentOrdersTitle: {
-    fontWeight: '700',
+    fontWeight: 700,
     paddingTop: 30,
     marginBottom: 10,
     fontSize: 24,

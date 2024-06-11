@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { TextInput, StyleSheet, Alert,TouchableOpacity } from 'react-native';
 import axios from 'axios';
-import { Button, Pressable, Text, View, } from 'native-base';
+import { Button, Pressable, ScrollView, Text, View, } from 'native-base';
 import { apiBaseUrl, updateProfileById } from '../../Contants/api';
 import color from '../../Contants/color';
 import { Entypo } from '@expo/vector-icons';
 
 export default function PersonalDetails({ route, navigation }) {
   const { profileData } = route.params;
+
   const [name, setName] = useState(profileData.name);
   const [firstMobileNumber, setFirstMobileNumber] = useState(profileData.firstMobileNumber);
   const [city, setCityName] = useState(profileData.city.cityName);
@@ -16,7 +17,7 @@ export default function PersonalDetails({ route, navigation }) {
   const [longitude, setLongitute] = useState(profileData.longitude);
   const [latitude, setLatitude] = useState(profileData.latitude);
   const [houseNo, setHouseNo] = useState(profileData.houseNo);
-  const [flateNo, setFlateNo] = useState(profileData.flateNo);
+  const [flatNo, setFlatNo] = useState(profileData.flatNo);
   const [addressLine, setaddressLine] = useState(profileData.addressLine);
   const [emailError, setEmailError] = useState("")
   const [nameError, setNameError] = useState("")
@@ -33,7 +34,7 @@ export default function PersonalDetails({ route, navigation }) {
       longitude,
       latitude,
       houseNo,
-      flateNo,
+      flatNo,
       addressLine
 
     }
@@ -43,6 +44,7 @@ export default function PersonalDetails({ route, navigation }) {
 
       alert('Profile updated successfully');
       navigation.goBack();
+
     }
     catch (error) {
       console.log(error, error.message);
@@ -72,7 +74,8 @@ export default function PersonalDetails({ route, navigation }) {
   };
 
   return (
-    <View style={{ width: "100%", justifyContent: "center", alignItems: "center", flex: 1, backgroundColor: color.white }}>
+    <ScrollView>
+      <View style={{ width: "100%", justifyContent: "center", alignItems: "center", flex: 1, backgroundColor: color.white }}>
         <View
           style={{
             flex: 1,
@@ -107,7 +110,7 @@ export default function PersonalDetails({ route, navigation }) {
 
             />
             {nameError ? <Text style={{ color: "red", paddingVertical: 3 }}>{nameError}</Text> : null}
-            {/* <TextInput
+            <TextInput
               style={styles.input}
               placeholder="Email"
               value={profileData.email}
@@ -115,7 +118,7 @@ export default function PersonalDetails({ route, navigation }) {
 
               keyboardType="email-address"
             />
-            {emailError ? <Text style={{ color: "red", paddingVertical: 3 }}>{emailError}</Text> : null} */}
+            {emailError ? <Text style={{ color: "red", paddingVertical: 3 }}>{emailError}</Text> : null}
             <TextInput
              style={styles.input}
               placeholder="First Number"
@@ -146,8 +149,8 @@ export default function PersonalDetails({ route, navigation }) {
             <TextInput
               style={styles.input}
               placeholder="Flate No"
-              value={flateNo}
-              onChangeText={setFlateNo}
+              value={flatNo}
+              onChangeText={setFlatNo}
 
             />
             <TextInput
@@ -208,6 +211,7 @@ export default function PersonalDetails({ route, navigation }) {
         </View>
       
     </View>
+    </ScrollView>
   );
 }
 

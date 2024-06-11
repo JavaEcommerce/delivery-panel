@@ -1,12 +1,15 @@
-import { StyleSheet, FlatList ,ActivityIndicator} from "react-native";
+import { StyleSheet, FlatList, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useContext } from "react";
+import { useContext, useEffect, useCallback, useState } from "react";
 import { OrderHistoryContext } from "../../Context/OrderContext";
 import color from "../../Contants/color";
-import { ScrollView } from "react-native-gesture-handler";
 import HomeRecentOrder from "../../Components/HomeRecentOrder";
 import { Box } from "native-base";
+import { useFocusEffect } from '@react-navigation/native';
+import { RefreshControl } from "react-native-gesture-handler";
+
 const OrderHistory = () => {
+    const [refreshing, setRefreshing] = useState(false)
     const {
         orderItems,
         isLoading,
@@ -16,6 +19,8 @@ const OrderHistory = () => {
         hasNextPage,
         isFetchingNextPage,
         refetch,
+
+
     } = useContext(OrderHistoryContext);
 
     const loadMore = () => {
@@ -24,9 +29,23 @@ const OrderHistory = () => {
         }
     };
 
+    useFocusEffect(
+        useCallback(() => {
+            refetch()
+        }, [orderItems])
+    );
+
     const renderOrderItem = ({ item }) => {
         return <HomeRecentOrder item={item} />;
     };
+
+    const onRefresh = () => {
+        setRefreshing(true)
+        setTimeout(() => {
+            refetch()
+            setRefreshing(false)
+        }, 500)
+    }
 
 
     return (
@@ -34,7 +53,7 @@ const OrderHistory = () => {
             <FlatList
                 data={orderItems}
                 renderItem={renderOrderItem}
-                keyExtractor={item => item.id}
+                keyExtractor={(item, index) => index.toString()}
                 style={styles.flatList}
                 onEndReached={loadMore}
                 onEndReachedThreshold={0.8}
@@ -43,6 +62,12 @@ const OrderHistory = () => {
                     isFetchingNextPage ? (
                         <ActivityIndicator style={styles.loader} color={color.primary} size={'large'} />
                     ) : null
+                }
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                        colors={[color.primary]} />
                 }
             />
 

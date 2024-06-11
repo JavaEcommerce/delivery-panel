@@ -11,12 +11,12 @@ export default function OrderDetailNavi() {
 
     return (
         <Stack.Navigator
-            screenOptions={ ({
+            screenOptions={({
                 headerTintColor: color.primary,
+                headerStatusBarHeight: 10,
                 headerBackTitleVisible: false,
                 headerStyle: {
                     backgroundColor: 'white',
-
                 },
                 headerTitleStyle: {
                     color: color.primary,

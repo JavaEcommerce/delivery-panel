@@ -6,10 +6,6 @@ import { Box, Pressable, Image } from 'native-base'
 const profileImage = require('../Assets/userPic.jpeg');
 const verified = require('../Assets/verified.png');
 import routes from '../Contants/routes';
-import { useContext } from 'react';
-import { PersonalDetailsContext } from '../Context/ProfileContext';
-import { Ionicons } from "@expo/vector-icons";
-import Icon from "react-native-vector-icons/FontAwesome";
 
 const HomeProfileCard = ({ navigation, isHomeNavigated, profileData }) => {
   const [isVerified, setIsVerified] = useState(profileData?.isVarified);
@@ -22,6 +18,7 @@ const HomeProfileCard = ({ navigation, isHomeNavigated, profileData }) => {
               <Image
                 style={{ width: 100, height: 100, borderRadius: 50 }}
                 source={profileImage}
+                alt='Profile Picture'
                 width={"10"} />
               <Box>
                 <Box flexDir={'row'} justifyContent={"start"} alignItems={'center'}>
@@ -34,7 +31,7 @@ const HomeProfileCard = ({ navigation, isHomeNavigated, profileData }) => {
               </Box>
             </Box>
             <Box style={{ marginTop: 10, gap: 5 }}>
-              <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>🏠 {profileData.houseNo ? `H No-${profileData.houseNo}` : ''} ,{profileData.flateNo ? `F No-${profileData.flateNo}` : ''}, {profileData.addressLine} </Text>
+              <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>🏠 {profileData.houseNo ? `H No-${profileData.houseNo}` : ''} ,{profileData.flatNo ? `F No-${profileData.flatNo}` : ''}, {profileData.addressLine} </Text>
               <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>📍 {profileData.city.cityName}</Text>
               <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>📱 {profileData.firstMobileNumber}</Text>
             </Box>
@@ -54,6 +51,7 @@ const HomeProfileCard = ({ navigation, isHomeNavigated, profileData }) => {
                 <Image
                   style={{ width: 100, height: 100, borderRadius: 50 }}
                   source={profileImage}
+                  alt='Profile Picture'
                   width={"10"} />
                 <Box>
                   <Box flexDir={'row'} justifyContent={"start"} alignItems={'center'}>
@@ -71,11 +69,11 @@ const HomeProfileCard = ({ navigation, isHomeNavigated, profileData }) => {
               <Box style={{ marginTop: 8, gap: 2 }}>
                 <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'white', height: 20 }}>
                   🏠 {profileData?.houseNo ? `H No-${profileData?.houseNo}` : ''}
-                  {profileData?.flateNo ? `, F No-${profileData?.flateNo}` : ''}, {profileData?.addressLine}
+                  {profileData?.flatNo ? `, F No-${profileData?.flatNo}` : ''}, {profileData?.addressLine}
                 </Text>
                 <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'white', height: 23 }}>
-                  📍 {profileData?.city?.cityName?.slice(0, 1)?.toUpperCase() + profileData?.city?.cityName?.slice(1,)}
-                  -{profileData?.city?.countryId?.countryName}, {profileData?.pincode}
+                  📍 {profileData?.city?.cityName?.slice(0, 1)?.toUpperCase() + profileData?.city?.cityName?.slice(1,) }
+                   , {profileData?.city?.countryId?.countryName} , {profileData?.pincode}
                 </Text>
                 <Text style={{ fontSize: 17, marginLeft: 5, color: color.white, fontWeight: 'bold' }}>
                   📱 {profileData?.firstMobileNumber}

@@ -89,18 +89,18 @@ export default function Earning({ navigation }) {
                     <Box style={{ height: 180, padding: 10, width: '100%', flexDirection: 'column', justifyContent: 'space-between' }}>
                         <Box style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Box style={{ backgroundColor: color.primary, padding: 5, width: '30%', borderRadius: 15 }}>
-                                <Text style={{ color: 'white', textAlign: 'center', fontWeight: '900' }}>#{item.id}</Text>
+                                <Text style={{ color: 'white', textAlign: 'center', fontWeight: 900 }}>#{item.id}</Text>
                             </Box>
                             <Box style={{ padding: 5 }}>
-                                <Text style={{ color: statusColor, textAlign: 'center', fontWeight: '900' }}>{item.status}</Text>
+                                <Text style={{ color: statusColor, textAlign: 'center', fontWeight: 900 }}>{item.status}</Text>
                             </Box>
                         </Box>
                         <Box style={{ gap: 10, marginTop: 10 }}>
-                            <Text style={{ color: 'black', fontWeight: '700' }}>Address : {item.address}</Text>
-                            <Text style={{ color: 'black', fontWeight: '700' }}>Time: {item.timestamp}</Text>
+                            <Text style={{ color: 'black', fontWeight: 700 }}>Address : {item.address}</Text>
+                            <Text style={{ color: 'black', fontWeight: 700 }}>Time: {item.timestamp}</Text>
                         </Box>
                         <Box style={{ width: '100%', alignSelf: 'center', backgroundColor: color.primary, padding: 10, borderRadius: 20 }}>
-                            <Text style={{ color: 'white', textAlign: 'center', fontWeight: '900' }}>Payment : {item.paymentMethod}</Text>
+                            <Text style={{ color: 'white', textAlign: 'center', fontWeight: 900 }}>Payment : {item.paymentMethod}</Text>
                         </Box>
                     </Box>
                 </TouchableOpacity>
