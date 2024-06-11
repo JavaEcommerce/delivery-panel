@@ -101,7 +101,7 @@ const NewOrders = ({ navigation }) => {
     return (
       <View style={styles.noDataContainer}>
 
-        <LottieView style={{ width: "100%", height: '30%', justifyContent: 'center', alignItems: 'center' }}
+        <LottieView style={{ width: "100%", height: '40%', justifyContent: 'center', alignItems: 'center' }}
           source={require('../../Assets/Animation - 1718105818011.json')}
           autoPlay
           loop >
