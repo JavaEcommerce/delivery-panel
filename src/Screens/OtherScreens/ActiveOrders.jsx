@@ -8,6 +8,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { apiBaseUrl, getAllActiveOrders } from '../../Contants/api';
 import { useFocusEffect } from '@react-navigation/native';
 import ActiveOrderCard from '../../Components/ActiveOrderCard';
+import LottieView from 'lottie-react-native';
 const activeOrderImg = require('../../Assets/ActiveOrder.jpg');
 const deliveryPersonId = 3;
 
@@ -116,11 +117,12 @@ const ActiveOrders = ({ navigation }) => {
   if (orders.length === 0) {
     return (
       <View style={styles.noDataContainer}>
-        <Image
-          style={styles.imgStyle}
-          alt='Empty List'
-          source={activeOrderImg} />
-        <Text>No active orders available 📦.</Text>
+        <LottieView style={{ width: "100%", height: '20%', }} 
+        source={require('../../Assets/Animation - 1718104901501.json')}
+          autoPlay
+          loop >
+        </LottieView>
+        <Text>No orders right now 📦.</Text>
       </View>
     );
   }
@@ -161,7 +163,6 @@ const styles = StyleSheet.create({
   },
   imgStyle: {
     width: '100%',
-
     height: undefined,
     aspectRatio: 5 / 5,
   },

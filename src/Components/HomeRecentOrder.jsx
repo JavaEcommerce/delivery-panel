@@ -1,9 +1,6 @@
-import { View, TouchableOpacity, Skeleton } from 'react-native'
-import {React,useContext} from 'react'
+import {React} from 'react'
 import { Box,Text } from 'native-base'
 import color from '../Contants/color'
-import { OrderHistoryContext } from '../Context/OrderContext'
-import { useInfiniteQuery } from '@tanstack/react-query'
 
 const HomeRecentOrder = ({item}) => {
 

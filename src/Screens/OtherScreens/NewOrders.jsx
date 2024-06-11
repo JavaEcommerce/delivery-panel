@@ -8,7 +8,7 @@ import { apiBaseUrl, getAllNewOrders, updateNewOrdersStatus } from '../../Contan
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Ionicons } from '@expo/vector-icons';
 import NewOrderCard from '../../Components/NewOrderCard';
-
+import LottieView from 'lottie-react-native';
 const deliveryPersonId = 3;
 const NewOrders = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
@@ -100,10 +100,19 @@ const NewOrders = ({ navigation }) => {
   if ((data?.pages[0]?.orders === 0 || data?.pages[0] === undefined)) {
     return (
       <View style={styles.noDataContainer}>
-        <TouchableOpacity bg={'white'} onPress={() => refetch()}>
-          <Ionicons name="reload" size={24} color={color.primary} />
-        </TouchableOpacity>
-        <Text>No new orders available 📦 .</Text>
+
+        <LottieView style={{ width: "100%", height: '30%', justifyContent: 'center', alignItems: 'center' }}
+          source={require('../../Assets/Animation - 1718105818011.json')}
+          autoPlay
+          loop >
+        </LottieView>
+        <View style={{ flexDirection: 'row', gap: 20, justifyContent: 'center', alignItems: 'center' }}>
+
+          <Text>No orders right now 📦.</Text>
+          <TouchableOpacity bg={'white'} onPress={() => refetch()}>
+            <Ionicons name="reload" size={24} color={color.primary} />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -156,8 +165,8 @@ const styles = StyleSheet.create({
   skeleton: {
     height: 180,
     alignSelf: 'center',
-    marginTop:10,
-    marginBottom:10,
+    marginTop: 10,
+    marginBottom: 10,
     borderRadius: 20,
     width: '90%',
     my: 3,
@@ -174,7 +183,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
     flexDirection: 'column',
-    gap: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },
