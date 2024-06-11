@@ -1,12 +1,11 @@
-// Import API base URL from environment variables
 
-// Uncomment to use environment variable for base URL
-// export const apiBaseUrl = API_BASE_URL;
 
+
+
+
+import { API_BASE_URL } from '@env'
 // Base API URLs for different services
-export const apiBaseUrl =
-  "https://ld63z6xh7gly.share.zrok.io";
-
+export const apiBaseUrl = API_BASE_URL;
 // Order Endpoints
 export const getAllNewOrders = "/orderAssignments/newOrders/";
 export const getAllActiveOrders = "/orderAssignments/activeOrders/";
