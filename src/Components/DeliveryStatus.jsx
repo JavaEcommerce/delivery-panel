@@ -25,7 +25,6 @@ export default function DeliveryStatus({item,navigation}) {
     const [items, setItems] = useState([
       { label: 'Unable To Connect', value: 'UnableToConnect' },
       { label: 'Customer Rejected', value: 'CustomerRejected' },
-      { label: 'Delivery Person Rejected', value: 'DeliveryPersonRejected' },
       { label: 'Delivered', value: 'Delivered' },
     ]);
   

@@ -114,7 +114,7 @@ const ActiveOrders = ({ navigation }) => {
 
   const orders = data?.pages?.flatMap((page) => page.orders) || [];
 
-  if (orders.length > 0) {
+  if (orders.length === 0) {
     return (
       <View style={styles.noDataContainer}>
         <LottieView style={{ width: "100%", height: '40%', }} 
@@ -122,7 +122,7 @@ const ActiveOrders = ({ navigation }) => {
           autoPlay
           loop >
         </LottieView>
-        <Text>No orders right now 📦.</Text>
+        <Text style={{fontWeight:'500',fontSize:16}}>No order right now 📦.</Text>
       </View>
     );
   }

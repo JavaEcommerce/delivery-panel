@@ -23,6 +23,8 @@ export default function NewOrderCard({ item,navigation,refetch}) {
           console.error('Error updating status:', error.message);
         }
       };
+
+      
     
       const handleAcceptOrder = async (id) => {
         const payload = { status: 'Assigned' };

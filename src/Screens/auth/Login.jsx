@@ -5,15 +5,14 @@ import routes from '../../Contants/routes';
 import COLORS from '../../Contants/color';
 
 const Login = ({ navigation }) => {
-    const imageTranslateX = useRef(new Animated.Value(-30)).current; // Initial translation value
+    const imageTranslateX = useRef(new Animated.Value(-30)).current;
 
     const handleLoginPress = () => {
         Animated.timing(imageTranslateX, {
-            toValue: 100, // Translate the image to the right by 100 units
-            duration: 500, // Animation duration
-            useNativeDriver: true, // Use native driver for performance
-        }).start(); // Start the animation
-        // Navigate to the home screen after animation completes
+            toValue: 100, 
+            duration: 500, 
+            useNativeDriver: true,
+        }).start();
         setTimeout(() => {
             navigation.navigate(routes.BOTTOM_TAB);
         }, 500);

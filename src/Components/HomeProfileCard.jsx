@@ -66,14 +66,14 @@ const HomeProfileCard = ({ navigation, isHomeNavigated, profileData }) => {
                   </Text>
                 </Box>
               </Box>
-              <Box style={{ marginTop: 8, gap: 2 }}>
+              <Box style={{ marginTop: 8, gap: 3 }}>
                 <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'white', height: 20 }}>
                   🏠 {profileData?.houseNo ? `H No-${profileData?.houseNo}` : ''}
                   {profileData?.flatNo ? `, F No-${profileData?.flatNo}` : ''}, {profileData?.addressLine}
                 </Text>
                 <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'white', height: 23 }}>
-                  📍 {profileData?.city?.cityName?.slice(0, 1)?.toUpperCase() + profileData?.city?.cityName?.slice(1,) }
-                   , {profileData?.city?.countryId?.countryName} , {profileData?.pincode}
+                  📍 {profileData?.city?.cityName?.slice(0, 1)?.toUpperCase() + profileData?.city?.cityName?.slice(1,)}
+                  , {profileData?.city?.countryId?.countryName} , {profileData?.pincode}
                 </Text>
                 <Text style={{ fontSize: 17, marginLeft: 5, color: color.white, fontWeight: 'bold' }}>
                   📱 {profileData?.firstMobileNumber}
@@ -82,10 +82,10 @@ const HomeProfileCard = ({ navigation, isHomeNavigated, profileData }) => {
                   📱 {profileData?.secondMobileNumber}
                 </Text>
                 <Text style={{ fontSize: 17, marginLeft: 5, color: color.white, fontWeight: 'bold' }}>
-                  Latitude: {profileData?.latitude}
+                  🌍 : {profileData?.latitude}  Latitude
                 </Text>
                 <Text style={{ fontSize: 17, marginLeft: 5, color: color.white, fontWeight: 'bold' }}>
-                  Longitude: {profileData?.longitude}
+                  🌍 : {profileData?.longitude} Longitude
                 </Text>
               </Box>
               <Box style={{ alignSelf: 'center' }}>

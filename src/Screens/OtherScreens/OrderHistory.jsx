@@ -1,15 +1,14 @@
-import { StyleSheet, FlatList, ActivityIndicator } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useContext, useEffect, useCallback, useState } from "react";
+import React, { useContext, useCallback, useState,useEffect } from "react";
+import { StyleSheet, FlatList, ActivityIndicator, RefreshControl } from "react-native";
+import { Box } from "native-base";
+import { useFocusEffect } from '@react-navigation/native';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { OrderHistoryContext } from "../../Context/OrderContext";
 import color from "../../Contants/color";
 import HomeRecentOrder from "../../Components/HomeRecentOrder";
-import { Box } from "native-base";
-import { useFocusEffect } from '@react-navigation/native';
-import { RefreshControl } from "react-native-gesture-handler";
 
 const OrderHistory = () => {
-    const [refreshing, setRefreshing] = useState(false)
+    const [refreshing, setRefreshing] = useState(false);
     const {
         orderItems,
         isLoading,
@@ -19,9 +18,32 @@ const OrderHistory = () => {
         hasNextPage,
         isFetchingNextPage,
         refetch,
-
-
     } = useContext(OrderHistoryContext);
+
+    const saveData = async () => {
+        try {
+            const jsonValue = JSON.stringify(orderItems);
+            await AsyncStorage.setItem('orderItems', jsonValue);
+        } catch (e) {
+            console.log("Error saving data to AsyncStorage:", e);
+        }
+    };
+
+    
+    const saveDataCallback = useCallback(saveData, [orderItems]);
+
+    useEffect(() => {
+        saveDataCallback();
+    }, [orderItems, saveDataCallback]);
+
+    const onRefresh = () => {
+        setRefreshing(true);
+        setTimeout(() => {
+            refetch();
+            setRefreshing(false);
+        }, 500);
+    };
+
 
     const loadMore = () => {
         if (hasNextPage && !isFetchingNextPage) {
@@ -29,24 +51,16 @@ const OrderHistory = () => {
         }
     };
 
-    useFocusEffect(
-        useCallback(() => {
-            refetch()
-        }, [orderItems])
-    );
 
     const renderOrderItem = ({ item }) => {
         return <HomeRecentOrder item={item} />;
     };
 
-    const onRefresh = () => {
-        setRefreshing(true)
-        setTimeout(() => {
-            refetch()
-            setRefreshing(false)
-        }, 500)
-    }
-
+    useFocusEffect(
+        useCallback(() => {
+            refetch();
+        }, [refetch])
+    );
 
     return (
         <Box py={2} bg={'white'}>
@@ -70,18 +84,17 @@ const OrderHistory = () => {
                         colors={[color.primary]} />
                 }
             />
-
         </Box>
     );
+};
 
+export default OrderHistory;
 
-}
-
-
-
-
-
-
-export default OrderHistory
-
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    flatList: {
+        // Your styles here
+    },
+    loader: {
+        // Loader styles
+    },
+});

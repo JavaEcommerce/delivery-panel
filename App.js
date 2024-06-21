@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import AuthNavigator from './src/Navigations/AuthNavigation';
 import { NativeBaseProvider, Box } from "native-base";

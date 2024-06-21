@@ -1,5 +1,6 @@
 export default COLORS= {
     gradientForm: '#A376F1',
+    primary: '#264653',
     primary: '#9ACA00',
     white: '#FFFFFF',
     dark: '#444',

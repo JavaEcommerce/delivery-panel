@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, StyleSheet, Alert,TouchableOpacity } from 'react-native';
+import { TextInput, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import { Button, Pressable, ScrollView, Text, View, } from 'native-base';
 import { apiBaseUrl, updateProfileById } from '../../Contants/api';
@@ -14,8 +14,8 @@ export default function PersonalDetails({ route, navigation }) {
   const [city, setCityName] = useState(profileData.city.cityName);
   const [secondMobileNumber, setSecondMobileNumber] = useState(profileData.secondMobileNumber);
   const [pincode, setPincode] = useState(profileData.pincode);
-  const [longitude, setLongitute] = useState(profileData.longitude);
-  const [latitude, setLatitude] = useState(profileData.latitude);
+  const [longitude, setLongitute] = useState(profileData.longitude.toString());
+  const [latitude, setLatitude] = useState(profileData.latitude.toString());
   const [houseNo, setHouseNo] = useState(profileData.houseNo);
   const [flatNo, setFlatNo] = useState(profileData.flatNo);
   const [addressLine, setaddressLine] = useState(profileData.addressLine);
@@ -43,7 +43,7 @@ export default function PersonalDetails({ route, navigation }) {
       const res = await axios.put(`${apiBaseUrl}${updateProfileById}3`, updatedDetails)
 
       alert('Profile updated successfully');
-      navigation.goBack();
+      navigation.navigate('My Profile', 'ok');
 
     }
     catch (error) {
@@ -113,6 +113,7 @@ export default function PersonalDetails({ route, navigation }) {
             <TextInput
               style={styles.input}
               placeholder="Email"
+              readOnly
               value={profileData.email}
               onChangeText={validateEmail}
 
@@ -120,13 +121,11 @@ export default function PersonalDetails({ route, navigation }) {
             />
             {emailError ? <Text style={{ color: "red", paddingVertical: 3 }}>{emailError}</Text> : null}
             <TextInput
-             style={styles.input}
+              style={styles.input}
               placeholder="First Number"
               value={firstMobileNumber}
               onChangeText={setFirstMobileNumber}
               maxLength={10}
-
-
               keyboardType="phone-pad"
             />
             <TextInput
@@ -209,8 +208,8 @@ export default function PersonalDetails({ route, navigation }) {
             </View>
           </View>
         </View>
-      
-    </View>
+
+      </View>
     </ScrollView>
   );
 }

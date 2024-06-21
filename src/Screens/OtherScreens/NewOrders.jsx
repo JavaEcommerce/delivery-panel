@@ -108,7 +108,8 @@ const NewOrders = ({ navigation }) => {
         </LottieView>
         <View style={{ flexDirection: 'row', gap: 20, justifyContent: 'center', alignItems: 'center' }}>
 
-          <Text>No orders right now 📦.</Text>
+        <Text style={{fontWeight:'500',fontSize:16}}>No order right now 📦.</Text>
+
           <TouchableOpacity bg={'white'} onPress={() => refetch()}>
             <Ionicons name="reload" size={24} color={color.primary} />
           </TouchableOpacity>
@@ -175,6 +176,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   errorContainer: {
+    backgroundColor:'white',
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',

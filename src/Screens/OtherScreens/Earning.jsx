@@ -1,128 +1,109 @@
-import { Box } from 'native-base';
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Switch, Image, FlatList, TouchableOpacity, Pressable } from 'react-native';
+import { Box, Image, View, Text } from 'native-base';
+import React from 'react';
+import { StyleSheet, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import color from '../../Contants/color';
-import { useNavigation } from '@react-navigation/native';
-import routes from '../../Contants/routes';
-const profileImage = require('../../Assets/userPic.jpeg');
-const verified = require('../../Assets/verified.png');
-export default function Earning({ navigation }) {
-    const [isVerified, setIsVerified] = useState(true); // State for verification status
+const profileImage = require('../../Assets/icons8-checkmark-48.png');
+import { Feather } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { Fontisto } from '@expo/vector-icons';
 
-    const recentOrders = [
-        {
-            id: '1',
-            status: 'Delivered',
-            address: '123 Main Street',
-            timestamp: '10:00 AM',
-            paymentMethod: 'Credit Card'
-        },
-        {
-            id: '2',
-            status: 'Pending',
-            address: '456 Elm Street',
-            timestamp: '11:30 AM',
-            paymentMethod: 'Cash On Delivery'
-        },
-        {
-            id: '3',
-            status: 'Cancelled',
-            address: '789 Oak Street',
-            timestamp: '1:00 PM',
-            paymentMethod: 'PayPal'
-        },
-        {
-            id: '4',
-            status: 'Delivered',
-            address: '101 Maple Avenue',
-            timestamp: '2:30 PM',
-            paymentMethod: 'Credit Card'
-        },
-        {
-            id: '5',
-            status: 'Pending',
-            address: '202 Pine Street',
-            timestamp: '4:00 PM',
-            paymentMethod: 'Cash On Delivery'
-        },
-        {
-            id: '6',
-            status: 'Cancelled',
-            address: '303 Cedar Street',
-            timestamp: '5:30 PM',
-            paymentMethod: 'PayPal'
-        },
-    ];
+const paymentDetails = [
+    {
+        status: 'Completed',
+        time: '2023-06-12 14:30',
+        deliveryAddress: '1234 Main St, Springfield, USA'
+    },
+    {
+        status: 'Pending',
+        time: '2023-06-11 10:00',
+        deliveryAddress: '5678 Elm St, Shelbyville, USA'
+    },
+    {
+        status: 'Completed',
+        time: '2023-06-11 10:00',
+        deliveryAddress: '5678 Elm St, Shelbyville, USA'
+    },
+    {
+        status: 'Pending',
+        time: '2023-06-11 10:00',
+        deliveryAddress: '5678 Elm St, Shelbyville, USA'
+    },
+    {
+        status: 'Completed',
+        time: '2023-06-11 10:00',
+        deliveryAddress: '5678 Elm St, Shelbyville, USA'
+    },
+    {
+        status: 'Completed',
+        time: '2023-06-10 09:15',
+        deliveryAddress: '9101 Oak St, Capital City, USA'
+    }
+];
 
-
-    const renderOrderItem = ({ item }) => {
-        let statusColor = '';
-        switch (item.status) {
-            case 'Delivered':
-                statusColor = color.primary;
-                break;
-            case 'Pending':
-                statusColor = '#fab005';
-                break;
-            case 'Cancelled':
-                statusColor = 'red';
-                break;
-            default:
-                statusColor = 'black';
-        }
-
-        return (
-            <Box
-                style={{
-                    backgroundColor: 'white',
-                    borderWidth: 0.17,
-                    borderColor: color.primary,
-                    width: '90%',
-                    marginBottom: 15,
-                    borderRadius: 20,
-                    justifyContent: 'center',
-                    alignSelf: 'center'
-                }}
-            >
-                <TouchableOpacity>
-                    <Box style={{ height: 180, padding: 10, width: '100%', flexDirection: 'column', justifyContent: 'space-between' }}>
-                        <Box style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Box style={{ backgroundColor: color.primary, padding: 5, width: '30%', borderRadius: 15 }}>
-                                <Text style={{ color: 'white', textAlign: 'center', fontWeight: 900 }}>#{item.id}</Text>
-                            </Box>
-                            <Box style={{ padding: 5 }}>
-                                <Text style={{ color: statusColor, textAlign: 'center', fontWeight: 900 }}>{item.status}</Text>
-                            </Box>
-                        </Box>
-                        <Box style={{ gap: 10, marginTop: 10 }}>
-                            <Text style={{ color: 'black', fontWeight: 700 }}>Address : {item.address}</Text>
-                            <Text style={{ color: 'black', fontWeight: 700 }}>Time: {item.timestamp}</Text>
-                        </Box>
-                        <Box style={{ width: '100%', alignSelf: 'center', backgroundColor: color.primary, padding: 10, borderRadius: 20 }}>
-                            <Text style={{ color: 'white', textAlign: 'center', fontWeight: 900 }}>Payment : {item.paymentMethod}</Text>
-                        </Box>
-                    </Box>
-                </TouchableOpacity>
-            </Box>
-        );
-    };
-
+renderItems = ({ item }) => {
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={{ backgroundColor: 'white', width: '100%', borderRadius: 20, }}>
-                <View style={styles.toggleContainer}>
-                    <Text style={{ fontWeight: 'bold', textAlign: 'center', fontSize: 20, color: 'black', letterSpacing: 2 }}>
-                        Balance </Text>
-                    <Text style={{ fontWeight: 'bold', textAlign: 'center', fontSize: 56, color: color.primary, letterSpacing: 2 }}>
-                        $450 </Text>
-                </View>
-                <Box style={{ padding: 10, height: '100%' }}>
-                    <Box style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-                    </Box>
-                </Box>
+        <View borderWidth={1} borderColor={'#6B8D00'} mt={2} borderRadius={20} p={3} flexDir={'row'} justifyContent={'space-between'} alignItems={'center'}>
+            <View w={'80%'}>
+                <Text fontSize={16} fontWeight={'semibold'} color={color.primary}>Time: {item.time}</Text>
+                <Text fontSize={14} color={color.primary}>Delivery Address: {item.deliveryAddress}</Text>
             </View>
+            {item.status === 'Completed' ? (
+                <Feather name="check-circle" size={26} color={color.primary} />
+            ) : (
+                <AntDesign name="exclamationcircle" size={26} color={color.primary} />
+            )}
+        </View>
 
+    )
+}
+export default function Earning({ navigation }) {
+    return (
+
+        <SafeAreaView style={styles.container}>
+
+            <View style={{ backgroundColor: 'white', width: '100%', borderRadius: 20, alignItems: 'center' }}>
+                <View style={styles.toggleContainer}>
+                    <View bg={'#C2DF66'} w={'50%'} p={5} borderRadius={20} justifyContent={'center'} alignItems={'center'}>
+                        <Text fontWeight={'900'} fontSize={36} color={'white'}>
+                            $ 450
+                        </Text>
+                        <View flexDir={'row'} justifyContent={'center'} alignItems={'center'} gap={2}>
+                            <Ionicons name="wallet" size={20} color="white" />
+                            <Text fontWeight={'bold'} fontSize={16} justifyContent={'center'} alignItems={'center'} color={'white'}>
+                                Your Income
+                            </Text>
+
+                        </View>
+                    </View>
+                    <View bg={'white'} w={'50%'} p={5} borderRadius={20} justifyContent={'center'} alignItems={'center'}>
+                        <Text fontWeight={'900'} fontSize={36} color={color.primary}>
+                            <AntDesign name="star" size={24} color={color.primary} />
+                            <AntDesign name="star" size={24} color={color.primary} />
+                            <AntDesign name="star" size={24} color={color.primary} />
+          
+                        </Text>
+                        <View flexDir={'row'} justifyContent={'center'} alignItems={'center'} gap={2}>
+                            {/* <Ionicons name="wallet" size={20} color="#6B8D00" /> */}
+                            <Fontisto name="smiley" size={20} color="#6B8D00" />
+                            <Text fontWeight={'bold'} fontSize={16} justifyContent={'center'} alignItems={'center'} color={'#6B8D00'}>
+                                Your Growth
+                            </Text>
+
+                        </View>
+                    </View>
+
+                </View>
+
+                <Box style={{ padding: 10, height: '100%', width: '90%' }}>
+                    <FlatList
+                        data={paymentDetails}
+                        keyExtractor={(item, index) => index.toString()}
+                        renderItem={renderItems} />
+                </Box>
+
+            </View>
         </SafeAreaView>
     );
 }
@@ -137,13 +118,13 @@ const styles = StyleSheet.create({
     },
     toggleContainer: {
         justifyContent: 'center',
-        width: '80%',
+        flexDirection: 'row',
+        width: '85%',
         borderRadius: 20,
         alignItems: 'center',
         alignSelf: 'center',
         marginTop: -50,
         backgroundColor: 'white',
-        padding: 30,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -151,10 +132,34 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.22,
         shadowRadius: 2.22,
-
         elevation: 3,
         zIndex: 100,
+        gap: 5,
+    },
+    paymentDetailsContainer: {
+        flexDirection: 'row',
 
-        gap: 10,
+        marginTop: 20,
+        padding: 10,
+        backgroundColor: 'red',
+        borderRadius: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        elevation: 3,
+    },
+    paymentDetailsText: {
+        fontSize: 16,
+        color: 'black',
+        marginBottom: 5,
     },
 });
+
+
+{/* <LinearGradient
+                    colors={['#9ACA00', '#C2DF66', '#ffff']}
+                ></LinearGradient> */}
