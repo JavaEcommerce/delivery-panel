@@ -46,6 +46,7 @@ const Registration = ({ navigation }) => {
               source={require('../../Assets/deliveryPng.png')}
               style={{ width: '100%', height: '100%' }}
               resizeMode="contain"
+              alt='img'
             />
           </View>
           <View style={{ width: '80%', height: '60%', alignItems: 'center', marginTop: -60, justifyContent: 'center', padding: 10, paddingTop: 30, borderRadius: 10 }}>

@@ -4,7 +4,6 @@ import { Button, Image, FlatList, View, Text, Pressable } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
 import ROUTES from '../../Contants/routes';
 import color from '../../Contants/color';
-
 const onboardingData = [
     {
         key: '1',
@@ -15,11 +14,23 @@ const onboardingData = [
     {
         key: '2',
         title: 'Navigate Like a Pro',
-        description: 'Master the routes and ensure timely deliveries. Your journey to excellence starts here',
+        description: 'Master the routes and ensure timely deliveries. Your journey to excellence starts here.',
         image: require('../../Assets/onboarding1.png'),
     },
-    
+    {
+        key: '3',
+        title: 'Customer Satisfaction',
+        description: 'Prioritize customer satisfaction by accurate deliveries. Happy customers, happy you!',
+        image: require('../../Assets/onboarding7.png'),
+    },
+    {
+        key: '4',
+        title: 'Earn Rewards',
+        description: 'Earn rewards and incentives for your exceptional delivery performance. The more you deliver, the more you earn.',
+        image: require('../../Assets/onboarding6.png'),
+    },
 ];
+
 
 const { width } = Dimensions.get('window');
 

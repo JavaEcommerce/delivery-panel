@@ -4,11 +4,8 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import routes from '../Contants/routes';
 import AllOrders from '../Screens/OtherScreens/AllOrders';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import PendingOrders from '../Screens/OtherScreens/NewOrders';
-import AssignOrders from '../Screens/OtherScreens/ActiveOrders';
 import OrderHistory from '../Screens/OtherScreens/OrderHistory';
 import color from '../Contants/color';
-import ActiveOrders from '../Screens/OtherScreens/ActiveOrders';
 import NewOrders from '../Screens/OtherScreens/NewOrders';
 import OrderDetailNavi from './OrderDetailNavi';
 
@@ -52,5 +49,6 @@ export default function OrderTopNavi({ navigation }) {
         </Tab.Navigator>
     );
 }
+
 
 const styles = StyleSheet.create({});

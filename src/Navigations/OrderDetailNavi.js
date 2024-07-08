@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import routes from '../Contants/routes';
 import ActiveOrders from '../Screens/OtherScreens/ActiveOrders';
 import OrderDetailPage from '../Screens/OtherScreens/OrderDetailPage';
+import OtpSection from '../Components/OtpSection';
 
 export default function OrderDetailNavi() {
     const Stack = createStackNavigator();
@@ -28,6 +29,9 @@ export default function OrderDetailNavi() {
         >
             <Stack.Screen name={routes.ASSIGN_ORDERS} component={ActiveOrders} options={{ headerShown: false }} />
             <Stack.Screen name={routes.ORDER_DETAIL} component={OrderDetailPage} />
+            <Stack.Screen name={routes.OTP_SCREEN} component={OtpSection} options={{ headerShown: false }}/>
         </Stack.Navigator>
     );
 }
+
+

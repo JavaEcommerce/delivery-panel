@@ -39,6 +39,7 @@ function BottomTabNavi() {
                     }
                 }
             })}>
+
             <Tab.Screen name={routes.HOME} component={Home} />
             <Tab.Screen name={routes.ORDER} component={OrderTopNavi} />
             <Tab.Screen name={routes.EARNING} component={Earning} />
@@ -46,5 +47,6 @@ function BottomTabNavi() {
         </Tab.Navigator>
     );
 }
+
 
 export default BottomTabNavi;

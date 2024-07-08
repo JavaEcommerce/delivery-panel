@@ -24,7 +24,7 @@ const HomeProfileCard = ({ navigation, isHomeNavigated, profileData }) => {
                 <Box flexDir={'row'} justifyContent={"start"} alignItems={'center'}>
                   <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>
                     {profileData?.name?.slice(0, 1)?.toUpperCase() + profileData?.name?.slice(1,)}</Text>
-                  {isVerified && <Image source={verified} style={{ width: 20, height: 20, }} />}
+                  {isVerified && <Image alt='verified' source={verified} style={{ width: 20, height: 20, }} />}
                 </Box>
 
                 <Text style={{ fontSize: 14, color: 'white' }}>{profileData.email}</Text>
@@ -58,7 +58,7 @@ const HomeProfileCard = ({ navigation, isHomeNavigated, profileData }) => {
                     <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>
                       {profileData?.name?.slice(0, 1)?.toUpperCase() + profileData?.name?.slice(1,)}
                     </Text>
-                    {isVerified && <Image source={verified} style={{ width: 20, height: 20, }} />}
+                    {isVerified && <Image alt='verified' source={verified} style={{ width: 20, height: 20, }} />}
                   </Box>
 
                   <Text style={{ fontSize: 14, color: 'white' }}>
@@ -68,18 +68,17 @@ const HomeProfileCard = ({ navigation, isHomeNavigated, profileData }) => {
               </Box>
               <Box style={{ marginTop: 8, gap: 3 }}>
                 <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'white', height: 20 }}>
-                  🏠 {profileData?.houseNo ? `H No-${profileData?.houseNo}` : ''}
+                  🏠 : {profileData?.houseNo ? `H No-${profileData?.houseNo}` : ''}
                   {profileData?.flatNo ? `, F No-${profileData?.flatNo}` : ''}, {profileData?.addressLine}
                 </Text>
                 <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'white', height: 23 }}>
-                  📍 {profileData?.city?.cityName?.slice(0, 1)?.toUpperCase() + profileData?.city?.cityName?.slice(1,)}
+                  📍 : {profileData?.city?.cityName?.slice(0, 1)?.toUpperCase() + profileData?.city?.cityName?.slice(1,)}
                   , {profileData?.city?.countryId?.countryName} , {profileData?.pincode}
                 </Text>
-                <Text style={{ fontSize: 17, marginLeft: 5, color: color.white, fontWeight: 'bold' }}>
-                  📱 {profileData?.firstMobileNumber}
+                <Text style={{ fontSize: 17, marginLeft: 5, color: color.white, fontWeight: 'bold' }}>📱 : {profileData?.firstMobileNumber}
                 </Text>
                 <Text style={{ fontSize: 17, marginLeft: 5, color: color.white, fontWeight: 'bold' }}>
-                  📱 {profileData?.secondMobileNumber}
+                  📱 : {profileData?.secondMobileNumber}
                 </Text>
                 <Text style={{ fontSize: 17, marginLeft: 5, color: color.white, fontWeight: 'bold' }}>
                   🌍 : {profileData?.latitude}  Latitude

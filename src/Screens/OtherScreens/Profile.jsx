@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView,Platform,StatusBar } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import routes from '../../Contants/routes';
 import { Box, Button, Pressable, ScrollView, Skeleton, Text, View, useToast } from 'native-base';
@@ -7,7 +7,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useProfile } from '../../Context/ProfileContext';
 import HomeProfileCard from '../../Components/HomeProfileCard';
-
+// import { Ionicons } from '@expo/vector-icons';
 const Profile = ({ navigation, route }) => {
   const { profileData, loading, error, refreshProfileData } = useProfile();
 
@@ -46,7 +46,9 @@ const Profile = ({ navigation, route }) => {
     return (
       <SafeAreaView style={styles.container}>
         <HomeProfileCard navigation={navigation} profileData={profileData} />
-        <Box shadow={1} alignItems={'center'} gap={3} justifyContent={'center'}>
+        <Text style={{width:'90%' , fontSize:18,fontWeight:'700',alignSelf:'center'}}> Setup Your Profile  
+        </Text>
+        <Box shadow={1}  alignItems={'center'} gap={3} justifyContent={'center'}>
           <Pressable onPress={() => navigation.navigate(routes.PROFILE_PERSONAL_DETAILS, { profileData },)} style={styles.pressable}>
             <Text fontWeight={'bold'}>Personal Detail</Text>
             <FontAwesome name="angle-right" size={24} color="black" />
@@ -63,6 +65,10 @@ const Profile = ({ navigation, route }) => {
             <Text fontWeight={'bold'}>Contact Us</Text>
             <FontAwesome name="angle-right" size={24} color="black" />
           </Pressable>
+          <Pressable onPress={() => navigation.navigate(routes.PROFILE_TERM_CONDITION)} style={styles.pressable}>
+            <Text fontWeight={'bold'}>Return Policy</Text>
+            <FontAwesome name="angle-right" size={24} color="black" />
+          </Pressable>
           <Pressable style={styles.signOutPressable}>
             <Text fontWeight={'bold'} color={'white'}>SIGN OUT</Text>
             <Ionicons name="exit-outline" size={24} color="white" />
@@ -77,7 +83,8 @@ export default Profile;
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'space-around',
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    gap:25,
     flex: 1,
     backgroundColor: 'white',
     alignItems: 'center',
@@ -104,7 +111,7 @@ const styles = StyleSheet.create({
   signOutPressable: {
     width: '90%',
     borderRadius: 10,
-    height: '12%',
+    height:50,
     flexDirection: 'row',
     justifyContent: 'space-between',
     gap: 3,

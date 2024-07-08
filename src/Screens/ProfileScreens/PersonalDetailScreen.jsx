@@ -5,9 +5,10 @@ import { Button, Pressable, ScrollView, Text, View, } from 'native-base';
 import { apiBaseUrl, updateProfileById } from '../../Contants/api';
 import color from '../../Contants/color';
 import { Entypo } from '@expo/vector-icons';
+import { useProfile } from '../../Context/ProfileContext';
 
 export default function PersonalDetails({ route, navigation }) {
-  const { profileData } = route.params;
+  const { profileData, loading, error, refreshProfileData } = useProfile();
 
   const [name, setName] = useState(profileData.name);
   const [firstMobileNumber, setFirstMobileNumber] = useState(profileData.firstMobileNumber);

@@ -1,4 +1,4 @@
-import { View, Text,Button } from 'react-native'
+import { View, Text, Button } from 'react-native'
 import React from 'react'
 import color from '../Contants/color';
 import PersonalDetails from '../Screens/ProfileScreens/PersonalDetailScreen';
@@ -13,26 +13,26 @@ export default function ProfileNavigation() {
 
   return (
     <Stack.Navigator screenOptions={{
-        headerTintColor: color.primary,
-        headerBackTitleVisible: false,
-        headerStyle: {
-          backgroundColor: 'white',
-        },
-        headerTitleStyle: {
-          color: color.primary,
-        },
-        headerBackTitleStyle: {
-          color: color.primary,
-        }
-      }}>
-  
+      headerTintColor: color.primary,
+      headerBackTitleVisible: false,
+      headerStyle: {
+        backgroundColor: 'white',
+      },
+      headerTitleStyle: {
+        color: color.primary,
+      },
+      headerBackTitleStyle: {
+        color: color.primary,
+      }
+    }}>
       <Stack.Screen name={routes.PROFILE} component={Profile} options={{ headerShown: false }} />
 
-       <Stack.Screen name={routes.PROFILE_PERSONAL_DETAILS} component={PersonalDetails} /> 
- 
-     <Stack.Screen name={routes.PROFILE_SECURITY_SCREEN} component={SecurityScreen} /> 
+      <Stack.Screen name={routes.PROFILE_PERSONAL_DETAILS} component={PersonalDetails} />
 
-     <Stack.Screen name={routes.PROFILE_TERM_CONDITION} component={TermsandCondition} /> 
+      <Stack.Screen name={routes.PROFILE_SECURITY_SCREEN} component={SecurityScreen} />
+
+      <Stack.Screen name={routes.PROFILE_TERM_CONDITION} component={TermsandCondition} />
     </Stack.Navigator>
   )
 }
+

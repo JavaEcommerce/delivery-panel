@@ -30,7 +30,7 @@ export default ROUTES = {
   PENDINGS_ORDERS: 'New Orders',
   ASSIGN_ORDERS: 'Active Orders ',
   ORDER_HISTORY: 'History',
-
+  OTP_SCREEN : 'Otp Screen',
   EARNING: 'Earnings',
 
 };

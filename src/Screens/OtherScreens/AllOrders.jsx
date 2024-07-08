@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image, FlatList } from 'react-native';
 import { Box } from 'native-base';
 import color from '../../Contants/color';
-const profileImage = require('../../Assets/right.png');
+// const profileImage = require('../../Assets/right.png');
 
 const AllOrders = () => {
   // Sample demo data for pending orders

@@ -22,16 +22,13 @@ function AuthNavigator() {
         }
       }}
     >
-      <Stack.Screen 
-        name={"Onboarding"} 
-        component={Onboarding} 
-        options={{ headerShown: false }} 
-      />
+      <Stack.Screen name={"Onboarding"} component={Onboarding} options={{ headerShown: false }} />
       <Stack.Screen 
         name={ROUTES.LOGIN} 
         component={Login} 
         options={{ 
-          headerLeft: null
+          headerLeft: null,
+          gestureEnabled: false,
         }} 
       />
       <Stack.Screen 
@@ -45,10 +42,13 @@ function AuthNavigator() {
       <Stack.Screen 
         name={ROUTES.BOTTOM_TAB} 
         component={BottomTabNavi}
-        options={{ headerShown: false }} 
+        options={{ headerShown: false,
+          gestureEnabled: false,
+         }} 
       />
     </Stack.Navigator>
   );
 }
+
 
 export default AuthNavigator;

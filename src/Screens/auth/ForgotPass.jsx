@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, Alert } from 'react-native';
+import { StyleSheet, TextInput, View, Button, Alert } from 'react-native';
 import color from '../../Contants/color';
+import { Pressable, Text } from 'native-base';
 
 export default function ForgotPass() {
   const [email, setEmail] = useState('');
@@ -53,7 +54,9 @@ export default function ForgotPass() {
         autoCapitalize="none"
       />
       {error ? <Text style={styles.error}>{error}</Text> : null}
-      <Button title="Submit" onPress={handleForgotPassword} />
+      <Pressable p={2} mt={4} bg={color.primary} borderRadius={10} w={'90%'} justifyContent={'center'} alignItems={'center'} onPress={handleForgotPassword}>
+        <Text fontWeight={'bold'} fontSize={18} color={'white'} >Submit</Text>
+      </Pressable>
     </View>
   );
 }
@@ -63,17 +66,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 16,
-    alignItems:'center',
+    alignItems: 'center',
     backgroundColor: 'white',
   },
   title: {
     fontSize: 18,
-    fontWeight:'bold',
+    fontWeight: 'bold',
     marginBottom: 16,
     textAlign: 'center',
   },
   input: {
-    width:'90%',
+    width: '90%',
     height: 40,
     borderColor: color.primary,
     borderWidth: 1,
@@ -82,6 +85,5 @@ const styles = StyleSheet.create({
   },
   error: {
     color: 'red',
-    marginBottom: 16,
   },
 });

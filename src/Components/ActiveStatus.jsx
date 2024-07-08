@@ -8,7 +8,6 @@ const ActiveStatus = ({ profile }) => {
   const [isOnline, setIsOnline] = useState(profile.status === 'STATUS_ONLINE');
   const toggleOnline = async () => {
     setIsOnline(previousState => !previousState);
-
     const newStatus = !isOnline ? 'STATUS_ONLINE' : 'STATUS_OFFLINE';
     const payload = { status: newStatus };
 

@@ -1,4 +1,4 @@
-import { Box, Image, View, Text } from 'native-base';
+import { Box, Image, View, Text, Pressable } from 'native-base';
 import React from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -8,6 +8,7 @@ import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
+import routes from '../../Contants/routes';
 
 const paymentDetails = [
     {
@@ -65,7 +66,7 @@ export default function Earning({ navigation }) {
 
             <View style={{ backgroundColor: 'white', width: '100%', borderRadius: 20, alignItems: 'center' }}>
                 <View style={styles.toggleContainer}>
-                    <View bg={'#C2DF66'} w={'50%'} p={5} borderRadius={20} justifyContent={'center'} alignItems={'center'}>
+                    <View bg={color.primary} w={'50%'} p={5} borderRadius={20} justifyContent={'center'} alignItems={'center'}>
                         <Text fontWeight={'900'} fontSize={36} color={'white'}>
                             $ 450
                         </Text>
@@ -82,7 +83,7 @@ export default function Earning({ navigation }) {
                             <AntDesign name="star" size={24} color={color.primary} />
                             <AntDesign name="star" size={24} color={color.primary} />
                             <AntDesign name="star" size={24} color={color.primary} />
-          
+
                         </Text>
                         <View flexDir={'row'} justifyContent={'center'} alignItems={'center'} gap={2}>
                             {/* <Ionicons name="wallet" size={20} color="#6B8D00" /> */}
@@ -90,10 +91,14 @@ export default function Earning({ navigation }) {
                             <Text fontWeight={'bold'} fontSize={16} justifyContent={'center'} alignItems={'center'} color={'#6B8D00'}>
                                 Your Growth
                             </Text>
-
                         </View>
                     </View>
-
+                </View>
+                <View justifyContent={'flex-end'} flexDir={'row'} w={'85%'}>
+                    <Pressable flexDir={'row'} justifyContent={'space-between'} alignItems={'center'} bgColor={color.primary} gap={3} mt={3} borderRadius={15} p={3}>
+                        <Text fontWeight={'semibold'} color={'white'} >Withdraw Money</Text>
+                        <AntDesign name="rightcircle" size={24} color={'white'} />
+                    </Pressable>
                 </View>
 
                 <Box style={{ padding: 10, height: '100%', width: '90%' }}>
