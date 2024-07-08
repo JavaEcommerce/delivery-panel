@@ -7,7 +7,6 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useProfile } from '../../Context/ProfileContext';
 import HomeProfileCard from '../../Components/HomeProfileCard';
-// import { Ionicons } from '@expo/vector-icons';
 const Profile = ({ navigation, route }) => {
   const { profileData, loading, error, refreshProfileData } = useProfile();
 
@@ -51,7 +50,6 @@ const Profile = ({ navigation, route }) => {
           <Ionicons name="settings-outline" size={20} color="black" />
         </View>
         <ScrollView showsVerticalScrollIndicator={false}  style={{width:'90%'}}>
-
 
           <Box shadow={1} alignItems={'center'} gap={3} justifyContent={'center'}>
             <Pressable onPress={() => navigation.navigate(routes.PROFILE_PERSONAL_DETAILS, { profileData },)} style={styles.pressable}>
