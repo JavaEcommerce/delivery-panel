@@ -94,17 +94,7 @@ export default function OtpSection({ route, navigation }) {
                     maxLength={6}
                     placeholder='Enter OTP' />
                 <View flexDir={'row'} justifyContent={'space-between'}>
-                    <Pressable
-                        bg={color.primary}
-                        p={3}
-                        w={'30%'}
-                        justifyContent={'center'}
-                        alignItems={'center'}
-                        borderRadius={10}
-                        onPress={optMatching}
-                    >
-                        <Text fontWeight={'bold'} color={'white'}>Submit OTP</Text>
-                    </Pressable>
+
                     <Pressable
                         flexDir={'row'}
                         w={'30%'}
@@ -116,19 +106,34 @@ export default function OtpSection({ route, navigation }) {
                     >
 
 
-                        <View style={{ flexDirection: 'row', justifyContent: 'center', gap:5, alignItems: 'center' }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 5, alignItems: 'center' }}>
                             {isResendDisabled ? (
                                 <>
                                     <Ionicons name="time" size={24} color="gray" />
                                     <Text fontWeight={'bold'} color='gray.400'>{` ${countdown}s`}</Text>
                                 </>
                             ) : (
-                                <Text fontWeight={'bold'} color='gray.400'>Resend OTP</Text>
+                                <>
+                                    {/* <Ionicons name="time" size={24} color="gray" /> */}
+                                    <Text fontWeight={'bold'} color='gray.400'>Resend OTP</Text>
+                                </>
                             )}
                         </View>
 
                     </Pressable>
+                    <Pressable
+                        bg={color.primary}
+                        p={3}
+                        w={'30%'}
+                        justifyContent={'center'}
+                        alignItems={'center'}
+                        borderRadius={10}
+                        onPress={optMatching}
+                    >
+                        <Text fontWeight={'bold'} color={'white'}>Submit OTP</Text>
+                    </Pressable>
                 </View>
+
             </View>
         </SafeAreaView>
     );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, SafeAreaView,Platform,StatusBar } from 'react-native';
+import { StyleSheet, SafeAreaView, Platform, StatusBar } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import routes from '../../Contants/routes';
 import { Box, Button, Pressable, ScrollView, Skeleton, Text, View, useToast } from 'native-base';
@@ -46,34 +46,40 @@ const Profile = ({ navigation, route }) => {
     return (
       <SafeAreaView style={styles.container}>
         <HomeProfileCard navigation={navigation} profileData={profileData} />
-        <Text style={{width:'90%' , fontSize:18,fontWeight:'700',alignSelf:'center'}}> Setup Your Profile  
-        </Text>
-        <Box shadow={1}  alignItems={'center'} gap={3} justifyContent={'center'}>
-          <Pressable onPress={() => navigation.navigate(routes.PROFILE_PERSONAL_DETAILS, { profileData },)} style={styles.pressable}>
-            <Text fontWeight={'bold'}>Personal Detail</Text>
-            <FontAwesome name="angle-right" size={24} color="black" />
-          </Pressable>
-          <Pressable onPress={() => navigation.navigate(routes.PROFILE_SECURITY_SCREEN)} style={styles.pressable}>
-            <Text fontWeight={'bold'}>Security</Text>
-            <FontAwesome name="angle-right" size={24} color="black" />
-          </Pressable>
-          <Pressable onPress={() => navigation.navigate(routes.PROFILE_TERM_CONDITION)} style={styles.pressable}>
-            <Text fontWeight={'bold'}>Term & Conditions</Text>
-            <FontAwesome name="angle-right" size={24} color="black" />
-          </Pressable>
-          <Pressable onPress={() => navigation.navigate(routes.PROFILE_TERM_CONDITION)} style={styles.pressable}>
-            <Text fontWeight={'bold'}>Contact Us</Text>
-            <FontAwesome name="angle-right" size={24} color="black" />
-          </Pressable>
-          <Pressable onPress={() => navigation.navigate(routes.PROFILE_TERM_CONDITION)} style={styles.pressable}>
-            <Text fontWeight={'bold'}>Return Policy</Text>
-            <FontAwesome name="angle-right" size={24} color="black" />
-          </Pressable>
-          <Pressable style={styles.signOutPressable}>
-            <Text fontWeight={'bold'} color={'white'}>SIGN OUT</Text>
-            <Ionicons name="exit-outline" size={24} color="white" />
-          </Pressable>
-        </Box>
+        <View borderRadius={10} w={'90%'} flexDir={'row'} p={2} justifyContent={'space-between'} alignItems={'center'}>
+          <Text style={{ fontSize: 18, fontWeight: '700', }}> Setup Your Profile</Text>
+          <Ionicons name="settings-outline" size={20} color="black" />
+        </View>
+        <ScrollView showsVerticalScrollIndicator={false}  style={{width:'90%'}}>
+
+
+          <Box shadow={1} alignItems={'center'} gap={3} justifyContent={'center'}>
+            <Pressable onPress={() => navigation.navigate(routes.PROFILE_PERSONAL_DETAILS, { profileData },)} style={styles.pressable}>
+              <Text fontWeight={'bold'}>Personal Detail</Text>
+              <FontAwesome name="angle-right" size={24} color="black" />
+            </Pressable>
+            <Pressable onPress={() => navigation.navigate(routes.PROFILE_SECURITY_SCREEN)} style={styles.pressable}>
+              <Text fontWeight={'bold'}>Security</Text>
+              <FontAwesome name="angle-right" size={24} color="black" />
+            </Pressable>
+            <Pressable onPress={() => navigation.navigate(routes.PROFILE_TERM_CONDITION)} style={styles.pressable}>
+              <Text fontWeight={'bold'}>Term & Conditions</Text>
+              <FontAwesome name="angle-right" size={24} color="black" />
+            </Pressable>
+            <Pressable onPress={() => navigation.navigate(routes.PROFILE_TERM_CONDITION)} style={styles.pressable}>
+              <Text fontWeight={'bold'}>Contact Us</Text>
+              <FontAwesome name="angle-right" size={24} color="black" />
+            </Pressable>
+            <Pressable onPress={() => navigation.navigate(routes.PROFILE_TERM_CONDITION)} style={styles.pressable}>
+              <Text fontWeight={'bold'}>Return Policy</Text>
+              <FontAwesome name="angle-right" size={24} color="black" />
+            </Pressable>
+            <Pressable style={styles.signOutPressable}>
+              <Text fontWeight={'bold'} color={'white'}>SIGN OUT</Text>
+              <Ionicons name="exit-outline" size={24} color="white" />
+            </Pressable>
+          </Box>
+        </ScrollView>
       </SafeAreaView>
     );
   }
@@ -84,7 +90,7 @@ export default Profile;
 const styles = StyleSheet.create({
   container: {
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-    gap:25,
+    gap: 25,
     flex: 1,
     backgroundColor: 'white',
     alignItems: 'center',
@@ -99,7 +105,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   pressable: {
-    width: '90%',
+    width: '100%',
     borderRadius: 10,
     height: 60,
     flexDirection: 'row',
@@ -109,9 +115,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   signOutPressable: {
-    width: '90%',
+    width: '100%',
     borderRadius: 10,
-    height:50,
+    height: 50,
     flexDirection: 'row',
     justifyContent: 'space-between',
     gap: 3,
