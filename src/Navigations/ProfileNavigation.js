@@ -7,6 +7,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Profile from '../Screens/OtherScreens/Profile';
 import routes from '../Contants/routes';
 import TermsandCondition from '../Screens/ProfileScreens/Terms&Condition';
+import ReturnPolicy from '../Screens/ProfileScreens/ReturnPolicy';
+import ContactUs from '../Screens/ProfileScreens/ContactUs';
 
 export default function ProfileNavigation() {
   const Stack = createStackNavigator();
@@ -32,6 +34,8 @@ export default function ProfileNavigation() {
       <Stack.Screen name={routes.PROFILE_SECURITY_SCREEN} component={SecurityScreen} />
 
       <Stack.Screen name={routes.PROFILE_TERM_CONDITION} component={TermsandCondition} />
+      <Stack.Screen name={routes.PROFILE_RETURN_POLICY} component={ReturnPolicy} />
+      <Stack.Screen name={routes.PROFILE_CONTACT_US} component={ContactUs} />
     </Stack.Navigator>
   )
 }

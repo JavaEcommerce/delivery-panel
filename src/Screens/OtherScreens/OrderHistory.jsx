@@ -63,7 +63,7 @@ const OrderHistory = () => {
     );
 
     return (
-        <Box py={2} bg={'white'}>
+        <Box py={2} bg={'white'} h={"100%"} >
             <FlatList
                 data={orderItems}
                 renderItem={renderOrderItem}

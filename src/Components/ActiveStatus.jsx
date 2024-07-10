@@ -34,7 +34,7 @@ const ActiveStatus = ({ profile }) => {
 
     <View style={{ justifyContent: 'space-between', width: '90%', flexDirection: 'row', alignItems: 'center', marginBottom: 20, marginTop: 20, gap: 10 }}>
       <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-        <Text style={{ fontWeight: 700 }}>{isOnline ? 'Hey 👋🏻' : 'Bye 👋🏻'}, {profile.name}</Text>
+        <Text  style={{ fontWeight: 700 }}>{isOnline ? 'Hey 👋🏻' : 'Bye 👋🏻'}, {profile.name}</Text>
       </Box>
       <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
         <Text style={{ fontWeight: 700 }}>{isOnline ? 'Online' : 'Offline'}</Text>

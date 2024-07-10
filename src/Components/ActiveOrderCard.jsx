@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.primary,
     padding: 5,
     width: '30%',
-    borderRadius: 15,
+    borderRadius: 20,
   },
   orderIdText: {
     color: 'white',

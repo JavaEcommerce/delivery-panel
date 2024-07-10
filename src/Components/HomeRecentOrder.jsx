@@ -41,10 +41,11 @@ const HomeRecentOrder = ({ item }) => {
                         borderColor: color.primary,
                         width: '90%',
                         marginBottom: 15,
-                        borderRadius: 10,
+                        borderRadius:10,
                         justifyContent: 'center',
-                        alignSelf: 'center'
+                        alignSelf: 'center',                        
                     }}
+                    
                 >
                     <>
                         <Box style={{ padding: 10, width: '100%', flexDirection: 'column', justifyContent: 'space-between', borderRadius: 0 }}>

@@ -1,9 +1,12 @@
-import React, { useState, useRef } from 'react';
-import { StyleSheet, Dimensions, } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { StyleSheet, Dimensions } from 'react-native';
 import { Button, Image, FlatList, View, Text, Pressable } from 'native-base';
 import { LinearGradient } from 'expo-linear-gradient';
 import ROUTES from '../../Contants/routes';
 import color from '../../Contants/color';
+import NetInfo from "@react-native-community/netinfo";
+import NoInternet from '../../Components/NoInternet';
+
 const onboardingData = [
     {
         key: '1',
@@ -31,12 +34,21 @@ const onboardingData = [
     },
 ];
 
-
 const { width } = Dimensions.get('window');
 
 const Onboarding = ({ navigation }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const flatListRef = useRef(null);
+    const [isConnected, setIsConnected] = useState(true); // Default to true assuming initial connection
+
+    useEffect(() => {
+        const unsubscribe = NetInfo.addEventListener(state => {
+            setIsConnected(state.isConnected);
+        });
+        return () => {
+            unsubscribe();
+        };
+    }, []);
 
     const renderIndicators = () => (
         <View style={styles.indicatorContainer}>
@@ -68,33 +80,42 @@ const Onboarding = ({ navigation }) => {
 
     return (
         <>
-        <LinearGradient
-            colors={['#9ACA00', '#C2DF66', '#ffff']}
-            style={styles.container}
-        >
-            <FlatList
-                ref={flatListRef}
-                data={onboardingData}
-                renderItem={renderItem}
-                horizontal
-                pagingEnabled
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={(item) => item.key}
-                onScroll={(e) => {
-                    const index = Math.floor(e.nativeEvent.contentOffset.x / width);
-                    setCurrentIndex(index);
-                }}
-            />
-            {renderIndicators()}
-            <View justifyContent={'space-between'}  m={10} flexDir={'row'} borderRadius={15} borderWidth={1} borderColor={color.primary}>
-                <Pressable p={2} justifyContent={'center'} alignItems={'center'} onPress={() => navigation.navigate(ROUTES.REGISTER)} w={'40%'} borderRadius={15} bg={color.primary}>
-                    <Text fontSize={18} fontWeight={'semibold'} color={'white'}>Sign Up</Text>
-                </Pressable>
-                <Pressable justifyContent={'center'} alignItems={'center'} onPress={() => navigation.navigate(ROUTES.LOGIN)} w={'40%'} borderRadius={15}>
-                    <Text fontSize={18} fontWeight={'semibold'} color={color.primary}>Log In</Text>
-                </Pressable>
-            </View>
-        </LinearGradient></>
+            {!isConnected ? (
+                <NoInternet/>
+            ) : (<>
+
+                <LinearGradient
+                    colors={['#9ACA00', '#C2DF66', '#ffff']}
+                    style={styles.container}
+                >
+                    <FlatList
+                        ref={flatListRef}
+                        data={onboardingData}
+                        renderItem={renderItem}
+                        horizontal
+                        pagingEnabled
+                        showsHorizontalScrollIndicator={false}
+                        keyExtractor={(item) => item.key}
+                        onScroll={(e) => {
+                            const index = Math.floor(e.nativeEvent.contentOffset.x / width);
+                            setCurrentIndex(index);
+                        }}
+                    />
+                    {renderIndicators()}
+                    <View justifyContent={'space-between'} m={10} flexDir={'row'} borderRadius={15} borderWidth={1} borderColor={color.primary}>
+                        <Pressable p={2} justifyContent={'center'} alignItems={'center'} onPress={() => navigation.navigate(ROUTES.REGISTER)} w={'40%'} borderRadius={15} bg={color.primary}>
+                            <Text fontSize={18} fontWeight={'semibold'} color={'white'}>Sign Up</Text>
+                        </Pressable>
+                        <Pressable justifyContent={'center'} alignItems={'center'} onPress={() => navigation.navigate(ROUTES.LOGIN)} w={'40%'} borderRadius={15}>
+                            <Text fontSize={18} fontWeight={'semibold'} color={color.primary}>Log In</Text>
+                        </Pressable>
+                    </View>
+                </LinearGradient>
+
+
+            </>)}
+
+        </>
     );
 };
 
@@ -103,7 +124,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
-
     },
     itemContainer: {
         width,
@@ -120,8 +140,8 @@ const styles = StyleSheet.create({
     },
     description: {
         color: '#666666',
-        fontWeight:'500',
-        width:'80%',
+        fontWeight: '500',
+        width: '80%',
         fontSize: 14,
         textAlign: 'center',
         marginTop: 5,
@@ -142,6 +162,17 @@ const styles = StyleSheet.create({
     },
     inactiveIndicator: {
         backgroundColor: '#b2b2b2',
+    },
+    noInternetContainer: {
+        flex: 1,
+        height: '100%',
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    noInternetText: {
+        color: 'Black',
+        fontWeight: 'bold',
     },
 });
 

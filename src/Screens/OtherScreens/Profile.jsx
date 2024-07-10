@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, SafeAreaView, Platform, StatusBar } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import routes from '../../Contants/routes';
-import { Box, Button, Pressable, ScrollView, Skeleton, Text, View, useToast } from 'native-base';
+import { Box, Pressable, ScrollView, Skeleton, Text, View, useToast } from 'native-base';
 import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useProfile } from '../../Context/ProfileContext';
@@ -39,6 +39,7 @@ const Profile = ({ navigation, route }) => {
     return (
       <SafeAreaView style={styles.errorContainer}>
         <Text>No profile data available.</Text>
+        
       </SafeAreaView>
     );
   } else {
@@ -64,11 +65,11 @@ const Profile = ({ navigation, route }) => {
               <Text fontWeight={'bold'}>Term & Conditions</Text>
               <FontAwesome name="angle-right" size={24} color="black" />
             </Pressable>
-            <Pressable onPress={() => navigation.navigate(routes.PROFILE_TERM_CONDITION)} style={styles.pressable}>
+            <Pressable onPress={() => navigation.navigate(routes.PROFILE_CONTACT_US)} style={styles.pressable}>
               <Text fontWeight={'bold'}>Contact Us</Text>
               <FontAwesome name="angle-right" size={24} color="black" />
             </Pressable>
-            <Pressable onPress={() => navigation.navigate(routes.PROFILE_TERM_CONDITION)} style={styles.pressable}>
+            <Pressable onPress={() => navigation.navigate(routes.PROFILE_RETURN_POLICY)} style={styles.pressable}>
               <Text fontWeight={'bold'}>Return Policy</Text>
               <FontAwesome name="angle-right" size={24} color="black" />
             </Pressable>

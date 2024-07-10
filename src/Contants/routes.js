@@ -23,6 +23,8 @@ export default ROUTES = {
   PROFILE_PERSONAL_DETAILS: 'Personal Details',
   PROFILE_SECURITY_SCREEN: 'Security',
   PROFILE_TERM_CONDITION: 'Term and Condition',
+  PROFILE_RETURN_POLICY: 'Return Policy',
+  PROFILE_CONTACT_US: 'Contact Us',
 
   ORDER_DETAIL: 'Order Detail',
   ORDER: 'Orders',
