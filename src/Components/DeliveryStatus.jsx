@@ -146,7 +146,6 @@ import {
   TextInput,
   Actionsheet,
 } from "native-base";
-import { Platform } from "react-native";
 import { StyleSheet } from "react-native";
 import color from "../Contants/color";
 import routes from "../Contants/routes";

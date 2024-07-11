@@ -1,11 +1,16 @@
-import { React, useRef } from 'react';
+import { React, useContext, useRef } from 'react';
 import { ScrollView, View, Image, Text, TextInput, Animated, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Importing Ionicons from the Expo Icons library
 import routes from '../../Contants/routes';
 import COLORS from '../../Contants/color';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import CheckInternetProvider, { useCheckInternet } from '../../Context/CheckInternet';
+import NoInternet from '../../Components/NoInternet';
 const Login = ({ navigation }) => {
+    const {
+        isConnected
+    } = useCheckInternet()
+
     const imageTranslateX = useRef(new Animated.Value(-30)).current;
 
     const handleLoginPress = () => {
@@ -21,13 +26,11 @@ const Login = ({ navigation }) => {
 
 
     return (
-        // <LinearGradient
-        //     colors={['#9ACA00', '#C2DF66', '#ffff']}
-        //     style={{styles.container}}
-        // >
+        <>
+
             <View style={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', }}>
 
-                <Animated.View style={{ transform: [{ translateX: imageTranslateX }], width: '50%', height: '30%', position: 'relative',}}>
+                <Animated.View style={{ transform: [{ translateX: imageTranslateX }], width: '50%', height: '30%', position: 'relative', }}>
                     <Image
                         source={require('../../Assets/deliveryPng.png')}
                         style={{ width: '100%', height: '100%', }}
@@ -69,9 +72,12 @@ const Login = ({ navigation }) => {
                     </View>
                 </View>
             </View>
-        // </LinearGradient>
-    );
+
+        </>
+    )
 }
+
+
 
 const styles = {
     inputContainer: {

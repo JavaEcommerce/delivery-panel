@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { StyleSheet, TextInput, View, Button, Alert } from 'react-native';
 import color from '../../Contants/color';
 import { Pressable, Text } from 'native-base';
-
+import { useCheckInternet } from '../../Context/CheckInternet';
+import NoInternet from '../../Components/NoInternet';
 export default function ForgotPass() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
-
+  const { isConnected } = useCheckInternet()
   const validateEmail = (email) => {
 
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -43,21 +44,26 @@ export default function ForgotPass() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Forgot Password</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      {error ? <Text style={styles.error}>{error}</Text> : null}
-      <Pressable p={2} mt={4} bg={color.primary} borderRadius={10} w={'90%'} justifyContent={'center'} alignItems={'center'} onPress={handleForgotPassword}>
-        <Text fontWeight={'bold'} fontSize={18} color={'white'} >Submit</Text>
-      </Pressable>
-    </View>
+    <>
+
+      <View style={styles.container}>
+        <Text style={styles.title}>Forgot Password</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your email"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        {error ? <Text style={styles.error}>{error}</Text> : null}
+        <Pressable p={2} mt={4} bg={color.primary} borderRadius={10} w={'90%'} justifyContent={'center'} alignItems={'center'} onPress={handleForgotPassword}>
+          <Text fontWeight={'bold'} fontSize={18} color={'white'} >Submit</Text>
+        </Pressable>
+      </View>
+      
+    </>
+
   );
 }
 
