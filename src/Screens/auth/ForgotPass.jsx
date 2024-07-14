@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, TextInput, View, Button, Alert } from 'react-native';
 import color from '../../Contants/color';
 import { Pressable, Text } from 'native-base';
+import typography from '../../Contants/fonts';
 
 export default function ForgotPass() {
   const [email, setEmail] = useState('');
@@ -55,7 +56,7 @@ export default function ForgotPass() {
       />
       {error ? <Text style={styles.error}>{error}</Text> : null}
       <Pressable p={2} mt={4} bg={color.primary} borderRadius={10} w={'90%'} justifyContent={'center'} alignItems={'center'} onPress={handleForgotPassword}>
-        <Text fontWeight={'bold'} fontSize={18} color={'white'} >Submit</Text>
+        <Text fontWeight={typography.bold.fontWeight} fontSize={typography.heading.fontSize}  color={'white'} >Submit</Text>
       </Pressable>
     </View>
   );
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: typography.bold.fontWeight,
     marginBottom: 16,
     textAlign: 'center',
   },

@@ -6,6 +6,7 @@ import COLORS from '../../Contants/color';
 import DatePicker from 'react-native-modern-datepicker'
 import { ScrollView } from 'native-base';
 import { useProfile } from '../../Context/ProfileContext';
+import typography from '../../Contants/fonts';
 const Registration = ({ navigation }) => {
     const { addDeliveryPerson } = useProfile();
     const [dob, setDob] = useState('');
@@ -147,9 +148,9 @@ const Registration = ({ navigation }) => {
             </View>
           </View>
           <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 20, borderRadius: 10 }}>
-            <Text>Already have an account?</Text>
+            <Text style={{fontSize:typography.subtitle.fontSize}}>Already have an account?</Text>
             <TouchableOpacity onPress={() => navigation.navigate(routes.LOGIN)}>
-              <Text style={{ color: COLORS.primary, fontWeight: 'bold', marginLeft: 10 }}>Login</Text>
+              <Text style={{ color: COLORS.primary, fontWeight: 'bold', marginLeft: 10, fontSize:typography.subtitle.fontSize}}>Login</Text>
             </TouchableOpacity>
           </View>
         </View>

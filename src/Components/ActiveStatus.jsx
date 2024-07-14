@@ -3,13 +3,19 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Box, Switch } from 'native-base';
 import color from '../Contants/color';
 import { apiBaseUrl, updateStatusByProfileId } from '../Contants/api';
+import typography from '../Contants/fonts';
 
 const ActiveStatus = ({ profile }) => {
-  const [isOnline, setIsOnline] = useState(profile.status === 'STATUS_ONLINE');
+
+
+  const [isOnline, setIsOnline] = useState(profile.status =='STATUS_ONLINE');
+  const [disable,setDisable] = useState(false)
+  
   const toggleOnline = async () => {
-    setIsOnline(previousState => !previousState);
-    const newStatus = !isOnline ? 'STATUS_ONLINE' : 'STATUS_OFFLINE';
+    const newStatus = isOnline ? 'STATUS_OFFLINE' : 'STATUS_ONLINE';
     const payload = { status: newStatus };
+    // setTimeout(()=>setIsOnline(previousState => !previousState),2000)
+    setIsOnline(previousState => !previousState)
 
     try {
       const response = await fetch(`${apiBaseUrl}${updateStatusByProfileId}3`, {
@@ -18,30 +24,45 @@ const ActiveStatus = ({ profile }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
+       
       });
+      
+      console.log(payload.status,"status")
+      // console.log(isOnline,'BKJBSCL')
 
       if (!response.ok) {
         throw new Error('Failed to update status');
-      }
 
+      }
+      
+
+      // setIsOnline(previousState => !previousState)
+      setDisable(true)      
     } catch (error) {
       console.error('Error updating status:', error.message);
-      setIsOnline(previousState => !previousState);
+      
+    }finally {
+      
+      setTimeout(() => setDisable(false), 3000); // Re-enable the switch after 2 seconds
     }
+    
+   
   };
-
+  
+    
   return (
 
     <View style={{ justifyContent: 'space-between', width: '90%', flexDirection: 'row', alignItems: 'center', marginBottom: 20, marginTop: 20, gap: 10 }}>
       <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-        <Text  style={{ fontWeight: 700 }}>{isOnline ? 'Hey 👋🏻' : 'Bye 👋🏻'}, {profile.name}</Text>
+        <Text  style={{ fontWeight: typography.bold.fontWeight,fontSize: typography.body.fontSize }}>{isOnline ? 'Hey 👋🏻' : 'Bye 👋🏻'}, {profile.name}</Text>
       </Box>
       <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-        <Text style={{ fontWeight: 700 }}>{isOnline ? 'Online' : 'Offline'}</Text>
+        <Text style={{ fontWeight: typography.bold.fontWeight,fontSize: typography.body.fontSize }}>{isOnline ? 'Online' : 'Offline'}</Text>
         <Switch
           value={isOnline}
           onValueChange={toggleOnline}
-          trackColor={{ false: 'green', true: color.primary }}
+          trackColor={{ false: 'gray', true: color.primary }}
+          isDisabled={disable}
         />
       </Box>
     </View>
@@ -49,3 +70,6 @@ const ActiveStatus = ({ profile }) => {
 }
 
 export default ActiveStatus;
+
+
+

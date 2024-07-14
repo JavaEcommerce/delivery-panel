@@ -1,5 +1,6 @@
 import { View, Text ,StyleSheet} from 'react-native'
 import React from 'react'
+import typography from '../Contants/fonts';
 
 export default function NoInternet() {
     return (
@@ -22,6 +23,6 @@ const styles = StyleSheet.create({
     },
     noInternetText: {
         color: 'Black',
-        fontWeight: 'bold',
+        fontWeight: typography.heading.fontWeight,
     },
 });

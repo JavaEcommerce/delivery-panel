@@ -3,6 +3,8 @@ import React from 'react'
 import color from '../Contants/color';
 import { Box } from 'native-base';
 import routes from '../Contants/routes';
+import { Platform } from 'react-native';
+import typography from '../Contants/fonts';
 
 export default function ActiveOrderCard({ item, navigation }) {
   const parseDateTime = (dateTimeString) => {
@@ -28,13 +30,13 @@ export default function ActiveOrderCard({ item, navigation }) {
               </Box>
             </Box>
             <Box style={styles.orderDetails}>
-              <Text style={styles.orderAddress} numberOfLines={4}>
+              <Text style={{fontSize:typography.small.fontSize,}} numberOfLines={4}>
                 🏠 : {item?.customerAddress?.houseNo ? `H-${item?.customerAddress?.houseNo}` : ''}
                 {item?.customerAddress?.flatNo ? `, F-${item?.customerAddress?.flatNo},` : ''}
                 {item?.customerAddress?.addressLine1}
               </Text>
-              <Text style={styles.orderDate}>🗓️ : {orderDate}</Text>
-              <Text style={styles.orderPhone}>📱 : {item?.customerAddress?.pocPhoneNo}</Text>
+            <Text style={{fontSize:typography.small.fontSize,}}>🗓️ : {orderDate}</Text>
+              <Text style={{fontSize:typography.small.fontSize,}}>📱 : {item?.customerAddress?.pocPhoneNo}</Text>
             </Box>
             <Box style={styles.orderAmountContainer}>
               <Text style={styles.orderAmountLabel}> Total Amount :</Text>
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
     borderColor: color.primary,
     width: '90%',
     marginBottom: 15,
-    borderRadius: 20,
+    borderRadius: Platform=='IOS'? 20:10,
     justifyContent: 'center',
     alignSelf: 'center',
   },
@@ -81,14 +83,20 @@ const styles = StyleSheet.create({
   orderIdText: {
     color: 'white',
     textAlign: 'center',
-    fontweight: 'bold',
+    fontWeight: typography.h1.fontWeight,
+    fontSize:typography.small.fontSize,
+    
+    
   },
 
 
   orderDetails: {
     gap: 10,
     marginTop: 10,
+    
+
   },
+ 
 
 
 
@@ -100,10 +108,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   orderAmountLabel: {
-    fontSize: 18,
+    fontSize:typography.heading.fontSize,
     color: 'black',
     textAlign: 'center',
-    fontweight: 'bold',
+    fontWeight: typography.bold.fontWeight,
   },
   orderAmount: {
     width: '40%',
@@ -115,7 +123,9 @@ const styles = StyleSheet.create({
   orderAmountText: {
     color: 'white',
     textAlign: 'center',
-    fontweight: 'bold',
+    fontWeight: typography.bold.fontWeight,
+    fontSize:typography.heading.fontSize,
+    
   },
   loader: {
     marginVertical: 10,

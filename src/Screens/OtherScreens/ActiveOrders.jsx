@@ -9,6 +9,7 @@ import { apiBaseUrl, getAllActiveOrders } from '../../Contants/api';
 import { useFocusEffect } from '@react-navigation/native';
 import ActiveOrderCard from '../../Components/ActiveOrderCard';
 import LottieView from 'lottie-react-native';
+import typography from '../../Contants/fonts';
 const activeOrderImg = require('../../Assets/ActiveOrder.jpg');
 const deliveryPersonId = 3;
 
@@ -122,7 +123,7 @@ const ActiveOrders = ({ navigation }) => {
           autoPlay
           loop >
         </LottieView>
-        <Text style={{fontWeight:'500',fontSize:16}}>No order right now 📦.</Text>
+        <Text style={{fontWeight:typography.heading.fontWeight,fontSize:typography.heading.fontSize}}>No order right now 📦.</Text>
       </View>
     );
   }
@@ -180,6 +181,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+
   },
 });
 

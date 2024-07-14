@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { NativeBaseProvider, Box, Accordion, Text, Button, ScrollView } from 'native-base';
 import color from '../../Contants/color';
+import typography from '../../Contants/fonts';
 
 const TermsAndCondition = () => {
 
@@ -24,7 +25,7 @@ const TermsAndCondition = () => {
                             {dataArray.map((item, index) => (
                                 <Accordion.Item key={index}>
                                     <Accordion.Summary style={{ backgroundColor: color.primary }}>
-                                        <Text fontWeight={'bold'} fontSize="lg" color={'white'}>{item.title}</Text>
+                                        <Text fontWeight={typography.bold.fontWeight} fontSize={typography.mainHeading.fontSize} color={'white'}>{item.title}</Text>
                                     </Accordion.Summary>
                                     <Accordion.Details>
                                         <Text py={2}>{item.content}</Text>

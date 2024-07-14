@@ -6,6 +6,7 @@ import ROUTES from '../../Contants/routes';
 import color from '../../Contants/color';
 import NetInfo from "@react-native-community/netinfo";
 import NoInternet from '../../Components/NoInternet';
+import typography from '../../Contants/fonts';
 
 const onboardingData = [
     {
@@ -104,10 +105,10 @@ const Onboarding = ({ navigation }) => {
                     {renderIndicators()}
                     <View justifyContent={'space-between'} m={10} flexDir={'row'} borderRadius={15} borderWidth={1} borderColor={color.primary}>
                         <Pressable p={2} justifyContent={'center'} alignItems={'center'} onPress={() => navigation.navigate(ROUTES.REGISTER)} w={'40%'} borderRadius={15} bg={color.primary}>
-                            <Text fontSize={18} fontWeight={'semibold'} color={'white'}>Sign Up</Text>
+                            <Text fontSize={ typography.heading.fontSize} fontWeight={typography.bold.fontWeight} color={'white'}>Sign Up</Text>
                         </Pressable>
                         <Pressable justifyContent={'center'} alignItems={'center'} onPress={() => navigation.navigate(ROUTES.LOGIN)} w={'40%'} borderRadius={15}>
-                            <Text fontSize={18} fontWeight={'semibold'} color={color.primary}>Log In</Text>
+                            <Text fontSize={ typography.heading.fontSize} fontWeight={typography.bold.fontWeight} color={color.primary}>Log In</Text>
                         </Pressable>
                     </View>
                 </LinearGradient>
@@ -133,16 +134,16 @@ const styles = StyleSheet.create({
     },
     title: {
         paddingTop: 20,
-        fontSize: 28,
-        fontWeight: 'bold',
+        fontSize: typography.h1.fontSize,
+        fontWeight: typography.h1.fontWeight,
         textAlign: 'center',
         color: '#6B8D00',
     },
     description: {
         color: '#666666',
-        fontWeight: '500',
+        fontWeight: typography.heading.fontWeight,
         width: '80%',
-        fontSize: 14,
+        fontSize:  typography.subtitle.fontSize,
         textAlign: 'center',
         marginTop: 5,
     },
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
     },
     noInternetText: {
         color: 'Black',
-        fontWeight: 'bold',
+        fontWeight: typography.bold.fontWeight,
     },
 });
 
