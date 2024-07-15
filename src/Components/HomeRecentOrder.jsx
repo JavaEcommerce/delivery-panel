@@ -61,9 +61,9 @@ const HomeRecentOrder = ({ item }) => {
                             </Box>
                             <Box style={{ gap: 5, marginTop: 10 }}>
 
-                                <Text style={{ color: 'black', fontWeight: typography.small.fontWeight , fontSize:typography.small.fontSize}}>Time: {orderTime}, Date: {orderDate}</Text>
+                                <Text style={{ color: 'black', fontWeight: typography.small.fontWeight , fontSize:typography.subtitle.fontSize}}>Time: {orderTime}, Date: {orderDate}</Text>
 
-                                <Text style={{ color: 'black', fontWeight: typography.small.fontWeight,fontSize:typography.small.fontSize }}>Address : {item.order.customerAddress.addressLine1}</Text>
+                                <Text style={{ color: 'black', fontWeight: typography.small.fontWeight,fontSize:typography.subtitle.fontSize }}>Address : {item.order.customerAddress.addressLine1}</Text>
                             </Box>
                             <Box style={{ flexDirection: "column", gap: 5 }}>
                                 <Box style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", margin: 2, }}>

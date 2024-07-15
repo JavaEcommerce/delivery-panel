@@ -30,13 +30,13 @@ export default function ActiveOrderCard({ item, navigation }) {
               </Box>
             </Box>
             <Box style={styles.orderDetails}>
-              <Text style={{fontSize:typography.small.fontSize,}} numberOfLines={4}>
+              <Text style={{fontSize:typography.subtitle.fontSize,}} numberOfLines={4}>
                 🏠 : {item?.customerAddress?.houseNo ? `H-${item?.customerAddress?.houseNo}` : ''}
                 {item?.customerAddress?.flatNo ? `, F-${item?.customerAddress?.flatNo},` : ''}
                 {item?.customerAddress?.addressLine1}
               </Text>
-            <Text style={{fontSize:typography.small.fontSize,}}>🗓️ : {orderDate}</Text>
-              <Text style={{fontSize:typography.small.fontSize,}}>📱 : {item?.customerAddress?.pocPhoneNo}</Text>
+            <Text style={{fontSize:typography.subtitle.fontSize,}}>🗓️ : {orderDate}</Text>
+              <Text style={{fontSize:typography.subtitle.fontSize,}}>📱 : {item?.customerAddress?.pocPhoneNo}</Text>
             </Box>
             <Box style={styles.orderAmountContainer}>
               <Text style={styles.orderAmountLabel}> Total Amount :</Text>
@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
     fontWeight: typography.bold.fontWeight,
+
   },
   orderAmount: {
     width: '40%',
