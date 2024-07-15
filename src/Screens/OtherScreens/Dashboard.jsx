@@ -1,4 +1,4 @@
-import { } from 'react-native'
+import { View, Text } from 'react-native'
 import React from 'react'
 import { BarChart } from "react-native-gifted-charts";
 import { View, Text } from 'native-base';

@@ -9,6 +9,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import routes from '../../Contants/routes';
+import typography from '../../Contants/fonts';
 
 const paymentDetails = [
     {
@@ -47,8 +48,8 @@ renderItems = ({ item }) => {
     return (
         <View borderWidth={1} borderColor={'#6B8D00'} mt={2} borderRadius={20} p={3} flexDir={'row'} justifyContent={'space-between'} alignItems={'center'}>
             <View w={'80%'}>
-                <Text fontSize={16} fontWeight={'semibold'} color={color.primary}>Time: {item.time}</Text>
-                <Text fontSize={14} color={color.primary}>Delivery Address: {item.deliveryAddress}</Text>
+                <Text fontSize={typography.h6.fontSize} fontWeight={typography.heading.fontWeight} color={color.primary}>Time: {item.time}</Text>
+                <Text fontSize={typography.subtitle.fontSize} color={color.primary}>Delivery Address: {item.deliveryAddress}</Text>
             </View>
             {item.status === 'Completed' ? (
                 <Feather name="check-circle" size={26} color={color.primary} />
@@ -67,19 +68,19 @@ export default function Earning({ navigation }) {
             <View style={{ backgroundColor: 'white', width: '100%', borderRadius: 20, alignItems: 'center' }}>
                 <View style={styles.toggleContainer}>
                     <View bg={color.primary} w={'50%'} p={5} borderRadius={20} justifyContent={'center'} alignItems={'center'}>
-                        <Text fontWeight={'900'} fontSize={36} color={'white'}>
+                        <Text fontWeight={typography.h1.fontWeight} fontSize={typography.h1.fontSize} color={'white'}>
                             $ 450
                         </Text>
                         <View flexDir={'row'} justifyContent={'center'} alignItems={'center'} gap={2}>
                             <Ionicons name="wallet" size={20} color="white" />
-                            <Text fontWeight={'bold'} fontSize={16} justifyContent={'center'} alignItems={'center'} color={'white'}>
+                            <Text fontWeight={typography.bold.fontWeight} fontSize={typography.heading.fontSize} justifyContent={'center'} alignItems={'center'} color={'white'}>
                                 Your Income
                             </Text>
 
                         </View>
                     </View>
                     <View bg={'white'} w={'50%'} p={5} borderRadius={20} justifyContent={'center'} alignItems={'center'}>
-                        <Text fontWeight={'900'} fontSize={36} color={color.primary}>
+                        <Text fontWeight={typography.h1.fontWeight} fontSize={36} color={color.primary}>
                             <AntDesign name="star" size={24} color={color.primary} />
                             <AntDesign name="star" size={24} color={color.primary} />
                             <AntDesign name="star" size={24} color={color.primary} />
@@ -88,7 +89,7 @@ export default function Earning({ navigation }) {
                         <View flexDir={'row'} justifyContent={'center'} alignItems={'center'} gap={2}>
                             {/* <Ionicons name="wallet" size={20} color="#6B8D00" /> */}
                             <Fontisto name="smiley" size={20} color="#6B8D00" />
-                            <Text fontWeight={'bold'} fontSize={16} justifyContent={'center'} alignItems={'center'} color={'#6B8D00'}>
+                            <Text fontWeight={typography.bold.fontWeight} fontSize={typography.heading.fontSize} justifyContent={'center'} alignItems={'center'} color={'#6B8D00'}>
                                 Your Growth
                             </Text>
                         </View>
@@ -96,7 +97,7 @@ export default function Earning({ navigation }) {
                 </View>
                 <View justifyContent={'flex-end'} flexDir={'row'} w={'85%'}>
                     <Pressable flexDir={'row'} justifyContent={'space-between'} alignItems={'center'} bgColor={color.primary} gap={3} mt={3} borderRadius={15} p={3}>
-                        <Text fontWeight={'semibold'} color={'white'} >Withdraw Money</Text>
+                        <Text fontWeight={typography.heading.fontWeight} color={'white'} >Withdraw Money</Text>
                         <AntDesign name="rightcircle" size={24} color={'white'} />
                     </Pressable>
                 </View>
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
         elevation: 3,
     },
     paymentDetailsText: {
-        fontSize: 16,
+        fontSize: typography.h6.fontSize,
         color: 'black',
         marginBottom: 5,
     },

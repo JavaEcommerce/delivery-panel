@@ -10,10 +10,17 @@ export default function OrderDetailCard(getData) {
         <>
             <ScrollView style={{ width: '100%', }}>
                 <View alignItems={'center'} alignSelf={'center'} justifyContent={'space-between'} w={'90%'} mt={7} gap={5}>
+<<<<<<< HEAD
                     {data?.productItemsList?.map((item, index) => {
                         return (
                             <>
                                 <View key={index} borderBottomWidth={1} borderBottomColor={'gray.300'} w={'100%'} flexDir={'row'} justifyContent={'space-between'} py={3} >
+=======
+                    {data?.productItemsList?.map((item,i) => {
+                        return (
+                            <>
+                                <View key={i} borderBottomWidth={1} borderBottomColor={'gray.300'} w={'100%'} flexDir={'row'} justifyContent={'space-between'} py={3} >
+>>>>>>> 6894b8c1a65258bb0478a7ed218865c1cbe66283
                                     <View gap={2}>
                                         <Text color={'black'} fontSize={'xl'} fontWeight={'semibold'}>{item.itemName}</Text>
                                         <Text fontSize={'xl'} fontWeight={'normal'}>Per Item Price : {item.perItemPrice}  x {item.itemQuantity}</Text>

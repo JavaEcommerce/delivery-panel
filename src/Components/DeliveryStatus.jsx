@@ -154,6 +154,7 @@ import { apiBaseUrl, updateNewOrdersStatus } from '../Contants/api';
 import axios from 'axios';
 import { TouchableOpacity, Alert } from "react-native"
 import OtpSection from "./OtpSection";
+import typography from "../Contants/fonts";
 export default function DeliveryStatus({ item, navigation }) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -208,7 +209,7 @@ export default function DeliveryStatus({ item, navigation }) {
           selectedItemLabelStyle={styles.selectedValue}
         />
         <TouchableOpacity style={{ padding: 14, borderRadius: 10, backgroundColor: color.primary }} onPress={() => handleUpdate(item.orderAssignmentId)}>
-          <Text style={{ color: color.white }}>Update Status</Text>
+          <Text style={{ color: color.white,fontSize:typography.body.fontSize, }}>Update Status</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -225,7 +226,7 @@ const styles = StyleSheet.create({
     marginVertical: 20
   },
   header: {
-    fontSize: 20,
+    fontSize: typography.heading.fontSize,
     marginBottom: 20,
   },
   dropdownContainer: {
@@ -242,8 +243,8 @@ const styles = StyleSheet.create({
   },
   selectedValue: {
     marginTop: 20,
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: typography.body.fontSize,
+    fontWeight: typography.bold.fontWeight ,
     color: color.primary,
     height: '100%'
   },

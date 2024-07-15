@@ -9,6 +9,7 @@ import { apiBaseUrl, authenticateOTP, updateNewOrdersStatus } from '../Contants/
 import routes from '../Contants/routes';
 import LottieView from 'lottie-react-native';
 import { Ionicons } from '@expo/vector-icons';
+import typography from '../Contants/fonts';
 
 const { width, height } = Dimensions.get('window');
 
@@ -82,12 +83,12 @@ export default function OtpSection({ route, navigation }) {
             </View>
             <View bg={'white'} justifyContent={'center'} alignItems={'center'} gap={5} >
                 <View flexDir={'row'} gap={2}>
-                    <Text textAlign={'center'} fontWeight={'bold'} fontSize={'md'}>Enter</Text>
-                    <Text textAlign={'center'} fontWeight={'bold'} fontSize={'md'} color={color.primary}>OTP</Text>
-                    <Text textAlign={'center'} fontWeight={'bold'} fontSize={'md'}>to Confirm Order</Text>
+                    <Text textAlign={'center'} fontWeight={typography.heading.fontWeight} fontSize={typography.heading.fontSize}>Enter</Text>
+                    <Text textAlign={'center'} fontWeight={typography.heading.fontWeight} fontSize={typography.heading.fontSize} color={color.primary}>OTP</Text>
+                    <Text textAlign={'center'} fontWeight={typography.heading.fontWeight} fontSize={typography.heading.fontSize}>to Confirm Order</Text>
                 </View>
                 <TextInput
-                    style={{ backgroundColor: '#f2f2f2', width: '60%', height: 60, padding: 20, color: color.primary, borderRadius: 10 }}
+                    style={{ backgroundColor: '#f2f2f2', width: '60%', height: 60, padding: 20, color: color.primary, borderRadius: 10, }}
                     inputMode="numeric"
                     placeholderTextColor={'gray'}
                     keyboardType="numeric"
@@ -111,12 +112,12 @@ export default function OtpSection({ route, navigation }) {
                             {isResendDisabled ? (
                                 <>
                                     <Ionicons name="time" size={24} color="gray" />
-                                    <Text fontWeight={'bold'} color='gray.400'>{` ${countdown}s`}</Text>
+                                    <Text fontWeight={typography.bold.fontWeight} color='gray.400'>{` ${countdown}s`}</Text>
                                 </>
                             ) : (
                                 <>
                                     {/* <Ionicons name="time" size={24} color="gray" /> */}
-                                    <Text fontWeight={'bold'} color='gray.400'>Resend OTP</Text>
+                                    <Text fontWeight={typography.bold.fontWeight} fontSize={typography.body.fontSize} color='gray.400'>Resend OTP</Text>
                                 </>
                             )}
                         </View>
@@ -131,7 +132,7 @@ export default function OtpSection({ route, navigation }) {
                         borderRadius={10}
                         onPress={optMatching}
                     >
-                        <Text fontWeight={'bold'} color={'white'}>Submit OTP</Text>
+                        <Text fontWeight={typography.heading.fontWeight} fontSize={typography.body.fontSize} color={'white'}>Submit OTP</Text>
                     </Pressable>
                 </View>
 

@@ -6,6 +6,7 @@ import { apiBaseUrl, updateProfileById } from '../../Contants/api';
 import color from '../../Contants/color';
 import { Entypo } from '@expo/vector-icons';
 import { useProfile } from '../../Context/ProfileContext';
+import typography from '../../Contants/fonts';
 
 export default function PersonalDetails({ route, navigation }) {
   const { profileData, loading, error, refreshProfileData } = useProfile();
@@ -203,7 +204,7 @@ export default function PersonalDetails({ route, navigation }) {
               }}
             >
 
-              <TouchableOpacity onPress={handleUpdate} style={{ width: "100%", justifyContent: "center", backgroundColor: color.primary, padding: 8, borderRadius: 5, alignItems: "center" }}><Text style={{ width: 80, color: color.white, fontSize: 20 }}>Update</Text></TouchableOpacity>
+              <TouchableOpacity onPress={handleUpdate} style={{ width: "100%", justifyContent: "center", backgroundColor: color.primary, padding: 8, borderRadius: 5, alignItems: "center" }}><Text style={{ width: 80, color: color.white, fontSize: typography.mainHeading.fontSize }}>Update</Text></TouchableOpacity>
 
 
             </View>
@@ -225,7 +226,7 @@ const styles = StyleSheet.create({
   input: {
     borderColor: color.primary,
     color: 'black',
-    fontWeight: '600',
+    fontWeight: typography.heading.fontWeight,
     borderWidth: 1,
     marginBottom: 10,
     paddingVertical: 15,
@@ -244,8 +245,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
-    fontSize: 16,
-    fontWeight: 700
+    fontSize: typography.body.fontSize,
+    fontWeight: typography.bold.fontWeight
   },
 });
 

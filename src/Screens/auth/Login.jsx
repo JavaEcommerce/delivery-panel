@@ -4,6 +4,8 @@ import { Ionicons } from '@expo/vector-icons'; // Importing Ionicons from the Ex
 import routes from '../../Contants/routes';
 import COLORS from '../../Contants/color';
 import { LinearGradient } from 'expo-linear-gradient';
+import typography from '../../Contants/fonts';
+
 import CheckInternetProvider, { useCheckInternet } from '../../Context/CheckInternet';
 import NoInternet from '../../Components/NoInternet';
 const Login = ({ navigation }) => {
@@ -55,7 +57,7 @@ const Login = ({ navigation }) => {
                         </View>
                         <View style={{ width: '100%', }}>
                             <TouchableOpacity onPress={() => navigation.navigate(routes.FORGOT_PASSWORD)}>
-                                <Text style={{ color: 'black', textAlign: 'right', fontWeight: 'bold', marginTop: 5, marginBottom: 15 }}>Forgot Password ?</Text>
+                                <Text style={{ color: 'black', textAlign: 'right', fontWeight: typography.h6.fontWeight, marginTop: 5, marginBottom: 15, fontSize:typography.subtitle.fontSize }} >Forgot Password ?</Text>
                             </TouchableOpacity>
                         </View>
                         <TouchableOpacity onPress={handleLoginPress} style={styles.button}>
@@ -63,9 +65,9 @@ const Login = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                     <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 20, borderRadius: 10, }}>
-                        <Text > Don't have an account ? </Text>
+                        <Text style={{fontSize:typography.subtitle.fontSize}}> Don't have an account ? </Text>
                         <TouchableOpacity onPress={() => navigation.navigate(routes.REGISTER)}>
-                            <Text style={{ color: COLORS.primary, fontWeight: 'bold', marginLeft: 10 }}>Sign Up</Text>
+                            <Text style={{ color: COLORS.primary, fontWeight: typography.h6.fontWeight ,fontSize:typography.subtitle.fontSize, marginLeft: 10 }}>Sign Up</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -104,7 +106,7 @@ const styles = {
     },
     buttonText: {
         color: "white",
-        fontSize: 16,
+        fontSize: typography.heading.fontSize,
     },
 };
 

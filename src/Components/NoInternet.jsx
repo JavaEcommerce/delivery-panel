@@ -3,6 +3,7 @@ import React from 'react';
 import { View, Text, Button, Pressable } from 'native-base';
 import color from '../Contants/color';
 const NoInternetImg = require('../Assets/deliveryPng.png')
+import typography from '../Contants/fonts';
 export default function NoInternet() {
     return (
         <>
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     noInternetText: {
-        color: 'black',
-        fontWeight: 'bold',
+        color: 'Black',
+        fontWeight: typography.heading.fontWeight,
     },
 });

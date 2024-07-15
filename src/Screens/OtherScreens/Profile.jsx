@@ -7,6 +7,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useProfile } from '../../Context/ProfileContext';
 import HomeProfileCard from '../../Components/HomeProfileCard';
+import typography from '../../Contants/fonts';
 const Profile = ({ navigation, route }) => {
   const { profileData, loading, error, refreshProfileData } = useProfile();
 
@@ -47,34 +48,34 @@ const Profile = ({ navigation, route }) => {
       <SafeAreaView style={styles.container}>
         <HomeProfileCard navigation={navigation} profileData={profileData} />
         <View borderRadius={10} w={'90%'} flexDir={'row'} p={2} justifyContent={'space-between'} alignItems={'center'}>
-          <Text style={{ fontSize: 18, fontWeight: '700', }}> Setup Your Profile</Text>
+          <Text style={{ fontSize: typography.heading.fontSize, fontWeight: typography.bold.fontWeight, }}> Setup Your Profile</Text>
           <Ionicons name="settings-outline" size={20} color="black" />
         </View>
         <ScrollView showsVerticalScrollIndicator={false}  style={{width:'90%'}}>
 
           <Box shadow={1} alignItems={'center'} gap={3} justifyContent={'center'}>
             <Pressable onPress={() => navigation.navigate(routes.PROFILE_PERSONAL_DETAILS, { profileData },)} style={styles.pressable}>
-              <Text fontWeight={'bold'}>Personal Detail</Text>
+              <Text fontWeight={typography.bold.fontWeight}>Personal Detail</Text>
               <FontAwesome name="angle-right" size={24} color="black" />
             </Pressable>
             <Pressable onPress={() => navigation.navigate(routes.PROFILE_SECURITY_SCREEN)} style={styles.pressable}>
-              <Text fontWeight={'bold'}>Security</Text>
+              <Text fontWeight={typography.bold.fontWeight}>Security</Text>
               <FontAwesome name="angle-right" size={24} color="black" />
             </Pressable>
             <Pressable onPress={() => navigation.navigate(routes.PROFILE_TERM_CONDITION)} style={styles.pressable}>
-              <Text fontWeight={'bold'}>Term & Conditions</Text>
+              <Text fontWeight={typography.bold.fontWeight}>Term & Conditions</Text>
               <FontAwesome name="angle-right" size={24} color="black" />
             </Pressable>
             <Pressable onPress={() => navigation.navigate(routes.PROFILE_CONTACT_US)} style={styles.pressable}>
-              <Text fontWeight={'bold'}>Contact Us</Text>
+              <Text fontWeight={typography.bold.fontWeight}>Contact Us</Text>
               <FontAwesome name="angle-right" size={24} color="black" />
             </Pressable>
             <Pressable onPress={() => navigation.navigate(routes.PROFILE_RETURN_POLICY)} style={styles.pressable}>
-              <Text fontWeight={'bold'}>Return Policy</Text>
+              <Text fontWeight={typography.bold.fontWeight}>Return Policy</Text>
               <FontAwesome name="angle-right" size={24} color="black" />
             </Pressable>
             <Pressable style={styles.signOutPressable}>
-              <Text fontWeight={'bold'} color={'white'}>SIGN OUT</Text>
+              <Text fontWeight={typography.bold.fontWeight} color={'white'}>SIGN OUT</Text>
               <Ionicons name="exit-outline" size={24} color="white" />
             </Pressable>
           </Box>

@@ -8,6 +8,7 @@ import { useProfile } from '../../Context/ProfileContext';
 import { ScrollView, Skeleton, Text, View, FlatList } from 'native-base';
 import { OrderHistoryContext } from '../../Context/OrderContext';
 import color from '../../Contants/color';
+import typography from '../../Contants/fonts';
 import { useCheckInternet } from '../../Context/CheckInternet';
 import NoInternet from '../../Components/NoInternet';
 
@@ -87,10 +88,10 @@ const styles = StyleSheet.create({
     marginBottom: -20
   },
   recentOrdersTitle: {
-    fontWeight: 700,
+    fontWeight: typography.bold.fontWeight,
     paddingTop: 30,
     marginBottom: 10,
-    fontSize: 24,
+    fontSize: typography.heading.fontSize,
     textAlign: 'left',
     width: '90%'
   },

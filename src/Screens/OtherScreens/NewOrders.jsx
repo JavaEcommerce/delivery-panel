@@ -9,6 +9,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { Ionicons } from '@expo/vector-icons';
 import NewOrderCard from '../../Components/NewOrderCard';
 import LottieView from 'lottie-react-native';
+import typography from '../../Contants/fonts';
 const deliveryPersonId = 3;
 const NewOrders = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
@@ -108,7 +109,7 @@ const NewOrders = ({ navigation }) => {
         </LottieView>
         <View style={{ flexDirection: 'row', gap: 20, justifyContent: 'center', alignItems: 'center' }}>
 
-        <Text style={{fontWeight:'500',fontSize:16}}>No order right now 📦.</Text>
+        <Text style={{fontWeight:typography.heading.fontWeight,fontSize:typography.body.fontSize}}>No order right now 📦.</Text>
 
           <TouchableOpacity bg={'white'} onPress={() => refetch()}>
             <Ionicons name="reload" size={24} color={color.primary} />

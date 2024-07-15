@@ -4,6 +4,7 @@ import { Box} from 'native-base';
 import color from '../Contants/color';
 import { apiBaseUrl,updateNewOrdersStatus } from '../Contants/api';
 import routes from '../Contants/routes';
+import typography from '../Contants/fonts';
 export default function NewOrderCard({ item,navigation,refetch}) {
     const handleRejectOrder = async (id) => {
         const payload = { status: 'DeliveryPersonRejected' };
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     },
     orderIdText: {
       color: 'white',
-      fontWeight: 'bold',
+      fontWeight: typography.heading.fontWeight,
       paddingLeft: 5,
     },
     orderDateBox: {
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     },
     orderDateText: {
       color: 'black',
-      fontWeight: 'bold',
+      fontWeight: typography.heading.fontWeight,
     },
     orderDetails: {
       flexDirection: 'column',
@@ -148,16 +149,16 @@ const styles = StyleSheet.create({
     },
     orderAddressText: {
       color: 'black',
-      fontWeight: 'bold',
+      fontWeight: typography.heading.fontWeight,
       width: '95%',
     },
     orderLocationText: {
       color: 'black',
-      fontWeight: 'bold',
+      fontWeight: typography.heading.fontWeight,
     },
     orderTimeText: {
       color: 'black',
-      fontWeight: 'bold',
+      fontWeight: typography.heading.fontWeight,
     },
     orderActions: {
       flexDirection: 'row',
@@ -180,8 +181,8 @@ const styles = StyleSheet.create({
     rejectButtonText: {
       color: 'white',
       textAlign: 'center',
-      fontSize: 18,
-      fontWeight: 'bold',
+      fontSize: typography.heading.fontSize,
+      fontWeight: typography.heading.fontWeight,
     },
     acceptButton: {
       width: '40%',
@@ -197,8 +198,8 @@ const styles = StyleSheet.create({
     acceptButtonText: {
       color: 'white',
       textAlign: 'center',
-      fontSize: 18,
-      fontWeight: 'bold',
+      fontSize: typography.heading.fontSize,
+      fontWeight: typography.heading.fontWeight,
     },
   });
   

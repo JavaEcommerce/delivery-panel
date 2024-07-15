@@ -6,6 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { OrderHistoryContext } from "../../Context/OrderContext";
 import color from "../../Contants/color";
 import HomeRecentOrder from "../../Components/HomeRecentOrder";
+import typography from "../../Contants/fonts";
 
 const OrderHistory = () => {
     const [refreshing, setRefreshing] = useState(false);
