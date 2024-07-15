@@ -29,9 +29,11 @@ export default function EarningNavigation({ navigation }) {
                 <Tab.Screen
                     name={routes.EARNING_DASHBOARD}
                     component={Dashboard}
+                    
                     initialParams={{ navigation }}
                     options={{
                         tabBarLabel: 'Dashboard',
+                
                     }}
                 />
 
