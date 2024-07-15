@@ -1,18 +1,53 @@
-import React, { useState } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, StyleSheet, ActivityIndicator } from "react-native";
 import color from "../../Contants/color";
-import { apiBaseUrl, updateNewOrdersStatus } from '../../Contants/api';
+import { apiBaseUrl, getOrderDetail } from '../../Contants/api';
 import axios from 'axios';
 import DeliveryStatus from "../../Components/DeliveryStatus";
-
+import OrderDetailCard from "../../Components/OrderDetailCard";
+import { ScrollView } from "react-native-gesture-handler";
+import { Skeleton, View } from "native-base";
 
 export default function OrderDetailPage({ navigation, route }) {
-  const { item } = route.params
+  const { item } = route.params;
+  const orderId = item.orderId;
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${apiBaseUrl}${getOrderDetail}${orderId}`);
+        setData(res?.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [orderId]);
+
+  if (loading) {
+    return (
+      <SafeAreaView style={{ flex: 1, alignItems: 'center', backgroundColor: 'white' }}>
+        <View w={'90%'} py={5} justifyContent={'space-between'} h={'100%'}>
+          <Skeleton bg={'gray.100'} borderRadius={10} h={100} />
+          <Skeleton bg={'gray.100'} borderRadius={10} h={100} />
+          <Skeleton bg={'gray.100'} borderRadius={10} h={100} />
+          <Skeleton bg={'gray.100'} borderRadius={10} h={100} />
+          <Skeleton bg={'gray.100'} borderRadius={10} h={100} />
+          <Skeleton bg={'gray.100'} borderRadius={10} h={50} />
+        </View>
+      </SafeAreaView>
+    );
+  }
+
   return (
-    <SafeAreaView style={{ backgroundColor: "white", justifyContent: 'center', alignItems: 'center' }}>
-      <DeliveryStatus item={item} navigation={navigation}/>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white", height: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
+      <OrderDetailCard data={data} />
+      <DeliveryStatus item={item} navigation={navigation} />
     </SafeAreaView>
   );
 }

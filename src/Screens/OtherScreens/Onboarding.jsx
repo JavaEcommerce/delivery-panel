@@ -71,40 +71,34 @@ const Onboarding = ({ navigation }) => {
 
     return (
         <>
-            {!isConnected ? (
-                <NoInternet />
-            ) : (<>
 
-                <LinearGradient
-                    colors={['#9ACA00', '#C2DF66', '#ffff']}
-                    style={styles.container}
-                >
-                    <FlatList
-                        ref={flatListRef}
-                        data={onboardingData}
-                        renderItem={renderItem}
-                        horizontal
-                        pagingEnabled
-                        showsHorizontalScrollIndicator={false}
-                        keyExtractor={(item) => item.key}
-                        onScroll={(e) => {
-                            const index = Math.floor(e.nativeEvent.contentOffset.x / width);
-                            setCurrentIndex(index);
-                        }}
-                    />
-                    {renderIndicators()}
-                    <View justifyContent={'space-between'} m={10} flexDir={'row'} borderRadius={15} borderWidth={1} borderColor={color.primary}>
-                        <Pressable p={2} justifyContent={'center'} alignItems={'center'} onPress={() => navigation.navigate(ROUTES.REGISTER)} w={'40%'} borderRadius={15} bg={color.primary}>
-                            <Text fontSize={18} fontWeight={'semibold'} color={'white'}>Sign Up</Text>
-                        </Pressable>
-                        <Pressable justifyContent={'center'} alignItems={'center'} onPress={() => navigation.navigate(ROUTES.LOGIN)} w={'40%'} borderRadius={15}>
-                            <Text fontSize={18} fontWeight={'semibold'} color={color.primary}>Log In</Text>
-                        </Pressable>
-                    </View>
-                </LinearGradient>
-
-
-            </>)}
+            <LinearGradient
+                colors={['#9ACA00', '#C2DF66', '#ffff']}
+                style={styles.container}
+            >
+                <FlatList
+                    ref={flatListRef}
+                    data={onboardingData}
+                    renderItem={renderItem}
+                    horizontal
+                    pagingEnabled
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={(item) => item.key}
+                    onScroll={(e) => {
+                        const index = Math.floor(e.nativeEvent.contentOffset.x / width);
+                        setCurrentIndex(index);
+                    }}
+                />
+                {renderIndicators()}
+                <View justifyContent={'space-between'} m={10} flexDir={'row'} borderRadius={15} borderWidth={1} borderColor={color.primary}>
+                    <Pressable p={2} justifyContent={'center'} alignItems={'center'} onPress={() => navigation.navigate(ROUTES.REGISTER)} w={'40%'} borderRadius={15} bg={color.primary}>
+                        <Text fontSize={18} fontWeight={'semibold'} color={'white'}>Sign Up</Text>
+                    </Pressable>
+                    <Pressable justifyContent={'center'} alignItems={'center'} onPress={() => navigation.navigate(ROUTES.LOGIN)} w={'40%'} borderRadius={15}>
+                        <Text fontSize={18} fontWeight={'semibold'} color={color.primary}>Log In</Text>
+                    </Pressable>
+                </View>
+            </LinearGradient>
 
         </>
     );

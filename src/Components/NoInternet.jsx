@@ -1,25 +1,26 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image, Linking } from 'react-native';
 import React from 'react';
-import { Image, View, Text } from 'native-base';
-import { LinearGradient } from 'expo-linear-gradient';
-import LottieView from 'lottie-react-native';
-import color from '../Contants/color'; 
-
+import { View, Text, Button, Pressable } from 'native-base';
+import color from '../Contants/color';
+const NoInternetImg = require('../Assets/deliveryPng.png')
 export default function NoInternet() {
     return (
         <>
             <View style={styles.outerContainer}>
                 <View style={styles.innerContainer}>
                     <Image
-                        source={require('../Assets/123.png')}
+                        source={NoInternetImg}
+                        style={{ width: 400, height: 400 }}
                         alt='No Internet'
-                        resizeMode='contain' 
-                    />
+                        resizeMode='contain' />
                     <View justifyContent={'center'} alignItems={'center'} position={'absolute'} bottom={10}>
-                        <Text fontSize={'md'} fontWeight={'bold'} color={'red.500'} >No Internet Connection 😓</Text>
-                        <Text fontSize={'md'} fontWeight={'bold'} color={'black'}>Check Your Internet Connection</Text>
+                        <Text shadow={1} fontSize={'lg'} fontWeight={'bold'} color={'red.500'} >No Internet Connection 😓</Text>
+                        <Text fontSize={'lg'} fontWeight={'bold'} color={color.primary}>Check Your Internet Connection</Text>
                     </View>
                 </View>
+                <Pressable py={4} borderRadius={20} position={'absolute'} bottom={10} w={'90%'} justifyContent={'center'} alignItems={'center'} onPress={() => Linking.openSettings()}>
+                    <Text fontSize={'xl'} fontWeight={'semibold'} color={'white'}>Go to Setting</Text>
+                </Pressable>
             </View>
         </>
     );

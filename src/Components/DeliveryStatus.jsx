@@ -193,7 +193,7 @@ export default function DeliveryStatus({ item, navigation }) {
   }
   return (
 
-    <View style={{ height: "100%", width: '90%', justifyContent: "flex-end" }}>
+    <View style={{width: '90%' }}>
       <View style={styles.container}>
         <DropDownPicker
           open={open}

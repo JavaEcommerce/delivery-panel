@@ -33,6 +33,14 @@ export default ROUTES = {
   ASSIGN_ORDERS: 'Active Orders ',
   ORDER_HISTORY: 'History',
   OTP_SCREEN : 'Otp Screen',
+
+
+
   EARNING: 'Earnings',
+  EARNING_DASHBOARD: 'Dashboard',
+  EARNING_HISTORY: 'Earning History',
+  EARNING_BONUS: 'Bonus Earning',
+
+
 
 };

@@ -24,10 +24,8 @@ const Login = ({ navigation }) => {
         }, 500);
     };
 
-
     return (
         <>
-
             <View style={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', }}>
 
                 <Animated.View style={{ transform: [{ translateX: imageTranslateX }], width: '50%', height: '30%', position: 'relative', }}>
