@@ -12,6 +12,7 @@ export const getAllActiveOrders = "/orderAssignments/activeOrders/";
 export const updateNewOrdersStatus = "/orderAssignments/status/";
 export const getOrderHistory = "/orderAssignments/workHistory/3";
 export const authenticateOTP = "/Otp/authenticateOTP";
+export const getOrderDetail = "/orderAssignments/orderDetail/";
 
 // Authentication Endpoints
 export const signup = "api/auth/v1/signup";

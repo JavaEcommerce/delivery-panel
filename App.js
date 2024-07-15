@@ -6,21 +6,24 @@ import { NativeBaseProvider, Box } from "native-base";
 import { ProfileProvider } from './src/Context/ProfileContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { OrderHistoryProvider } from './src/Context/OrderContext';
+import CheckInternetProvider from './src/Context/CheckInternet';
 
 const queryClient = new QueryClient()
 export default function App() {
 
   return (
     <NativeBaseProvider>
-      <NavigationContainer>
-        <QueryClientProvider client={queryClient}>
-          <ProfileProvider>
-            <OrderHistoryProvider>
-              <AuthNavigator />
-            </OrderHistoryProvider>
-          </ProfileProvider>
-        </QueryClientProvider>
-      </NavigationContainer>
+      <CheckInternetProvider>
+        <NavigationContainer>
+          <QueryClientProvider client={queryClient}>
+            <ProfileProvider>
+              <OrderHistoryProvider>
+                <AuthNavigator />
+              </OrderHistoryProvider>
+            </ProfileProvider>
+          </QueryClientProvider>
+        </NavigationContainer>
+      </CheckInternetProvider>
     </NativeBaseProvider>
   );
 }

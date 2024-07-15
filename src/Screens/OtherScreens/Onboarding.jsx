@@ -7,6 +7,7 @@ import color from '../../Contants/color';
 import NetInfo from "@react-native-community/netinfo";
 import NoInternet from '../../Components/NoInternet';
 import typography from '../../Contants/fonts';
+import { useCheckInternet } from '../../Context/CheckInternet';
 
 const onboardingData = [
     {
@@ -40,17 +41,7 @@ const { width } = Dimensions.get('window');
 const Onboarding = ({ navigation }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const flatListRef = useRef(null);
-    const [isConnected, setIsConnected] = useState(true); // Default to true assuming initial connection
-
-    useEffect(() => {
-        const unsubscribe = NetInfo.addEventListener(state => {
-            setIsConnected(state.isConnected);
-        });
-        return () => {
-            unsubscribe();
-        };
-    }, []);
-
+    const { isConnected } = useCheckInternet()
     const renderIndicators = () => (
         <View style={styles.indicatorContainer}>
             {onboardingData.map((_, index) => (
@@ -81,9 +72,6 @@ const Onboarding = ({ navigation }) => {
 
     return (
         <>
-            {!isConnected ? (
-                <NoInternet/>
-            ) : (<>
 
                 <LinearGradient
                     colors={['#9ACA00', '#C2DF66', '#ffff']}
@@ -112,9 +100,6 @@ const Onboarding = ({ navigation }) => {
                         </Pressable>
                     </View>
                 </LinearGradient>
-
-
-            </>)}
 
         </>
     );

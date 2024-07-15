@@ -4,10 +4,12 @@ import color from '../../Contants/color';
 import { Pressable, Text } from 'native-base';
 import typography from '../../Contants/fonts';
 
+import { useCheckInternet } from '../../Context/CheckInternet';
+import NoInternet from '../../Components/NoInternet';
 export default function ForgotPass() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
-
+  const { isConnected } = useCheckInternet()
   const validateEmail = (email) => {
 
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

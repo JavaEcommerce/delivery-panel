@@ -146,7 +146,6 @@ import {
   TextInput,
   Actionsheet,
 } from "native-base";
-import { Platform } from "react-native";
 import { StyleSheet } from "react-native";
 import color from "../Contants/color";
 import routes from "../Contants/routes";
@@ -195,7 +194,7 @@ export default function DeliveryStatus({ item, navigation }) {
   }
   return (
 
-    <View style={{ height: "100%", width: '90%', justifyContent: "flex-end" }}>
+    <View style={{width: '90%' }}>
       <View style={styles.container}>
         <DropDownPicker
           open={open}
