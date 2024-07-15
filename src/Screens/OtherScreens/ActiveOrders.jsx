@@ -93,7 +93,7 @@ const ActiveOrders = ({ navigation }) => {
   if (loading) {
     return (
       <View bg={'white'} flex={1} alignItems={'center'} py={3}>
-        <ScrollView showsVerticalScrollIndicator={'false'} w={'90%'} scrollIndicatorInsets={false}>
+        <ScrollView showsVerticalScrollIndicator={false} w={'90%'} scrollIndicatorInsets={false}>
           <Skeleton borderRadius={10} h={200} />
           <Skeleton borderRadius={10} mt={3} h={200} />
           <Skeleton borderRadius={10} mt={3} h={200} />
