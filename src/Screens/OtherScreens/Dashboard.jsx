@@ -1,54 +1,42 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { BarChart } from "react-native-gifted-charts";
-import { View, Text } from 'native-base';
-import color from '../../Contants/color';;
+import { Dimensions, Image } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, FlatList, ScrollView, Pressable, } from 'native-base';
+import typography from '../../Contants/fonts';
+
+import DashBoardChart from '../../Components/DashBoardChart'
+import EarningCard from '../../Components/EarningCard';
+import { TextInput } from 'react-native-gesture-handler';
 export default function Dashboard() {
-  const barData = [
-    { value: 250, label: 'M' },
-    { value: 500, label: 'T', frontColor: '#177AD5' },
-    { value: 745, label: 'W', frontColor: '#177AD5' },
-    { value: 320, label: 'T' },
-    { value: 600, label: 'F', frontColor: '#177AD5' },
-    { value: 256, label: 'S' },
-    { value: 300, label: 'S' },
-  ];
-  const data = [
-    1.3, 10, 20, 80, 50, 30, 35, 45, 30, 24, 23, 21, 19, 17, 16, 15, 14.5, 13,
-    13, 13, 13, 13,
-  ];
+  const [amount, setAmount] = useState()
+  const addSpacesBetweenCharacters = (text) => {
+    return text.split('').join(' ');
+  };
   return (
     <View bg={'white'} flex={1} alignItems={'center'} w={'100%'} >
-      <View w={'90%'} gap={10} >
-        <Text fontWeight={'bold'} fontSize={'lg'}>Your Activities</Text>
-        <BarChart
-          // width={'50%'}
-          isAnimated
-          barWidth={22}
-          noOfSections={3}
-          barBorderRadius={4}
-          frontColor="lightgray"
-          data={barData}
-          yAxisThickness={0}
-          xAxisThickness={0}
-        // renderTooltip={(item, index) => {
-        //   return (
-        //     <View
-        //       style={{
-        //         marginBottom: 20,
-        //         marginLeft: -6,
-        //         backgroundColor: color.primary,
-
-        //         paddingHorizontal: 6,
-        //         paddingVertical: 4,
-        //         borderRadius: 4,
-        //       }}>
-        //       <Text color={'white'}>{item.value}</Text>
-        //     </View>
-        //   )}}
-        />
-        
-      </View>
+      <ScrollView showsVerticalScrollIndicator={false} w={'90%'}>
+        <View w={'100%'} gap={10} >
+          <View w={'100%'} gap={5} >
+            <EarningCard />
+          </View>
+          <DashBoardChart />
+          <View gap={5}>
+            <Text style={{ fontSize: typography.heading.fontSize, fontWeight: typography.bold.fontWeight }}>Withdraw Methods</Text>
+            <TextInput
+              style={{ borderRadius: 10, borderBottomWidth: 1, borderColor: 'lightgray', padding: 20, fontSize: typography.h2.fontSize, }}
+              inputMode='numeric'
+              keyboardType='numeric'
+              placeholderTextColor='lightgray'
+              placeholder='Enter Withdraw Amount '
+              value={amount ? addSpacesBetweenCharacters(`₹ ${amount}`) : ''}
+              onChangeText={(text) => setAmount(text.replace(/^₹\s?/, '').replace(/[^0-9]/g, ''))}
+            />
+            <Pressable onPress={() => console.log(amount)} bg={'black'} p={4} borderRadius={10} mb={5} justifyContent={'center'} alignItems={'center'} >
+              <Text color={'white'} fontSize={typography.heading.fontSize} fontWeight={typography.bold.fontWeight}>Withdraw </Text>
+            </Pressable>
+          </View>
+        </View>
+      </ScrollView>
     </View>
+
   )
 }

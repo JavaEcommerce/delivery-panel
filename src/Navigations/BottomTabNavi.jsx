@@ -9,7 +9,6 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import color from '../Contants/color';
 import { Foundation } from '@expo/vector-icons';
-import Earning from '../Screens/OtherScreens/Earning';
 import OrderTopNavi from '../Navigations/OrderTopNavi';
 import ProfileNavigation from './ProfileNavigation';
 import EarningNavigation from './EarningNavigation';

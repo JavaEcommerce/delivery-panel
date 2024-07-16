@@ -55,7 +55,7 @@ const ActiveStatus = ({ profile }) => {
     
   return (
 
-    <View style={{ justifyContent: 'space-between', width: '90%', flexDirection: 'row', alignItems: 'center', marginBottom: 20, marginTop: 20, gap: 10 }}>
+    <View style={{ justifyContent: 'space-between', width: '90%', flexDirection: 'row', alignItems: 'center', marginBottom: 20, marginTop: 20, gap: 10  }}>
       <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
         <Text  style={{ fontWeight: typography.bold.fontWeight,fontSize: typography.body.fontSize }}>{isOnline ? 'Hey 👋🏻' : 'Bye 👋🏻'}, {profile.name}</Text>
       </Box>

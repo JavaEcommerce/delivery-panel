@@ -16,24 +16,28 @@ export default function EarningNavigation({ navigation }) {
     const insets = useSafeAreaInsets();
     return (
         <View bg={'white'} flex={1}  >
- 
+
             <Tab.Navigator
                 screenOptions={{
-                    tabBarStyle: [styles.containerStyle, { marginTop: insets.top, marginBottom: insets.bottom }],
+                    tabBarStyle: [styles.containerStyle, { marginTop: insets.top, marginBottom: insets.bottom,overflow:'hidden' }],
                     tabBarIndicatorStyle: styles.indicator,
                     tabBarActiveTintColor: 'white',
                     tabBarInactiveTintColor: '#a6a6a6',
                     tabBarLabelStyle: styles.label,
+                    
+
                 }}
+                // tabBarOptions={{
+                //     scrollEnabled: true,
+                //   }}
             >
                 <Tab.Screen
                     name={routes.EARNING_DASHBOARD}
                     component={Dashboard}
-                    
                     initialParams={{ navigation }}
                     options={{
                         tabBarLabel: 'Dashboard',
-                
+
                     }}
                 />
 
