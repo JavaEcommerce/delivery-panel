@@ -1,90 +1,98 @@
-import { View, TouchableOpacity, Skeleton } from 'react-native'
-import {React,useContext} from 'react'
-import { Box,Text } from 'native-base'
+import { React } from 'react'
+import { Box, Text, Button } from 'native-base'
 import color from '../Contants/color'
-import { OrderHistoryContext } from '../Context/OrderContext'
-import { useInfiniteQuery } from '@tanstack/react-query'
+import { useToast } from 'native-base'
+import typography from '../Contants/fonts'
+import { Platform } from 'react-native'
 
-const HomeRecentOrder = ({item}) => {
+const HomeRecentOrder = ({ item }) => {
+    const toast = useToast();
+    if (item) {
+        let statusColor = '';
+        switch (item.status) {
+            case 'DELIVERED':
+                statusColor = 'green';
+                break;
+            case 'DELIVERY_PERSON_REJECTED':
+                statusColor = 'red';
+                break;
+            case 'UNABLE_TO_CONNECT':
+                statusColor = '#fab005';
+                break;
+            case 'CUSTOMER_REJECTED':
+                statusColor = 'red';
+                break;
+            default:
+                statusColor = 'black';
+        }
+        const parseDateTime = (dateTimeString) => {
+            const dateTime = new Date(dateTimeString);
+            const date = dateTime.toLocaleDateString();
+            const time = dateTime.toLocaleTimeString();
+            return { date, time };
+        };
+        const { date: orderDate, time: orderTime } = parseDateTime(item.order.orderDate);
 
-    let statusColor = '';
-    switch (item.status) {
-        case 'DELIVERED':
-            statusColor = 'green';
-            break;
-        case 'DELIVERY_PERSON_REJECTED':
-            statusColor = 'red';
-            break;
-        case 'UNABLE_TO_CONNECT':
-            statusColor = '#fab005';
-            break;
-        case 'CUSTOMER_REJECTED':
-            statusColor = 'red';
-            break;
-        default:
-            statusColor = 'black';
-    }
-    const parseDateTime = (dateTimeString) => {
-        const dateTime = new Date(dateTimeString);
-        const date = dateTime.toLocaleDateString();
-        const time = dateTime.toLocaleTimeString();
-        return { date, time };
-    };
-    const { date: orderDate, time: orderTime } = parseDateTime(item.order.orderDate);
 
-
-    return (
-        <>
-            <Box
-                style={{
-                    backgroundColor: 'white',
-                    borderWidth: 0.17,
-                    borderColor: color.primary,
-                    width: '90%',
-                    marginBottom: 15,
-                    borderRadius: 10,
-                    justifyContent: 'center',
-                    alignSelf: 'center'
-                }}
-            >
-                <>
-                    <Box style={{ padding: 10, width: '100%', flexDirection: 'column', justifyContent: 'space-between', borderRadius: 0 }}>
-                        <Box style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Box px={5} style={{ backgroundColor: color.primary, padding: 5,  borderRadius: 15 }}>
-                                <Text style={{ color: 'white', textAlign: 'center', fontWeight: '900' }}>#{item.order.orderId}</Text>
-                            </Box>
-                            <Box style={{ padding: 5 }}>
-                                <Text style={{ color: statusColor, textAlign: 'center', fontWeight: '900', fontSize: 12 }}>{item.status}</Text>
-                            </Box>
-                        </Box>
-                        <Box style={{ gap: 5, marginTop: 10 }}>
-
-                            <Text style={{ color: 'black', fontWeight: '300' }}>Time: {orderTime}, Date: {orderDate}</Text>
-
-                            <Text style={{ color: 'black', fontWeight: '300' }}>Address : {item.order.customerAddress.addressLine1}</Text>
-                        </Box>
-                        <Box style={{ flexDirection: "column", gap: 5 }}>
-                            <Box style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", margin: 2, }}>
-                                <Text style={{ fontSize: 18, fontWeight: '600' }}>Total Amount:</Text>
-                                <Box bg={color.primary} borderRadius={10}>
-                                <Text fontSize={18} color={'white'} fontWeight={'bold'} p={1} px={3}>$ {item.order.totalAmount}</Text>
+        return (
+            <>
+                <Box
+                    style={{
+                        backgroundColor: 'white',
+                        borderWidth: 0.17,
+                        borderColor: color.primary,
+                        width: '90%',
+                        marginBottom: 15,
+                        borderRadius: Platform=='IOS'? 20:10,
+                        justifyContent: 'center',
+                        alignSelf: 'center',                        
+                    }}
+                    
+                >
+                    <>
+                        <Box style={{ padding: 10, width: '100%', flexDirection: 'column', justifyContent: 'space-between', borderRadius: 0 }}>
+                            <Box style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Box px={5} style={{ backgroundColor: color.primary, padding: 5, borderRadius: 15 }}>
+                                    <Text style={{ color: 'white', textAlign: 'center', fontWeight: typography.h1.fontWeight,fontSize:typography.small.fontSize }}>#{item.order.orderId}</Text>
+                                </Box>
+                                <Box style={{ padding: 5 }}>
+                                    <Text style={{ color: statusColor, textAlign: 'center', fontWeight: typography.h1.fontWeight, fontSize:typography.small.fontSize }}>{item.status}</Text>
                                 </Box>
                             </Box>
+                            <Box style={{ gap: 5, marginTop: 10 }}>
 
-                            {item.status == 'DELIVERED' ? (
-                                <Box style={{ width: '100%', alignSelf: 'center', backgroundColor: color.primary, padding: 10, borderRadius: 10 }}>
-                                    <Text style={{ color: 'white', textAlign: 'center', fontWeight: '900' }}>Payment : Cash On Delivery</Text>
-                                </Box>)
-                                : (<Box style={{ width: '100%', alignSelf: 'center', backgroundColor: color.primary, padding: 10, borderRadius: 10 }}>
-                                    <Text style={{ color: 'white', textAlign: 'center', fontWeight: '900' }}>Cancelled</Text>
-                                </Box>)}
+                                <Text style={{ color: 'black', fontWeight: typography.small.fontWeight , fontSize:typography.subtitle.fontSize}}>Time: {orderTime}, Date: {orderDate}</Text>
+
+                                <Text style={{ color: 'black', fontWeight: typography.small.fontWeight,fontSize:typography.subtitle.fontSize }}>Address : {item.order.customerAddress.addressLine1}</Text>
+                            </Box>
+                            <Box style={{ flexDirection: "column", gap: 5 }}>
+                                <Box style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", margin: 2, }}>
+                                    <Text style={{ fontSize:typography.heading.fontSize, fontWeight: typography.bold.fontWeight }}>Total Amount:</Text>
+                                    <Box bg={color.primary} borderRadius={10}>
+                                        <Text fontSize={typography.heading.fontSize} color={'white'} fontWeight={typography.bold.fontWeight } p={1} px={3}>$ {item.order.totalAmount}</Text>
+                                    </Box>
+                                </Box>
+
+                                {item.status == 'DELIVERED' ? (
+                                    <Box style={{ width: '100%', alignSelf: 'center', backgroundColor: color.primary, padding: 10, borderRadius: 10 }}>
+                                        <Text style={{ color: 'white', textAlign: 'center', fontWeight: typography.h1.fontWeight,fontSize:typography.body.fontSize }}>Payment : Cash On Delivery</Text>
+                                    </Box>)
+                                    : (<Box style={{ width: '100%', alignSelf: 'center', backgroundColor: color.primary, padding: 10, borderRadius: 10 }}>
+                                        <Text style={{ color: 'white', textAlign: 'center', fontWeight: typography.h1.fontWeight,fontSize:typography.body.fontSize }}>Cancelled</Text>
+                                    </Box>)}
+                            </Box>
                         </Box>
-                    </Box>
-                </>
-            </Box>
+                    </>
+                </Box>
 
-        </>
-    )
+            </>
+        )
+    }
+    else {
+        return <Text>Error</Text>;
+    }
+
+
 }
 
 export default HomeRecentOrder

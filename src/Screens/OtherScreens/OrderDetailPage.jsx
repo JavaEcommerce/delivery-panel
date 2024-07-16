@@ -1,22 +1,53 @@
-import React from 'react'
-import { View, Text, Button, Pressable, } from 'native-base'
-import routes from '../../Contants/routes'
-import { Ionicons } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native';
-import color from '../../Contants/color';
-
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, StyleSheet, ActivityIndicator } from "react-native";
+import color from "../../Contants/color";
+import { apiBaseUrl, getOrderDetail } from '../../Contants/api';
+import axios from 'axios';
+import DeliveryStatus from "../../Components/DeliveryStatus";
+import OrderDetailCard from "../../Components/OrderDetailCard";
+import { ScrollView } from "react-native-gesture-handler";
+import { Skeleton, View } from "native-base";
 
 export default function OrderDetailPage({ navigation, route }) {
-    const { item } = route.params;
+  const { item } = route.params;
+  const orderId = item.orderId;
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${apiBaseUrl}${getOrderDetail}${orderId}`);
+        setData(res?.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [orderId]);
+
+  if (loading) {
     return (
-        <SafeAreaView style={{backgroundColor:'white'}}>
-            <View>
-                <Pressable w={'10%'} p={3} justifyContent={'center'} bg={'white'} alignItems={'center'} onPress={() => navigation.navigate(routes.ASSIGN_ORDERS)}>
-                    <Ionicons name="chevron-back" size={24} color={color.primary} />
-                </Pressable>
-                
-                <Text>{item.Amount}</Text>
-            </View>
-        </SafeAreaView>
-    )
+      <SafeAreaView style={{ flex: 1, alignItems: 'center', backgroundColor: 'white' }}>
+        <View w={'90%'} py={5} justifyContent={'space-between'} h={'100%'}>
+          <Skeleton bg={'gray.100'} borderRadius={10} h={100} />
+          <Skeleton bg={'gray.100'} borderRadius={10} h={100} />
+          <Skeleton bg={'gray.100'} borderRadius={10} h={100} />
+          <Skeleton bg={'gray.100'} borderRadius={10} h={100} />
+          <Skeleton bg={'gray.100'} borderRadius={10} h={100} />
+          <Skeleton bg={'gray.100'} borderRadius={10} h={50} />
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white", height: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
+      <OrderDetailCard data={data} />
+      <DeliveryStatus item={item} navigation={navigation} />
+    </SafeAreaView>
+  );
 }

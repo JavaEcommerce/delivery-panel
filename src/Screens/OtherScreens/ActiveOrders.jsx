@@ -1,13 +1,16 @@
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, RefreshControl, FlatList, ActivityIndicator } from 'react-native';
-import { Box, Skeleton, View, ScrollView } from 'native-base';
+import { Box, Skeleton, View, ScrollView, Image } from 'native-base';
 import color from '../../Contants/color';
 import routes from '../../Contants/routes';
 import axios from 'axios';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { apiBaseUrl, getAllActiveOrders } from '../../Contants/api';
 import { useFocusEffect } from '@react-navigation/native';
-
+import ActiveOrderCard from '../../Components/ActiveOrderCard';
+import LottieView from 'lottie-react-native';
+import typography from '../../Contants/fonts';
+const activeOrderImg = require('../../Assets/ActiveOrder.jpg');
 const deliveryPersonId = 3;
 
 const ActiveOrders = ({ navigation }) => {
@@ -82,53 +85,15 @@ const ActiveOrders = ({ navigation }) => {
   };
 
   const renderOrderItem = ({ item }) => {
-    const parseDateTime = (dateTimeString) => {
-      const dateTime = new Date(dateTimeString);
-      const date = dateTime.toLocaleDateString();
-      const time = dateTime.toLocaleTimeString();
-      return { date, time };
-    };
-
-    const { date: orderDate } = parseDateTime(item?.orderDate);
-    const { date: assignmentDate } = parseDateTime(item?.assignmentTime);
-
     return (
-      <Box style={styles.orderContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate(routes.ORDER_DETAIL, { item })}>
-          <Box style={styles.orderContent}>
-            <Box style={styles.orderHeader}>
-              <Box style={styles.orderId}>
-                <Text style={styles.orderIdText}>#{item?.orderId}</Text>
-              </Box>
-              <Box style={styles.orderStatus}>
-                <Text style={styles.orderStatusText}>{item?.status}</Text>
-              </Box>
-            </Box>
-            <Box style={styles.orderDetails}>
-              <Text style={styles.orderAddress} numberOfLines={4}>
-                🏠 : {item?.customerAddress?.houseNo ? `H-${item?.customerAddress?.houseNo}` : ''}
-                {item?.customerAddress?.flatNo ? `, F-${item?.customerAddress?.flatNo},` : ''}
-                {item?.customerAddress?.addressLine1}
-              </Text>
-              <Text style={styles.orderDate}>🗓️ : {orderDate}</Text>
-              <Text style={styles.orderPhone}>📱 : {item?.customerAddress?.pocPhoneNo}</Text>
-            </Box>
-            <Box style={styles.orderAmountContainer}>
-              <Text style={styles.orderAmountLabel}> Total Amount :</Text>
-              <Box style={styles.orderAmount}>
-                <Text style={styles.orderAmountText}>$ {item?.totalAmount}</Text>
-              </Box>
-            </Box>
-          </Box>
-        </TouchableOpacity>
-      </Box>
+      <ActiveOrderCard item={item} navigation={navigation} />
     );
   };
 
   if (loading) {
     return (
       <View bg={'white'} flex={1} alignItems={'center'} py={3}>
-        <ScrollView w={'90%'} scrollIndicatorInsets={false}>
+        <ScrollView showsVerticalScrollIndicator={false} w={'90%'} scrollIndicatorInsets={false}>
           <Skeleton borderRadius={10} h={200} />
           <Skeleton borderRadius={10} mt={3} h={200} />
           <Skeleton borderRadius={10} mt={3} h={200} />
@@ -153,7 +118,12 @@ const ActiveOrders = ({ navigation }) => {
   if (orders.length === 0) {
     return (
       <View style={styles.noDataContainer}>
-        <Text>No active orders available.</Text>
+        <LottieView style={{ width: "100%", height: '40%', }} 
+        source={require('../../Assets/Animation - 1718104901501.json')}
+          autoPlay
+          loop >
+        </LottieView>
+        <Text style={{fontWeight:typography.heading.fontWeight,fontSize:typography.heading.fontSize}}>No order right now 📦.</Text>
       </View>
     );
   }
@@ -192,87 +162,12 @@ const styles = StyleSheet.create({
   flatList: {
     width: '100%',
   },
-  orderContainer: {
-    backgroundColor: 'white',
-    borderWidth: 0.17,
-    borderColor: color.primary,
-    width: '90%',
-    marginBottom: 15,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignSelf: 'center',
-  },
-  orderContent: {
-    padding: 10,
+  imgStyle: {
     width: '100%',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    height: undefined,
+    aspectRatio: 5 / 5,
   },
-  orderHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  orderId: {
-    backgroundColor: color.primary,
-    padding: 5,
-    width: '30%',
-    borderRadius: 15,
-  },
-  orderIdText: {
-    color: 'white',
-    textAlign: 'center',
-    fontWeight: '900',
-  },
-  orderStatus: {
-    padding: 5,
-  },
-  orderStatusText: {
-    color: 'black',
-    textAlign: 'center',
-    fontWeight: '900',
-  },
-  orderDetails: {
-    gap: 10,
-    marginTop: 10,
-  },
-  orderAddress: {
-    color: 'black',
-    fontWeight: '700',
-    width: '95%',
-  },
-  orderDate: {
-    color: 'black',
-    fontWeight: '700',
-  },
-  orderPhone: {
-    color: 'black',
-    fontWeight: '700',
-  },
-  orderAmountContainer: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderRadius: 20,
-  },
-  orderAmountLabel: {
-    fontSize: 18,
-    color: 'black',
-    textAlign: 'center',
-    fontWeight: '700',
-  },
-  orderAmount: {
-    width: '40%',
-    alignSelf: 'center',
-    backgroundColor: color.primary,
-    padding: 15,
-    borderRadius: 20,
-  },
-  orderAmountText: {
-    color: 'white',
-    textAlign: 'center',
-    fontWeight: '900',
-  },
+
   loader: {
     marginVertical: 10,
   },
@@ -283,9 +178,13 @@ const styles = StyleSheet.create({
   },
   noDataContainer: {
     flex: 1,
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+
   },
 });
 
 export default ActiveOrders;
+
+

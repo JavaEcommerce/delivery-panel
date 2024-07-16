@@ -6,10 +6,7 @@ import { Box, Pressable, Image } from 'native-base'
 const profileImage = require('../Assets/userPic.jpeg');
 const verified = require('../Assets/verified.png');
 import routes from '../Contants/routes';
-import { useContext } from 'react';
-import { PersonalDetailsContext } from '../Context/ProfileContext';
-import { Ionicons } from "@expo/vector-icons";
-import Icon from "react-native-vector-icons/FontAwesome";
+import typography from '../Contants/fonts';
 
 const HomeProfileCard = ({ navigation, isHomeNavigated, profileData }) => {
   const [isVerified, setIsVerified] = useState(profileData?.isVarified);
@@ -22,21 +19,22 @@ const HomeProfileCard = ({ navigation, isHomeNavigated, profileData }) => {
               <Image
                 style={{ width: 100, height: 100, borderRadius: 50 }}
                 source={profileImage}
+                alt='Profile Picture'
                 width={"10"} />
               <Box>
                 <Box flexDir={'row'} justifyContent={"start"} alignItems={'center'}>
-                  <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>
+                  <Text style={{ fontWeight: typography.bold.fontWeight, fontSize: typography.mainHeading.fontSize, color: 'white' }}>
                     {profileData?.name?.slice(0, 1)?.toUpperCase() + profileData?.name?.slice(1,)}</Text>
-                  {isVerified && <Image source={verified} style={{ width: 20, height: 20, }} />}
+                  {isVerified && <Image alt='verified' source={verified} style={{ width: 20, height: 20, }} />}
                 </Box>
 
                 <Text style={{ fontSize: 14, color: 'white' }}>{profileData.email}</Text>
               </Box>
             </Box>
             <Box style={{ marginTop: 10, gap: 5 }}>
-              <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>🏠 {profileData.houseNo ? `H No-${profileData.houseNo}` : ''} ,{profileData.flateNo ? `F No-${profileData.flateNo}` : ''}, {profileData.addressLine} </Text>
-              <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>📍 {profileData.city.cityName}</Text>
-              <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white' }}>📱 {profileData.firstMobileNumber}</Text>
+              <Text style={{ fontSize: typography.body.fontSize, fontWeight: typography.bold.fontWeight, color: 'white' }}>🏠 {profileData.houseNo ? `H No-${profileData.houseNo}` : ''} ,{profileData.flatNo ? `F No-${profileData.flatNo}` : ''}, {profileData.addressLine} </Text>
+              <Text style={{ fontSize: typography.body.fontSize, fontWeight: typography.bold.fontWeight, color: 'white' }}>📍 {profileData.city.cityName}</Text>
+              <Text style={{ fontSize: typography.body.fontSize, fontWeight: typography.bold.fontWeight, color: 'white' }}>📱 {profileData.firstMobileNumber}</Text>
             </Box>
             <Box style={{ alignSelf: 'center' }}>
             </Box>
@@ -47,47 +45,47 @@ const HomeProfileCard = ({ navigation, isHomeNavigated, profileData }) => {
   } else {
     return (
       <>
-        <View style={{ height: "37%", backgroundColor: color.primary, width: '90%', borderRadius: 20 }}>
+        <View style={{ height: "37%", backgroundColor: color.primary, width: '90%', borderRadius: 20 ,marginTop:5 }}>
           <Box style={{ padding: 10 }}>
             <Pressable style={{ justifyContent: 'space-between', height: '100%' }}>
               <Box style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
                 <Image
-                  style={{ width: 100, height: 100, borderRadius: 50 }}
+                  style={{ width: 90, height: 90, borderRadius: 50 }}
                   source={profileImage}
+                  alt='Profile Picture'
                   width={"10"} />
                 <Box>
                   <Box flexDir={'row'} justifyContent={"start"} alignItems={'center'}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>
+                    <Text style={{ fontWeight: typography.bold.fontWeight, fontSize: typography.mainHeading.fontSize, color: 'white' }}>
                       {profileData?.name?.slice(0, 1)?.toUpperCase() + profileData?.name?.slice(1,)}
                     </Text>
-                    {isVerified && <Image source={verified} style={{ width: 20, height: 20, }} />}
+                    {isVerified && <Image alt='verified' source={verified} style={{ width: 20, height: 20, }} />}
                   </Box>
 
-                  <Text style={{ fontSize: 14, color: 'white' }}>
+                  <Text style={{ fontSize:typography.subtitle.fontSize, color: 'white' }}>
                     {profileData?.email}
                   </Text>
                 </Box>
               </Box>
-              <Box style={{ marginTop: 8, gap: 2 }}>
-                <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'white', height: 20 }}>
-                  🏠 {profileData?.houseNo ? `H No-${profileData?.houseNo}` : ''}
-                  {profileData?.flateNo ? `, F No-${profileData?.flateNo}` : ''}, {profileData?.addressLine}
+              <Box style={{ marginTop: 8, gap: 3 }}>
+                <Text style={{ fontSize: typography.body.fontSize, fontWeight: typography.bold.fontWeight, color: 'white', height: 20 }}>
+                  🏠 : {profileData?.houseNo ? `H No-${profileData?.houseNo}` : ''}
+                  {profileData?.flatNo ? `, F No-${profileData?.flatNo}` : ''}, {profileData?.addressLine}
                 </Text>
-                <Text style={{ fontSize: 17, fontWeight: 'bold', color: 'white', height: 23 }}>
-                  📍 {profileData?.city?.cityName?.slice(0, 1)?.toUpperCase() + profileData?.city?.cityName?.slice(1,)}
-                  -{profileData?.city?.countryId?.countryName}, {profileData?.pincode}
+                <Text style={{ fontSize: typography.body.fontSize, fontWeight: typography.bold.fontWeight, color: 'white', height: 23 }}>
+                  📍 : {profileData?.city?.cityName?.slice(0, 1)?.toUpperCase() + profileData?.city?.cityName?.slice(1,)}
+                  , {profileData?.city?.countryId?.countryName} , {profileData?.pincode}
                 </Text>
-                <Text style={{ fontSize: 17, marginLeft: 5, color: color.white, fontWeight: 'bold' }}>
-                  📱 {profileData?.firstMobileNumber}
+                <Text style={{ fontSize: typography.body.fontSize, marginLeft: 5, color: color.white, fontWeight: typography.bold.fontWeight }}>📱 : {profileData?.firstMobileNumber}
                 </Text>
-                <Text style={{ fontSize: 17, marginLeft: 5, color: color.white, fontWeight: 'bold' }}>
-                  📱 {profileData?.secondMobileNumber}
+                <Text style={{ fontSize: typography.body.fontSize, marginLeft: 5, color: color.white, fontWeight: typography.bold.fontWeight }}>
+                  📱 : {profileData?.secondMobileNumber}
                 </Text>
-                <Text style={{ fontSize: 17, marginLeft: 5, color: color.white, fontWeight: 'bold' }}>
-                  Latitude: {profileData?.latitude}
+                <Text style={{ fontSize: typography.body.fontSize, marginLeft: 5, color: color.white, fontWeight: typography.bold.fontWeight }}>
+                  🌍 : {profileData?.latitude}  Latitude
                 </Text>
-                <Text style={{ fontSize: 17, marginLeft: 5, color: color.white, fontWeight: 'bold' }}>
-                  Longitude: {profileData?.longitude}
+                <Text style={{ fontSize: typography.body.fontSize, marginLeft: 5, color: color.white, fontWeight: typography.bold.fontWeight }}>
+                  🌍 : {profileData?.longitude} Longitude
                 </Text>
               </Box>
               <Box style={{ alignSelf: 'center' }}>

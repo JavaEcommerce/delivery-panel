@@ -9,9 +9,9 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import color from '../Contants/color';
 import { Foundation } from '@expo/vector-icons';
-import Earning from '../Screens/OtherScreens/Earning';
 import OrderTopNavi from '../Navigations/OrderTopNavi';
 import ProfileNavigation from './ProfileNavigation';
+import EarningNavigation from './EarningNavigation';
 const Tab = createBottomTabNavigator();
 
 
@@ -39,12 +39,14 @@ function BottomTabNavi() {
                     }
                 }
             })}>
+
             <Tab.Screen name={routes.HOME} component={Home} />
             <Tab.Screen name={routes.ORDER} component={OrderTopNavi} />
-            <Tab.Screen name={routes.EARNING} component={Earning} />
+            <Tab.Screen name={routes.EARNING} component={EarningNavigation} />
             <Tab.Screen name={routes.PROFILE} component={ProfileNavigation} />
         </Tab.Navigator>
     );
 }
+
 
 export default BottomTabNavi;

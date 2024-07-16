@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
-import { TextInput, StyleSheet, Alert,TouchableOpacity } from 'react-native';
+import { TextInput, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import axios from 'axios';
-import { Button, Pressable, Text, View, } from 'native-base';
+import { Button, Pressable, ScrollView, Text, View, } from 'native-base';
 import { apiBaseUrl, updateProfileById } from '../../Contants/api';
 import color from '../../Contants/color';
 import { Entypo } from '@expo/vector-icons';
+import { useProfile } from '../../Context/ProfileContext';
+import typography from '../../Contants/fonts';
 
 export default function PersonalDetails({ route, navigation }) {
-  const { profileData } = route.params;
+  const { profileData, loading, error, refreshProfileData } = useProfile();
+
   const [name, setName] = useState(profileData.name);
   const [firstMobileNumber, setFirstMobileNumber] = useState(profileData.firstMobileNumber);
   const [city, setCityName] = useState(profileData.city.cityName);
   const [secondMobileNumber, setSecondMobileNumber] = useState(profileData.secondMobileNumber);
   const [pincode, setPincode] = useState(profileData.pincode);
-  const [longitude, setLongitute] = useState(profileData.longitude);
-  const [latitude, setLatitude] = useState(profileData.latitude);
+  const [longitude, setLongitute] = useState(profileData.longitude.toString());
+  const [latitude, setLatitude] = useState(profileData.latitude.toString());
   const [houseNo, setHouseNo] = useState(profileData.houseNo);
-  const [flateNo, setFlateNo] = useState(profileData.flateNo);
+  const [flatNo, setFlatNo] = useState(profileData.flatNo);
   const [addressLine, setaddressLine] = useState(profileData.addressLine);
   const [emailError, setEmailError] = useState("")
   const [nameError, setNameError] = useState("")
@@ -33,7 +36,7 @@ export default function PersonalDetails({ route, navigation }) {
       longitude,
       latitude,
       houseNo,
-      flateNo,
+      flatNo,
       addressLine
 
     }
@@ -42,7 +45,8 @@ export default function PersonalDetails({ route, navigation }) {
       const res = await axios.put(`${apiBaseUrl}${updateProfileById}3`, updatedDetails)
 
       alert('Profile updated successfully');
-      navigation.goBack();
+      navigation.navigate('My Profile', 'ok');
+
     }
     catch (error) {
       console.log(error, error.message);
@@ -72,7 +76,8 @@ export default function PersonalDetails({ route, navigation }) {
   };
 
   return (
-    <View style={{ width: "100%", justifyContent: "center", alignItems: "center", flex: 1, backgroundColor: color.white }}>
+    <ScrollView>
+      <View style={{ width: "100%", justifyContent: "center", alignItems: "center", flex: 1, backgroundColor: color.white }}>
         <View
           style={{
             flex: 1,
@@ -107,23 +112,22 @@ export default function PersonalDetails({ route, navigation }) {
 
             />
             {nameError ? <Text style={{ color: "red", paddingVertical: 3 }}>{nameError}</Text> : null}
-            {/* <TextInput
+            <TextInput
               style={styles.input}
               placeholder="Email"
+              readOnly
               value={profileData.email}
               onChangeText={validateEmail}
 
               keyboardType="email-address"
             />
-            {emailError ? <Text style={{ color: "red", paddingVertical: 3 }}>{emailError}</Text> : null} */}
+            {emailError ? <Text style={{ color: "red", paddingVertical: 3 }}>{emailError}</Text> : null}
             <TextInput
-             style={styles.input}
+              style={styles.input}
               placeholder="First Number"
               value={firstMobileNumber}
               onChangeText={setFirstMobileNumber}
               maxLength={10}
-
-
               keyboardType="phone-pad"
             />
             <TextInput
@@ -146,8 +150,8 @@ export default function PersonalDetails({ route, navigation }) {
             <TextInput
               style={styles.input}
               placeholder="Flate No"
-              value={flateNo}
-              onChangeText={setFlateNo}
+              value={flatNo}
+              onChangeText={setFlatNo}
 
             />
             <TextInput
@@ -200,14 +204,15 @@ export default function PersonalDetails({ route, navigation }) {
               }}
             >
 
-              <TouchableOpacity onPress={handleUpdate} style={{ width: "100%", justifyContent: "center", backgroundColor: color.primary, padding: 8, borderRadius: 5, alignItems: "center" }}><Text style={{ width: 80, color: color.white, fontSize: 20 }}>Update</Text></TouchableOpacity>
+              <TouchableOpacity onPress={handleUpdate} style={{ width: "100%", justifyContent: "center", backgroundColor: color.primary, padding: 8, borderRadius: 5, alignItems: "center" }}><Text style={{ width: 80, color: color.white, fontSize: typography.mainHeading.fontSize }}>Update</Text></TouchableOpacity>
 
 
             </View>
           </View>
         </View>
-      
-    </View>
+
+      </View>
+    </ScrollView>
   );
 }
 
@@ -221,7 +226,7 @@ const styles = StyleSheet.create({
   input: {
     borderColor: color.primary,
     color: 'black',
-    fontWeight: '600',
+    fontWeight: typography.heading.fontWeight,
     borderWidth: 1,
     marginBottom: 10,
     paddingVertical: 15,
@@ -240,8 +245,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
-    fontSize: 16,
-    fontWeight: 700
+    fontSize: typography.body.fontSize,
+    fontWeight: typography.bold.fontWeight
   },
 });
 
