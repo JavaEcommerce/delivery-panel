@@ -59,7 +59,7 @@ export default function OtpSection({ route, navigation }) {
     };
 
     const resendOTP = async (id) => {
-        console.log(id,'kk')
+       
         const updatedStatus = {
             status: 'Delivered'
         };

@@ -50,7 +50,7 @@ export default function EarningHistory() {
 ];
 const [allEarning,setAllEarnings] = useState(earnings)
 
-console.log(allEarning);
+
 const renderItems =({item})=>{
 
     let statusColor = '';
@@ -72,7 +72,7 @@ const renderItems =({item})=>{
     if(item.status=='Paid'){
       statusColor = 'green';
     }
-    console.log(statusColor);
+
   return(
     <View key={item.orderId} style={{ backgroundColor: 'white', padding: 10, marginBottom: 10, width:'100%',borderRadius:Platform=='IOS'?20:10,gap:10,borderWidth:1, }} borderColor={'gray.300'} >
       <View style={{flexDirection:'row'}} justifyContent={'space-between'} alignItems={'center'} >
