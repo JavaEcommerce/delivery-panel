@@ -1,23 +1,18 @@
-import { Platform, StyleSheet } from 'react-native'
+import { Dimensions, Image } from 'react-native'
 import React, { useState } from 'react'
-import { View, Text, ScrollView, Pressable, } from 'native-base';
+import { View, Text, FlatList, ScrollView, Pressable, } from 'native-base';
 import typography from '../../Contants/fonts';
 
 import DashBoardChart from '../../Components/DashBoardChart'
 import EarningCard from '../../Components/EarningCard';
 import { TextInput } from 'react-native-gesture-handler';
-import { LinearGradient } from 'react-native-svg';
 export default function Dashboard() {
   const [amount, setAmount] = useState()
   const addSpacesBetweenCharacters = (text) => {
     return text.split('').join(' ');
   };
   return (
-    <View bg={'white'} flex={1} alignItems={'center'} w={'100%'} py={Platform.OS === 'ios' ? 0 : 5} >
-        <LinearGradient
-          colors={['#9ACA00', '#C2DF66', '#ffff']}
-          style={styles.container}
-        />
+    <View bg={'white'} flex={1} alignItems={'center'} w={'100%'} >
       <ScrollView showsVerticalScrollIndicator={false} w={'90%'}>
         <View w={'100%'} gap={10} >
           <View w={'100%'} gap={5} >
@@ -45,12 +40,3 @@ export default function Dashboard() {
 
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor:'red',
-    position: 'absolute',
-    zIndex: 1
-  }
-})

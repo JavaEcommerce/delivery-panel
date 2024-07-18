@@ -11,7 +11,7 @@ export default function ActiveOrderCard({ item, navigation }) {
     const dateTime = new Date(dateTimeString);
     const date = dateTime.toLocaleDateString();
     const time = dateTime.toLocaleTimeString();
-    return { date, time };
+    return { date, time }
   };
 
   const { date: orderDate } = parseDateTime(item?.orderDate);

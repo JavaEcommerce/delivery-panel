@@ -8,7 +8,7 @@ import { Platform } from 'react-native'
 const HomeRecentOrder = ({ item }) => {
     const toast = useToast();
     if (item) {
-        let statusColor = '';
+        let statusColor = ''
         switch (item.status) {
             case 'DELIVERED':
                 statusColor = 'green';
