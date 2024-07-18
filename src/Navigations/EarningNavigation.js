@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -15,7 +15,7 @@ const Tab = createMaterialTopTabNavigator();
 export default function EarningNavigation({ navigation }) {
     const insets = useSafeAreaInsets();
     return (
-        <View bg={'white'} flex={1}  >
+        <View bg={'white'} flex={1} py={Platform.OS === 'ios' ? 0 : 5}  >
 
             <Tab.Navigator
                 screenOptions={{
@@ -27,9 +27,6 @@ export default function EarningNavigation({ navigation }) {
                     
 
                 }}
-                // tabBarOptions={{
-                //     scrollEnabled: true,
-                //   }}
             >
                 <Tab.Screen
                     name={routes.EARNING_DASHBOARD}

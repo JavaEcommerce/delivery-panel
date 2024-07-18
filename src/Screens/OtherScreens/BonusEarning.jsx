@@ -40,20 +40,19 @@ return(
       <Text style={{fontSize:typography.subtitle.fontSize,color:'gray'}}>{item.date}</Text>
       <Text style={{fontWeight:typography.bold.fontWeight, fontSize:typography.mainHeading.fontSize}}>${item.bonusAmount}</Text>
    </View>
-    
   </View>
 )
 }
 
   return (
     <View>
-       <View style={{ padding: 10, height: '100%', width: '100%', justifyContent:'center',alignItems:'center',backgroundColor:'white' }}>
+       <View style={{ height: '100%', width: '100%', justifyContent:'center',alignItems:'center',backgroundColor:'white' }}>
           <FlatList
             data={allBonus}
             keyExtractor={(item, index) => index.toString()}
             renderItem={renderItems}
             style={{width: '90%', }}
-            marginTop={20}
+            // marginTop={20}
 
           />
                     
