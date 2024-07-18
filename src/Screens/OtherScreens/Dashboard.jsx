@@ -6,8 +6,10 @@ import typography from '../../Contants/fonts';
 import DashBoardChart from '../../Components/DashBoardChart'
 import EarningCard from '../../Components/EarningCard';
 import { TextInput } from 'react-native-gesture-handler';
+import { Select,VStack } from "native-base";
 export default function Dashboard() {
   const [amount, setAmount] = useState()
+  const [service, setService] = useState("");
   const addSpacesBetweenCharacters = (text) => {
     return text.split('').join(' ');
   };
@@ -20,7 +22,7 @@ export default function Dashboard() {
           </View>
           <DashBoardChart />
           <View gap={5}>
-            <Text style={{ fontSize: typography.heading.fontSize, fontWeight: typography.bold.fontWeight }}>Withdraw Methods</Text>
+            <Text style={{ fontSize: typography.heading.fontSize, fontWeight: typography.bold.fontWeight }}>Withdraw </Text>
             <TextInput
               style={{ borderRadius: 10, borderBottomWidth: 1, borderColor: 'lightgray', padding: 20, fontSize: typography.h2.fontSize, }}
               inputMode='numeric'

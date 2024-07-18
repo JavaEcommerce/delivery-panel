@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet ,LogBox} from 'react-native';
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -34,7 +34,6 @@ export default function EarningNavigation({ navigation }) {
                 <Tab.Screen
                     name={routes.EARNING_DASHBOARD}
                     component={Dashboard}
-                    initialParams={{ navigation }}
                     options={{
                         tabBarLabel: 'Dashboard',
 
@@ -45,7 +44,6 @@ export default function EarningNavigation({ navigation }) {
 
                     name={routes.EARNING_HISTORY}
                     component={EarningHistory}
-                    initialParams={{ navigation }}
                     options={{
                         tabBarLabel: 'Logs',
                     }}
@@ -54,7 +52,6 @@ export default function EarningNavigation({ navigation }) {
 
                     name={routes.EARNING_BONUS}
                     component={BonusEarning}
-                    initialParams={{ navigation }}
                     options={{
                         tabBarLabel: 'Bonus',
                     }}

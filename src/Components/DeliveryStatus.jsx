@@ -194,7 +194,7 @@ export default function DeliveryStatus({ item, navigation }) {
   }
   return (
 
-    <View style={{width: '90%' }}>
+    <View style={{width: '90%'}}>
       <View style={styles.container}>
         <DropDownPicker
           open={open}
@@ -206,6 +206,18 @@ export default function DeliveryStatus({ item, navigation }) {
           containerStyle={styles.dropdownContainer}
           style={styles.dropdown}
           dropDownStyle={styles.dropdownStyle}
+          dropDownContainerStyle={{
+            backgroundColor: "#f2f2f2",
+            borderWidth:0,
+            borderRadius:10
+          }}
+          listItemLabelStyle={{
+            color: "black",
+            fontWeight:'bold',
+          }} 
+          translation={{
+            PLACEHOLDER: "Update Order Status"
+          }}
           selectedItemLabelStyle={styles.selectedValue}
         />
         <TouchableOpacity style={{ padding: 14, borderRadius: 10, backgroundColor: color.primary }} onPress={() => handleUpdate(item.orderAssignmentId)}>
