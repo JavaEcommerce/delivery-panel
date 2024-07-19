@@ -95,6 +95,13 @@ export default function EarningHistory() {
       </View>
     )
   }
+  const renderOptions = ({ item }) => {
+    return (
+      <>
+        <Menu.Item onPress={() => setFilter(item.value)}>{item.label}</Menu.Item>
+      </>
+    )
+  }
 
   return (
 
@@ -106,46 +113,13 @@ export default function EarningHistory() {
             <Ionicons name="filter" size={20} color="black" />
           </Pressable>;
         }}>
-          {
-            option.map((item,index) => {
-              return (
-                <>
-                  <Menu.Item key={index} onPress={() => setFilter(item.value)}>{item.label}</Menu.Item>
-                </>
-              )
-            })
-          }
+          <FlatList
+            data={option}
+            scrollEnabled={false}
+            renderItem={renderOptions} />
         </Menu>
 
       </View>
-      {/* <Dropdown
-        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
-        data={data}
-        maxHeight={300}
-        labelField="label"
-        valueField="value"
-        placeholder={!isFocus ? 'Filter' : '....'}
-        searchPlaceholder="Search..."
-        value={value}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-        onChange={item => {
-          setValue(item.value);
-          setIsFocus(false);
-        }}
-        renderLeftIcon={() => (
-          <Ionicons 
-          name="filter"
-          style={styles.icon}
-            color={isFocus ? 'blue' : 'black'}
-           size={24} 
-            />
-        )}
-      /> */}
       <FlatList
         data={earnings}
         keyExtractor={(item, index) => index.toString()}

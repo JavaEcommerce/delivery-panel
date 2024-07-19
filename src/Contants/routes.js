@@ -20,6 +20,7 @@ export default ROUTES = {
 
   SETTINGS_DETAIL: 'Settings Detail',
   PROFILE: 'My Profile',
+  PROFILE_NAVIGATION: 'Profile Navigation',
   PROFILE_PERSONAL_DETAILS: 'Personal Details',
   PROFILE_SECURITY_SCREEN: 'Security',
   PROFILE_TERM_CONDITION: 'Term and Condition',
@@ -30,7 +31,9 @@ export default ROUTES = {
   ORDER: 'Orders',
   All_ORDERS: 'All ',
   PENDINGS_ORDERS: 'New Orders',
-  ASSIGN_ORDERS: 'Active Orders ',
+  ORDER_DETAIL_NAVIGATION:'Order Navigation',
+  ASSIGN_ORDERS: 'Active Orders',
+  ACTIVE_SCREEN:'Order Active',
   ORDER_HISTORY: 'History',
   OTP_SCREEN : 'Otp Screen',
 

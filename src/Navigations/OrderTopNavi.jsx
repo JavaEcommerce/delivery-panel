@@ -16,35 +16,33 @@ export default function OrderTopNavi({ navigation }) {
 
     return (
         <Tab.Navigator
-            tabBarOptions={{
-                style: { backgroundColor: 'white', paddingTop: insets.top },
-                indicatorStyle: {
-                    borderBottomColor: color.primary,
-                    borderBottomWidth: 2,
-                },
-                scrollEnabled: true,
-                tabStyle: { width: 150 },
+            screenOptions={{
+                tabBarScrollEnabled: true,
+                tabBarIndicatorStyle: { backgroundColor: color.primary },
+                tabBarStyle: { backgroundColor: 'white', paddingTop: insets.top, },
+                tabBarItemStyle: { borderBottomColor: color.primary },
+
+
             }}
         >
             <Tab.Screen
-                name={routes.ASSIGN_ORDERS}
+                name={routes.ORDER_DETAIL_NAVIGATION}
                 component={OrderDetailNavi}
-                initialParams={{ navigation }}
+                options={{
+                    tabBarLabel: 'Active Orders',
+                }}
             />
             <Tab.Screen
                 name={routes.PENDINGS_ORDERS}
                 component={NewOrders}
-                initialParams={{ navigation }}
             />
             <Tab.Screen
                 name={routes.All_ORDERS}
                 component={AllOrders}
-                initialParams={{ navigation }}
             />
             <Tab.Screen
                 name={routes.ORDER_HISTORY}
                 component={OrderHistory}
-                initialParams={{ navigation }}
             />
         </Tab.Navigator>
     );
