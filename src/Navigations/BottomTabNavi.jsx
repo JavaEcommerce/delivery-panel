@@ -32,7 +32,7 @@ function BottomTabNavi() {
                         return focused ? <Ionicons name="home" size={20} color={color} /> : <Ionicons name="home-outline" size={20} color='black' />;
                     } else if (route.name === routes.ORDER) {
                         return focused ? <FontAwesome5 name="box-open" size={20} color={color} /> : <Feather name="box" size={20} color='black' />;
-                    } else if (route.name === routes.PROFILE) {
+                    } else if (route.name === routes.PROFILE_NAVIGATION) {
                         return focused ? <FontAwesome name="user" size={20} color={color} /> : <FontAwesome name="user-o" size={20} color='black' />;
                     } else if (route.name === routes.EARNING) {
                         return focused ? <Foundation name="dollar" size={28} color={color} /> : <Feather name="dollar-sign" size={20} color='black' />;
@@ -43,7 +43,8 @@ function BottomTabNavi() {
             <Tab.Screen name={routes.HOME} component={Home} />
             <Tab.Screen name={routes.ORDER} component={OrderTopNavi} />
             <Tab.Screen name={routes.EARNING} component={EarningNavigation} />
-            <Tab.Screen name={routes.PROFILE} component={ProfileNavigation} />
+            <Tab.Screen name={routes.PROFILE_NAVIGATION} component={ProfileNavigation}
+            options={{ tabBarLabel:'Profile'}} />
         </Tab.Navigator>
     );
 }

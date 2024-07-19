@@ -9,7 +9,6 @@ import { TextInput } from 'react-native-gesture-handler';
 import { Select,VStack } from "native-base";
 export default function Dashboard() {
   const [amount, setAmount] = useState()
-  const [service, setService] = useState("");
   const addSpacesBetweenCharacters = (text) => {
     return text.split('').join(' ');
   };

@@ -51,7 +51,7 @@ const Profile = ({ navigation, route }) => {
           <Text style={{ fontSize: typography.heading.fontSize, fontWeight: typography.bold.fontWeight, }}> Setup Your Profile</Text>
           <Ionicons name="settings-outline" size={20} color="black" />
         </View>
-        <ScrollView showsVerticalScrollIndicator={false}  style={{width:'90%'}}>
+        <ScrollView showsVerticalScrollIndicator={false}  style={{width:'90%',}}>
 
           <Box shadow={1} alignItems={'center'} gap={3} justifyContent={'center'}>
             <Pressable onPress={() => navigation.navigate(routes.PROFILE_PERSONAL_DETAILS, { profileData },)} style={styles.pressable}>
@@ -120,8 +120,8 @@ const styles = StyleSheet.create({
     height: 50,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 3,
     paddingHorizontal: 10,
+    marginBottom:20,
     alignItems: 'center',
     backgroundColor: 'rgba(249, 84, 74, 1)',
   },
