@@ -13,6 +13,7 @@ export const ProfileProvider = ({ children }) => {
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  console.log(profileData)
 
   const fetchProfileData = async () => {
     setLoading(true);

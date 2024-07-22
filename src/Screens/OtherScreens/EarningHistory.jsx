@@ -79,7 +79,7 @@ export default function EarningHistory() {
     }
 
     return (
-      <View key={item.orderId} style={{ backgroundColor: 'white', padding: 10, marginBottom: 10, width: '100%', borderRadius: Platform.OS == 'ios' ? 10 : 10, gap: 15, borderWidth: 1, }} borderColor={'gray.300'} >
+      <View key={item.orderId} style={{ paddingTop:Platform.OS=='ios'?0:20,backgroundColor: 'white', padding: 10, marginBottom: 10, width: '100%', borderRadius: Platform.OS == 'ios' ? 10 : 10, gap: 15, borderWidth: 1, }} borderColor={'gray.300'} >
         <View style={{ flexDirection: 'row' }} justifyContent={'space-between'} alignItems={'center'} >
           <Text style={{ padding: 4, color: 'black', borderRadius: Platform == 'IOS' ? 15 : 8, fontWeight: typography.h1.fontWeight, fontSize: typography.small.fontSize }}>#{item.orderId}</Text>
           <Text style={{ color: statusColor, fontSize: typography.small.fontSize, fontWeight: typography.bold.fontWeight }}>{item.paymentStatus}</Text>
