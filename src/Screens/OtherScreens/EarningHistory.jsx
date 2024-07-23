@@ -1,14 +1,24 @@
-import { FlatList, StyleSheet } from 'react-native'
-import React, { useState } from 'react'
-import { View, Text } from 'native-base'
+import { FlatList, StyleSheet, Platform, RefreshControl, ActivityIndicator } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Skeleton, Menu, Pressable, } from 'native-base';
 import typography from '../../Contants/fonts';
-import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Menu, Pressable } from 'native-base';
+import axios from 'axios';
+import { apiBaseUrl, paymentHistory } from '../../Contants/api';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useProfile } from '../../Context/ProfileContext';
+import color from '../../Contants/color';
+
+
 
 export default function EarningHistory() {
-  const [filter, setFilter] = useState(null)
-  const option = [
+  const [filter, setFilter] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const { profileData } = useProfile();
+  const deliveryPersonId = profileData?.deliveryPersonId;
+
+  const options = [
     {
       label: 'Last Month',
       value: '1'
@@ -19,46 +29,74 @@ export default function EarningHistory() {
     },
     {
       label: 'Last week',
-      value: '2'
+      value: '3'
     },
-  ]
-  const earnings = [
-    {
-      time: '10:00 AM',
-      date: '15 July 2024 ',
-      amount: 100.00,
-      paymentStatus: 'Paid',
-      orderId: 'ORD001'
-    },
-    {
-      time: '11:30 AM',
-      date: '15 July 2024',
-      amount: 150.50,
-      paymentStatus: 'Pending',
-      orderId: 'ORD002'
-    },
-    {
-      time: '01:00 PM',
-      date: '15 July 2024',
-      amount: 200.75,
-      paymentStatus: 'Paid',
-      orderId: 'ORD003'
-    },
-    {
-      time: '02:45 PM',
-      date: '15 July 2024',
-      amount: 50.25,
-      paymentStatus: 'Admin Pandings',
-      orderId: 'ORD004'
-    },
-    {
-      time: '02:45 PM',
-      date: '15 July 2024',
-      amount: 50.25,
-      paymentStatus: 'Failed',
-      orderId: 'ORD004'
-    }
   ];
+
+  useEffect(() => {
+    fetchPaymentHistory();
+  }, []);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    refetch();
+  };
+
+  const fetchPaymentHistory = async ({ deliveryPersonId, pageNumber, pageSize }) => {
+    try {
+      const res = await axios.get(`${apiBaseUrl}${paymentHistory}${deliveryPersonId}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+      if (res?.data?.flatPaymentHistoryResponseList) {
+        const data = res.data.flatPaymentHistoryResponseList;
+        return {
+          log: data,
+          totalPages: res.data.totalPages || 0,
+        };
+      }
+    } catch (error) {
+      console.error('Error fetching payment history:', error);
+      return {
+        log: [],
+        totalPages: 0,
+      };
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+    error,
+    isError,
+    refetch,
+  } = useInfiniteQuery({
+    queryKey: ['earningHistory', deliveryPersonId],
+    queryFn: ({ pageParam = 0 }) =>
+      fetchPaymentHistory({
+        deliveryPersonId,
+        pageNumber: pageParam,
+        pageSize: 10,
+      }),
+    enabled: !!deliveryPersonId,
+    getNextPageParam: (lastPage, pages) => {
+      if (!lastPage || typeof lastPage.totalPages !== 'number') {
+        return undefined;
+      }
+      const currentPage = pages.length;
+      return currentPage < lastPage.totalPages ? currentPage : undefined;
+    },
+  });
+
+  const loadMore = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  };
+
   const renderItems = ({ item }) => {
     let statusColor = '';
     switch (item.paymentStatus) {
@@ -78,97 +116,131 @@ export default function EarningHistory() {
         statusColor = 'black';
     }
 
-    return (
-      <View key={item.orderId} style={{ backgroundColor: 'white', padding: 10, marginBottom: 10, width: '100%', borderRadius: Platform.OS == 'ios' ? 10 : 10, gap: 15, borderWidth: 1, }} borderColor={'gray.300'} >
-        <View style={{ flexDirection: 'row' }} justifyContent={'space-between'} alignItems={'center'} >
-          <Text style={{ padding: 4, color: 'black', borderRadius: Platform == 'IOS' ? 15 : 8, fontWeight: typography.h1.fontWeight, fontSize: typography.small.fontSize }}>#{item.orderId}</Text>
-          <Text style={{ color: statusColor, fontSize: typography.small.fontSize, fontWeight: typography.bold.fontWeight }}>{item.paymentStatus}</Text>
-        </View>
-        <View style={{ flexDirection: 'row' }} justifyContent={'space-between'}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }} justifyContent={'center'} >
-            <Text style={{ fontSize: typography.subtitle.fontSize, color: 'gray' }}>{item.date} at </Text>
-            <Text style={{ fontSize: typography.subtitle.fontSize, color: 'gray' }}>{item.time} </Text>
+    if (item?.amountPaid) {
+      const [date, timeWithMs] = item?.paymentDate ? item?.paymentDate.split(' ') : '';
+      const time = timeWithMs ? timeWithMs.split('.')[0] : 'null';
+      return (
+        <View key={item.orderId} style={{ backgroundColor: 'white', padding: 10, marginBottom: 10, width: '100%', borderRadius: Platform.OS === 'ios' ? 10 : 10, gap: 15, borderWidth: 1 }} borderColor={'gray.300'}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Text style={{ padding: 4, color: 'black', borderRadius: Platform.OS === 'ios' ? 15 : 8, fontWeight: typography.h1.fontWeight, fontSize: typography.small.fontSize }}>#ORD{item.orderAssignmentId}</Text>
+            <Text style={{ color: statusColor, fontSize: typography.small.fontSize, fontWeight: typography.bold.fontWeight }}>{item.paymentStatus}</Text>
           </View>
-          <Text style={{ fontWeight: typography.bold.fontWeight, fontSize: typography.mainHeading.fontSize }}>${item.amount}</Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+              <Text style={{ fontSize: typography.subtitle.fontSize, color: 'gray' }}>{date} at {time} </Text>
+            </View>
+            <Text style={{ fontWeight: typography.bold.fontWeight, fontSize: typography.mainHeading.fontSize }}>${Math.abs(item.amountPaid)}</Text>
+          </View>
         </View>
+      );
+    }
+  };
 
-      </View>
-    )
-  }
-  const renderOptions = ({ item }) => {
+  const renderOptions = ({ item }) => (
+    <Menu.Item onPress={() => setFilter(item.value)}>{item.label}</Menu.Item>
+  );
+
+  const objectData = data?.pages.flatMap(page => page.log) || [];
+
+  if (loading) {
     return (
-      <>
-        <Menu.Item onPress={() => setFilter(item.value)}>{item.label}</Menu.Item>
-      </>
-    )
-  }
-
-  return (
-
-    <View style={{ height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }}>
-      <View w={'90%'} flexDir={'row'} justifyContent={'space-between'} alignItems={'center'} pb={5}>
-        <Text fontSize={typography.heading.fontSize} fontWeight={typography.heading.fontWeight}>Filter</Text>
-        <Menu w="190" trigger={triggerProps => {
-          return <Pressable accessibilityLabel="More options menu" {...triggerProps}>
-            <Ionicons name="filter" size={20} color="black" />
-          </Pressable>;
-        }}>
-          <FlatList
-            data={option}
-            scrollEnabled={false}
-            renderItem={renderOptions} />
-        </Menu>
-
+      <View flex={1} w={'100%'} bg={'white'} alignItems={'center'} gap={5}>
+        <Skeleton w={'90%'} borderRadius={10} h={100} />
+        <Skeleton w={'90%'} borderRadius={10} h={100} />
+        <Skeleton w={'90%'} borderRadius={10} h={100} />
+        <Skeleton w={'90%'} borderRadius={10} h={100} />
+        <Skeleton w={'90%'} borderRadius={10} h={100} />
+        <Skeleton w={'90%'} borderRadius={10} h={100} />
       </View>
-      <FlatList
-        data={earnings}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderItems}
-        style={{ width: '90%', }}
-
-      />
-
-    </View>
-
-  )
+    );
+  } else {
+    return (
+      <View style={styles.container}>
+        <View style={styles.filterContainer}>
+          <Text style={{ fontSize: typography.heading.fontSize, fontWeight: typography.bold.fontWeight }}>Filter</Text>
+          <Menu w="190" trigger={triggerProps => (
+            <Pressable accessibilityLabel="More options menu" {...triggerProps}>
+              <Ionicons name="filter" size={20} color="black" />
+            </Pressable>
+          )}>
+            <FlatList
+              data={options}
+              scrollEnabled={false}
+              renderItem={renderOptions}
+            />
+          </Menu>
+        </View>
+        <FlatList
+          data={objectData}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={renderItems}
+          showsVerticalScrollIndicator={false}
+          style={styles.flatList}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.8}
+          scrollEventThrottle={20}
+          ListFooterComponent={isFetchingNextPage ? <ActivityIndicator size="large" color={color.primary} /> : null}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['red', 'yellow']} />}
+        />
+      </View>
+    );
+  }
 }
 
-
 const styles = StyleSheet.create({
-
-  dropdown: {
-    height: 50,
-    borderColor: 'gray',
-    // backgroundColor: 'black',
-    width: '40%',
-    borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 8,
-  },
-  icon: {
-    marginRight: 5,
-  },
-  label: {
-    position: 'absolute',
+  container: {
+    height: '100%',
+    width: '100%',
+    alignItems: 'center',
     backgroundColor: 'white',
-    left: 22,
-    top: 8,
-    zIndex: 999,
-    paddingHorizontal: 8,
-    fontSize: 14,
+    gap: 5,
   },
-  placeholderStyle: {
-    fontSize: 16,
+  filterContainer: {
+    width: '90%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
-  selectedTextStyle: {
-    fontSize: 16,
+  filterText: {
+    fontSize: typography.heading.fontSize,
+    fontWeight: typography.heading.fontWeight,
   },
-  iconStyle: {
-    width: 20,
-    height: 20,
+  flatList: {
+    marginTop: 10,
+    width: '90%',
   },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 16,
+  paymentItem: {
+    backgroundColor: 'white',
+    padding: 10,
+    marginBottom: 10,
+    width: '100%',
+    borderRadius: Platform.OS === 'ios' ? 10 : 10,
+    gap: 15,
+    borderWidth: 1,
+    borderColor: 'gray.300',
+  },
+  paymentHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  orderId: {
+    padding: 4,
+    color: 'black',
+    borderRadius: Platform.OS === 'ios' ? 15 : 8,
+    fontWeight: typography.h1.fontWeight,
+    fontSize: typography.small.fontSize,
+  },
+  paymentDetails: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  paymentDate: {
+    fontSize: typography.subtitle.fontSize,
+    color: 'gray',
+  },
+  amountPaid: {
+    fontWeight: typography.bold.fontWeight,
+    fontSize: typography.mainHeading.fontSize,
   },
 });

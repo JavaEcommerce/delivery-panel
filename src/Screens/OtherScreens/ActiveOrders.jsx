@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, RefreshControl, FlatList, ActivityIndicator } from 'react-native';
 import { Box, Skeleton, View, ScrollView, Image } from 'native-base';
 import color from '../../Contants/color';
-import routes from '../../Contants/routes';
 import axios from 'axios';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { apiBaseUrl, getAllActiveOrders } from '../../Contants/api';
@@ -10,7 +9,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import ActiveOrderCard from '../../Components/ActiveOrderCard';
 import LottieView from 'lottie-react-native';
 import typography from '../../Contants/fonts';
-const activeOrderImg = require('../../Assets/ActiveOrder.jpg');
 const deliveryPersonId = 3;
 
 const ActiveOrders = ({ navigation }) => {

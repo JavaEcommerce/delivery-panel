@@ -30,13 +30,13 @@ export default function ActiveOrderCard({ item, navigation }) {
               </Box>
             </Box>
             <Box style={styles.orderDetails}>
-              <Text style={{fontSize:typography.subtitle.fontSize,}} numberOfLines={4}>
+              <Text style={{ fontSize: typography.subtitle.fontSize, }} numberOfLines={4}>
                 🏠 : {item?.customerAddress?.houseNo ? `H-${item?.customerAddress?.houseNo}` : ''}
                 {item?.customerAddress?.flatNo ? `, F-${item?.customerAddress?.flatNo},` : ''}
                 {item?.customerAddress?.addressLine1}
               </Text>
-            <Text style={{fontSize:typography.subtitle.fontSize,}}>🗓️ : {orderDate}</Text>
-              <Text style={{fontSize:typography.subtitle.fontSize,}}>📱 : {item?.customerAddress?.pocPhoneNo}</Text>
+              <Text style={{ fontSize: typography.subtitle.fontSize, }}>🗓️ : {orderDate}</Text>
+              <Text style={{ fontSize: typography.subtitle.fontSize, }}>📱 : {item?.customerAddress?.pocPhoneNo}</Text>
             </Box>
             <Box style={styles.orderAmountContainer}>
               <Text style={styles.orderAmountLabel}> Total Amount :</Text>
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     borderColor: color.primary,
     width: '90%',
     marginBottom: 15,
-    borderRadius: Platform=='IOS'? 20:10,
+    borderRadius: Platform.OS == 'ios' ? 10 : 10,
     justifyContent: 'center',
     alignSelf: 'center',
   },
@@ -78,25 +78,25 @@ const styles = StyleSheet.create({
     backgroundColor: color.primary,
     padding: 5,
     width: '30%',
-    borderRadius: 20,
+    borderRadius: 10,
   },
   orderIdText: {
     color: 'white',
     textAlign: 'center',
     fontWeight: typography.h1.fontWeight,
-    fontSize:typography.small.fontSize,
-    
-    
+    fontSize: typography.small.fontSize,
+
+
   },
 
 
   orderDetails: {
     gap: 10,
     marginTop: 10,
-    
+
 
   },
- 
+
 
 
 
@@ -105,28 +105,31 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderRadius: 20,
+    // backgroundColor:'black',
+    borderRadius: 10,
   },
   orderAmountLabel: {
-    fontSize:typography.heading.fontSize,
-    color: 'black',
+    fontSize: typography.heading.fontSize,
+    color: 'grey',
     textAlign: 'center',
+
     fontWeight: typography.bold.fontWeight,
 
   },
   orderAmount: {
-    width: '40%',
+    // width: '40%',
+    marginTop: 10,
     alignSelf: 'center',
-    backgroundColor: color.primary,
+    // backgroundColor: color.primary,
     padding: 15,
-    borderRadius: 20,
+    borderRadius: 10,
   },
   orderAmountText: {
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
     fontWeight: typography.bold.fontWeight,
-    fontSize:typography.heading.fontSize,
-    
+    fontSize: typography.heading.fontSize,
+
   },
   loader: {
     marginVertical: 10,

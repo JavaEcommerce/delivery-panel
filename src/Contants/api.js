@@ -4,7 +4,7 @@
 
 import { API_BASE_URL } from '@env'
 // Base API URLs for different services
-export const apiBaseUrl = 'https://i57l05gw4to2.share.zrok.io';
+export const apiBaseUrl = 'https://67ilkorosdse.share.zrok.io';
 
 // Order Endpoints
 export const getAllNewOrders = "/orderAssignments/newOrders/";
@@ -22,6 +22,12 @@ export const signin = "api/auth/v1/signin";
 export const getProfileById = "/api/v1/delivery/profile/";
 export const addDeliveryPerson = "/api/v1/delivery/";
 export const updateProfileById = "/api/v1/delivery/update/";
+
+
+// Payment Endpoints
+export const paymentHistory = "/flatPaymentHistory/?deliveryPersonId=";
+// export const addDeliveryPerson = "/api/v1/delivery/";
+// export const updateProfileById = "/api/v1/delivery/update/";
 
 // Online/Offline Endpoints
 export const updateStatusByProfileId = "/api/v1/delivery/";

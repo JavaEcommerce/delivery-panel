@@ -52,7 +52,7 @@ const HomeRecentOrder = ({ item }) => {
                     <>
                         <Box style={{ padding: 10, width: '100%', flexDirection: 'column', justifyContent: 'space-between', borderRadius: 0 }}>
                             <Box style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <Box px={5} style={{ backgroundColor: color.primary, padding: 5, borderRadius: 15 }}>
+                                <Box px={5} style={{ backgroundColor: color.primary, padding: 5, borderRadius: 10 }}>
                                     <Text style={{ color: 'white', textAlign: 'center', fontWeight: typography.h1.fontWeight,fontSize:typography.small.fontSize }}>#{item.order.orderId}</Text>
                                 </Box>
                                 <Box style={{ padding: 5 }}>
