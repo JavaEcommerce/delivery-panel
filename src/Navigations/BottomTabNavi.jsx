@@ -44,7 +44,7 @@ function BottomTabNavi() {
             <Tab.Screen name={routes.ORDER} component={OrderTopNavi} />
             <Tab.Screen name={routes.EARNING} component={EarningNavigation} />
             <Tab.Screen name={routes.PROFILE_NAVIGATION} component={ProfileNavigation}
-            options={{ tabBarLabel:'Profile'}} />
+                options={{ tabBarLabel: 'Profile' }} />
         </Tab.Navigator>
     );
 }

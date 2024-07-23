@@ -1,8 +1,8 @@
 
-import { View, Text, } from 'react-native'
+
 import { React, useState } from 'react'
 import color from '../Contants/color'
-import { Box, Pressable, Image } from 'native-base'
+import { Box, Pressable, Image, View, Text } from 'native-base'
 const profileImage = require('../Assets/userPic.jpeg');
 const verified = require('../Assets/verified.png');
 import routes from '../Contants/routes';
@@ -12,7 +12,7 @@ const HomeProfileCard = ({ navigation, isHomeNavigated, profileData }) => {
   const [isVerified, setIsVerified] = useState(profileData?.isVarified);
   if (isHomeNavigated) {
     return (
-      <View style={{ height: "30%", backgroundColor: color.primary, width: '90%', borderRadius: 20 }}>
+      <View bg={color.primary} style={{ height: "30%", width: '90%', borderRadius: 20 }}>
         <Box style={{ padding: 10 }}>
           <Pressable onPress={() => navigation.navigate(routes.PROFILE)} style={{ justifyContent: 'space-between', height: '100%' }}>
             <Box style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
@@ -45,7 +45,7 @@ const HomeProfileCard = ({ navigation, isHomeNavigated, profileData }) => {
   } else {
     return (
       <>
-        <View style={{ height: "37%", backgroundColor: color.primary, width: '90%', borderRadius: 20 ,marginTop:5 }}>
+        <View style={{ height: "37%", backgroundColor: color.primary, width: '90%', borderRadius: 20, marginTop: 5 }}>
           <Box style={{ padding: 10 }}>
             <Pressable style={{ justifyContent: 'space-between', height: '100%' }}>
               <Box style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
@@ -62,7 +62,7 @@ const HomeProfileCard = ({ navigation, isHomeNavigated, profileData }) => {
                     {isVerified && <Image alt='verified' source={verified} style={{ width: 20, height: 20, }} />}
                   </Box>
 
-                  <Text style={{ fontSize:typography.subtitle.fontSize, color: 'white' }}>
+                  <Text style={{ fontSize: typography.subtitle.fontSize, color: 'white' }}>
                     {profileData?.email}
                   </Text>
                 </Box>
