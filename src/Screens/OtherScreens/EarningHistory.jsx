@@ -112,19 +112,10 @@ export default function EarningHistory() {
 
   const objectData = data?.pages.flatMap(page => page.log) || [];
 
-  if (loading) {
-    return (
-      <View flex={1} w={'100%'} bg={'white'} alignItems={'center'} gap={5}>
-        <Skeleton w={'90%'} borderRadius={10} h={100} />
-        <Skeleton w={'90%'} borderRadius={10} h={100} />
-        <Skeleton w={'90%'} borderRadius={10} h={100} />
-        <Skeleton w={'90%'} borderRadius={10} h={100} />
-        <Skeleton w={'90%'} borderRadius={10} h={100} />
-        <Skeleton w={'90%'} borderRadius={10} h={100} />
-      </View>
-    );
-  } else {
-    return (
+  
+
+  return (
+    <>
       <View style={styles.container}>
         <View style={styles.filterContainer}>
           <Text style={{ fontSize: typography.heading.fontSize, fontWeight: typography.bold.fontWeight }}>Filter</Text>
@@ -140,21 +131,36 @@ export default function EarningHistory() {
             />
           </Menu>
         </View>
-        <FlatList
-          data={objectData}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={renderItems}
-          showsVerticalScrollIndicator={false}
-          style={styles.flatList}
-          onEndReached={loadMore}
-          onEndReachedThreshold={0.8}
-          scrollEventThrottle={20}
-          ListFooterComponent={isFetchingNextPage ? <ActivityIndicator size="large" color={color.primary} /> : null}
-          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['red', 'yellow']} />}
-        />
-      </View>
-    );
-  }
+        {
+          loading ? (<>
+            <View flex={1} w={'100%'} bg={'white'} alignItems={'center'} gap={5}>
+              <Skeleton w={'90%'} borderRadius={10} h={100} />
+              <Skeleton w={'90%'} borderRadius={10} h={100} />
+              <Skeleton w={'90%'} borderRadius={10} h={100} />
+              <Skeleton w={'90%'} borderRadius={10} h={100} />
+              <Skeleton w={'90%'} borderRadius={10} h={100} />
+              <Skeleton w={'90%'} borderRadius={10} h={100} />
+            </View>
+          </>) : (<>
+
+            <FlatList
+              data={objectData}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={renderItems}
+              showsVerticalScrollIndicator={false}
+              style={styles.flatList}
+              onEndReached={loadMore}
+              onEndReachedThreshold={0.8}
+              scrollEventThrottle={20}
+              ListFooterComponent={isFetchingNextPage ? <ActivityIndicator size="large" color={color.primary} /> : null}
+              refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['red', 'yellow']} />}
+            />
+
+          </>)
+        }
+      </View >
+    </>
+  );
 }
 
 const styles = StyleSheet.create({

@@ -1,42 +1,68 @@
-import { FlatList, ActivityIndicator, RefreshControl } from "react-native";
-import React, { useState, useEffect, useContext, useCallback } from "react";
-import { useFocusEffect } from "@react-navigation/native";
-import { Box, View, Text, Skeleton, ScrollView } from "native-base";
-import typography from "../../Contants/fonts";
-import COLORS from "../../Contants/color";
-import { Platform } from "react-native";
-import { FontAwesome5 } from "@expo/vector-icons";
-import color from "../../Contants/color";
-import { apiBaseUrl } from "../../Contants/api";
-import { getBonus } from "../../Contants/api";
-import axios from "axios";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { useProfile } from "../../Context/ProfileContext";
+
+import { FlatList, StyleSheet, Platform, RefreshControl, ActivityIndicator } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Skeleton, Menu, Pressable, } from 'native-base';
+import typography from '../../Contants/fonts';
+import { Ionicons } from '@expo/vector-icons';
+import axios from 'axios';
+import { apiBaseUrl, getBonus, paymentHistory } from '../../Contants/api';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useProfile } from '../../Context/ProfileContext';
+import color from '../../Contants/color';
+import EarningHistoryCard from '../../Components/EarningHistoryCard';
+
 
 
 export default function BonusEarning() {
-  const { profileData } = useProfile();
+  const [filter, setFilter] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const deliveryPersonId = profileData.deliveryPersonId;
-  const [bonusData,setBonusData] = useState(null)
+  const { profileData } = useProfile();
+  const deliveryPersonId = profileData?.deliveryPersonId;
 
-  const fetchBonusData = async ({ pageNumber, deliveryPersonId, pageSize }) => {
+  const options = [
+    {
+      label: 'Last Month',
+      value: '1'
+    },
+    {
+      label: 'Last 10 days',
+      value: '2'
+    },
+    {
+      label: 'Last week',
+      value: '3'
+    },
+  ];
+
+  useEffect(() => {
+    fetchBonusHistory();
+  }, []);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    refetch();
+  };
+
+  const fetchBonusHistory = async ({ deliveryPersonId, pageNumber, pageSize }) => {
     try {
-      const response = await axios.get(
-        `${apiBaseUrl}${getBonus}?deliveryPersonId=${deliveryPersonId}?pageNumber=${pageNumber}&pageSize=${pageSize}`
-        // `https://bvzwr2c7mj3m.share.zrok.io/bonusPaymentHistory/?deliveryPersonId=3&pageNumber=${pageNumber}&pageSize=${pageSize}`
-
-      );
-      // const data = response?.data?.bonusPaymentHistoryResponseList;
-      // console.log(response.data,'kkhhh')
-      setBonusData(response?.data?.bonusPaymentHistoryResponseList)
-      // console.log(data,'bksjcbk')
-      return {
-        // bonus: data,
-        totalPages: response?.data?.totalPage || 0,
-      };
+      const res = await axios.get(`${apiBaseUrl}${getBonus}${deliveryPersonId}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+      if (res?.data?.bonusPaymentHistoryResponseList) {
+        const data = res?.data?.bonusPaymentHistoryResponseList;
+        return {
+          bonus: data,
+          totalPages: res.data.totalPages || 0,
+        };
+      }
     } catch (error) {
-      console.error("Error fetching bonus history:", error.message);
+      console.error('Error fetching Bonus:', error);
+      return {
+        bonus: [],
+        totalPages: 0,
+      };
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
     }
   };
 
@@ -47,16 +73,17 @@ export default function BonusEarning() {
     isFetchingNextPage,
     status,
     error,
+    isError,
     refetch,
   } = useInfiniteQuery({
-    queryKey: ["BonusEarning", deliveryPersonId],
+    queryKey: ['bonusEarning', deliveryPersonId],
     queryFn: ({ pageParam = 0 }) =>
-      fetchBonusData({
+      fetchBonusHistory({
         deliveryPersonId,
         pageNumber: pageParam,
-        pageSize: 5,
+        pageSize: 10,
       }),
-      enabled: !!deliveryPersonId,
+    enabled: !!deliveryPersonId,
     getNextPageParam: (lastPage, pages) => {
       if (!lastPage || typeof lastPage.totalPages !== 'number') {
         return undefined;
@@ -66,143 +93,131 @@ export default function BonusEarning() {
     },
   });
 
-  const onRefresh = () => {
-    setRefreshing(true);
-    refetch().finally(() => setRefreshing(false));
-  };
-
   const loadMore = () => {
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
   };
 
-  // const getData = data?.pages.flatMap(page => page.bonus) || [];
-
   const renderItems = ({ item }) => {
-    return (
-      <View
-        key={item.orderId}
-        style={{
-          backgroundColor: "white",
-          padding: 10,
-          marginBottom: 10,
-          width: "100%",
-          borderRadius: Platform.OS == "ios" ? 20 : 10,
-          gap: 10,
-          borderWidth: 1,
-        }}
-        borderColor={"gray.300"}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            gap={2}
-          >
-            <FontAwesome5
-              name="gift"
-              size={16}
-              color={"rgba(249, 84, 74, 1)"}
-            />
-            <Text
-              color={"rgba(249, 84, 74, 1)"}
-              style={{
-                fontWeight: typography.bold.fontWeight,
-                fontSize: typography.mainHeading.fontSize,
-              }}
-            >
-              {item.bonusPaymentId}
-            </Text>
-          </View>
-          <Text>{item.paymentStatus}</Text>
-        </View>
-
-        <View
-          style={{ flexDirection: "row" }}
-          justifyContent={"space-between"}
-          alignItems={"center"}
-        >
-          <Text
-            style={{ fontSize: typography.subtitle.fontSize, color: "gray" }}
-          >
-            {item.paymentDate != null ? item.paymentDate : "15 july"}
-          </Text>
-          <Text
-            color={color.primary}
-            style={{
-              fontWeight: typography.bold.fontWeight,
-              fontSize: typography.mainHeading.fontSize,
-            }}
-          >
-            + ${item.amountPaid}
-          </Text>
-        </View>
-      </View>
-    );
+    if (item?.amountPaid) {
+      return (
+        <EarningHistoryCard item={item} />
+      );
+    }
   };
 
+  const renderOptions = ({ item }) => (
+    <Menu.Item onPress={() => setFilter(item.value)}>{item.label}</Menu.Item>
+  );
+
+  const objectData = data?.pages.flatMap(page => page.bonus) || [];
+
+
   return (
-    <View>
-      <View
-        style={{
-          paddingTop: Platform.OS == "ios" ? 0 : 20,
-          height: "100%",
-          width: "100%",
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "white",
-        }}
-      >
-        {bonusData!=null ? (
-          <FlatList
-            data={bonusData}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={renderItems}
-            style={{ width: "90%" }}
-            showsVerticalScrollIndicator={false}
-            onEndReached={loadMore}
-            onEndReachedThreshold={0.8}
-            scrollEventThrottle={20}
-            ListFooterComponent={
-              isFetchingNextPage ? (
-                <ActivityIndicator color={color.primary} size={"large"} />
-              ) : null
-            }
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-                colors={[color.primary]}
-              />
-            }
-          />
-        ) : (
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            w={"90%"}
-            scrollIndicatorInsets={false}
-          >
-            <Skeleton borderRadius={10} h={100} />
-            <Skeleton borderRadius={10} mt={3} h={100} />
-            <Skeleton borderRadius={10} mt={3} h={100} />
-            <Skeleton borderRadius={10} mt={3} h={100} />
-            <Skeleton borderRadius={10} mt={3} h={100} />
-            <Skeleton borderRadius={10} mt={3} h={100} />
-            <Skeleton borderRadius={10} mt={3} h={100} />
-            <Skeleton borderRadius={10} mt={3} h={100} />
-          </ScrollView>
-        )}
-      </View>
-    </View>
+    <>
+      <View style={styles.container}>
+        <View style={styles.filterContainer}>
+          <Text style={{ fontSize: typography.heading.fontSize, fontWeight: typography.bold.fontWeight }}>Filter</Text>
+          <Menu w="190" trigger={triggerProps => (
+            <Pressable accessibilityLabel="More options menu" {...triggerProps}>
+              <Ionicons name="filter" size={20} color="black" />
+            </Pressable>
+          )}>
+            <FlatList
+              data={options}
+              scrollEnabled={false}
+              renderItem={renderOptions}
+            />
+          </Menu>
+        </View>
+        {
+          loading ? (<>
+            <View flex={1} w={'100%'} bg={'white'} alignItems={'center'} gap={5}>
+              <Skeleton w={'90%'} borderRadius={10} h={100} />
+              <Skeleton w={'90%'} borderRadius={10} h={100} />
+              <Skeleton w={'90%'} borderRadius={10} h={100} />
+              <Skeleton w={'90%'} borderRadius={10} h={100} />
+              <Skeleton w={'90%'} borderRadius={10} h={100} />
+              <Skeleton w={'90%'} borderRadius={10} h={100} />
+            </View>
+          </>) : (<>
+
+            <FlatList
+              data={objectData}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={renderItems}
+              showsVerticalScrollIndicator={false}
+              style={styles.flatList}
+              onEndReached={loadMore}
+              onEndReachedThreshold={0.8}
+              scrollEventThrottle={20}
+              ListFooterComponent={isFetchingNextPage ? <ActivityIndicator size="large" color={color.primary} /> : null}
+              refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['red', 'yellow']} />}
+            />
+
+          </>)
+        }
+      </View >
+    </>
   );
 }
+
+
+const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    width: '100%',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    gap: 5,
+  },
+  filterContainer: {
+    width: '90%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  filterText: {
+    fontSize: typography.heading.fontSize,
+    fontWeight: typography.heading.fontWeight,
+  },
+  flatList: {
+    marginTop: 10,
+    width: '90%',
+  },
+  paymentItem: {
+    backgroundColor: 'white',
+    padding: 10,
+    marginBottom: 10,
+    width: '100%',
+    borderRadius: Platform.OS === 'ios' ? 10 : 10,
+    gap: 15,
+    borderWidth: 1,
+    borderColor: 'gray.300',
+  },
+  paymentHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  orderId: {
+    padding: 4,
+    color: 'black',
+    borderRadius: Platform.OS === 'ios' ? 15 : 8,
+    fontWeight: typography.h1.fontWeight,
+    fontSize: typography.small.fontSize,
+  },
+  paymentDetails: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  paymentDate: {
+    fontSize: typography.subtitle.fontSize,
+    color: 'gray',
+  },
+  amountPaid: {
+    fontWeight: typography.bold.fontWeight,
+    fontSize: typography.mainHeading.fontSize,
+  },
+});
