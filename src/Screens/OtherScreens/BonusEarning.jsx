@@ -23,8 +23,8 @@ export default function BonusEarning() {
   const fetchBonusData = async ({ pageNumber, deliveryPersonId, pageSize }) => {
     try {
       const response = await axios.get(
-        // `${apiBaseUrl}${getBonus}?deliveryPersonId=${deliveryPersonId}?pageNumber=${pageNumber}&pageSize=${pageSize}`
-        `https://bvzwr2c7mj3m.share.zrok.io/bonusPaymentHistory/?deliveryPersonId=3&pageNumber=${pageNumber}&pageSize=${pageSize}`
+        `${apiBaseUrl}${getBonus}?deliveryPersonId=${deliveryPersonId}?pageNumber=${pageNumber}&pageSize=${pageSize}`
+        // `https://bvzwr2c7mj3m.share.zrok.io/bonusPaymentHistory/?deliveryPersonId=3&pageNumber=${pageNumber}&pageSize=${pageSize}`
 
       );
       // const data = response?.data?.bonusPaymentHistoryResponseList;
