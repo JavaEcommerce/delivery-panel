@@ -9,7 +9,7 @@ import { apiBaseUrl, getBonus, paymentHistory } from '../../Contants/api';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useProfile } from '../../Context/ProfileContext';
 import color from '../../Contants/color';
-import EarningHistoryCard from '../../Components/EarningHistoryCard';
+import BonusCard from '../../Components/BonusCard';
 
 
 
@@ -102,7 +102,7 @@ export default function BonusEarning() {
   const renderItems = ({ item }) => {
     if (item?.amountPaid) {
       return (
-        <EarningHistoryCard item={item} />
+        <BonusCard item={item} />
       );
     }
   };
@@ -221,3 +221,6 @@ const styles = StyleSheet.create({
     fontSize: typography.mainHeading.fontSize,
   },
 });
+
+
+

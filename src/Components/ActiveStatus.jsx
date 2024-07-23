@@ -10,6 +10,7 @@ const ActiveStatus = ({ profile }) => {
 
   const [isOnline, setIsOnline] = useState(profile.status =='STATUS_ONLINE');
   const [disable,setDisable] = useState(false)
+  const [res,setRes] = useState(false)
   
   const toggleOnline = async () => {
     const newStatus = isOnline ? 'STATUS_ONLINE' : 'STATUS_OFFLINE';
@@ -29,6 +30,7 @@ const ActiveStatus = ({ profile }) => {
        
       });
       setDisable(false)
+      setRes(true)
  
 
       if (!response.ok) {
@@ -41,7 +43,7 @@ const ActiveStatus = ({ profile }) => {
       // setDisable(true)      
     } catch (error) {
       console.error('Error updating status:', error.message);
-      
+      setRes(false)
     }finally {
       
      // setTimeout(() => setDisable(false), 4000); // Re-enable the switch after 2 seconds
@@ -55,14 +57,14 @@ const ActiveStatus = ({ profile }) => {
 
     <View style={{ justifyContent: 'space-between', width: '90%', flexDirection: 'row', alignItems: 'center', marginBottom: 20, marginTop: 20, gap: 10  }}>
       <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-        <Text  style={{ fontWeight: typography.bold.fontWeight,fontSize: typography.body.fontSize }}>{isOnline ? 'Hey 👋🏻' : 'Bye 👋🏻'}, {profile.name}</Text>
+        <Text  style={{ fontWeight: typography.bold.fontWeight,fontSize: typography.body.fontSize }}>{isOnline && res ? 'Hey 👋🏻' : 'Bye 👋🏻'}, {profile.name}</Text>
       </Box>
       <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-        <Text style={{ fontWeight: typography.bold.fontWeight,fontSize: typography.body.fontSize }}>{isOnline ? 'Online' : 'Offline'}</Text>
+        <Text style={{ fontWeight: typography.bold.fontWeight,fontSize: typography.body.fontSize }}>{isOnline && res ? 'Online' : 'Offline'}</Text>
         <Switch
           value={isOnline}
           onValueChange={toggleOnline}
-          trackColor={{ false: 'gray', true: color.primary }}
+          trackColor={{ false: 'gray', true: isOnline && res?color.primary:'gray' }}
           isDisabled={disable}
         />
       </Box>
