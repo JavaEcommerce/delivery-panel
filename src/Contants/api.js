@@ -26,11 +26,13 @@ export const updateProfileById = "/api/v1/delivery/update/";
 
 // Payment Endpoints
 export const paymentHistory = "/flatPaymentHistory/?deliveryPersonId=";
-// export const addDeliveryPerson = "/api/v1/delivery/";
-// export const updateProfileById = "/api/v1/delivery/update/";
+export const getBonus = "/bonusPaymentHistory/";
 
 // Online/Offline Endpoints
 export const updateStatusByProfileId = "/api/v1/delivery/";
+
+// Bonus endpoint
+
 
 
 

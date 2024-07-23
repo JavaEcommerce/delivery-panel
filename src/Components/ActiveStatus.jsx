@@ -29,9 +29,7 @@ const ActiveStatus = ({ profile }) => {
        
       });
       setDisable(false)
-      
-      console.log(payload.status,"status")
-      console.log(isOnline,'BKJBSCL')
+ 
 
       if (!response.ok) {
         throw new Error('Failed to update status');
