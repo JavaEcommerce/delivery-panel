@@ -92,8 +92,8 @@ const Onboarding = ({ navigation }) => {
                     />
                     {renderIndicators()}
                     <View justifyContent={'space-between'} m={10} flexDir={'row'} borderRadius={15} borderWidth={1} borderColor={color.primary}>
-                        <Pressable p={2} justifyContent={'center'} alignItems={'center'} onPress={() => navigation.navigate(ROUTES.REGISTER)} w={'40%'} borderRadius={15} bg={color.primary}>
-                            <Text fontSize={ typography.heading.fontSize} fontWeight={typography.bold.fontWeight} color={'white'}>Sign Up</Text>
+                        <Pressable p={2} justifyContent={'center'} alignItems={'center'} onPress={() => navigation.navigate(ROUTES.REGISTER)} w={'40%'} borderRadius={15} bg={color.buttonColor}>
+                            <Text fontSize={ typography.heading.fontSize} fontWeight={typography.bold.fontWeight} color={color.fontColor}>Sign Up</Text>
                         </Pressable>
                         <Pressable justifyContent={'center'} alignItems={'center'} onPress={() => navigation.navigate(ROUTES.LOGIN)} w={'40%'} borderRadius={15}>
                             <Text fontSize={ typography.heading.fontSize} fontWeight={typography.bold.fontWeight} color={color.primary}>Log In</Text>

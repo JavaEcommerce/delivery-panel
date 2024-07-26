@@ -29,6 +29,7 @@ const ActiveStatus = ({ profile }) => {
        
       });
       setDisable(false)
+      setIsOnline(previousState => !previousState)
  
 
       if (!response.ok) {
@@ -37,7 +38,6 @@ const ActiveStatus = ({ profile }) => {
       }
       
 
-      setIsOnline(previousState => !previousState)
       // setDisable(true)      
     } catch (error) {
       console.error('Error updating status:', error.message);
