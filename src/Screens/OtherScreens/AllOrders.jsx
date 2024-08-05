@@ -14,6 +14,7 @@ const AllOrders = () => {
   const getOrderData = async () => {
     const res = await axios.get(`${apiBaseUrl}${getAllOrders}`)
     setData(res?.data?.allOrders)
+    
   }
   useEffect(() => {
     getOrderData()
