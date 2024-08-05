@@ -97,7 +97,7 @@ const styles = {
         paddingLeft: 10,
     },
     button: {
-        backgroundColor: COLORS.primary,
+        backgroundColor: COLORS.buttonColor,
         width: '100%',
         height: 40,
         borderRadius: 5,
