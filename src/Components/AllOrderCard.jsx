@@ -5,9 +5,10 @@ import color from '../Contants/color';
 import typography from '../Contants/fonts';
 import axios from 'axios';
 import { useProfile } from '../Context/ProfileContext';
-import { apiBaseUrl, getAllOrders, postAllOrder } from '../Contants/api';
+import { apiBaseUrl, postAllOrder } from '../Contants/api';
 export default function AllOrderCard({ item }) {
-    const { profileData, loading, error, refreshProfileData } = useProfile();
+
+    const { profileData} = useProfile();
     const postOrder = async () => {
         const object = {
             order: {

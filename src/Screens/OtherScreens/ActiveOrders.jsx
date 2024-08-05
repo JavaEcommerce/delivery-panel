@@ -9,12 +9,13 @@ import { useFocusEffect } from '@react-navigation/native';
 import ActiveOrderCard from '../../Components/ActiveOrderCard';
 import LottieView from 'lottie-react-native';
 import typography from '../../Contants/fonts';
-const deliveryPersonId = 3;
+import { useProfile } from '../../Context/ProfileContext';
 
 const ActiveOrders = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  const { profileData} = useProfile();
+  const deliveryPersonId = profileData.deliveryPersonId;
   const onRefresh = () => {
     setRefreshing(true);
     setTimeout(() => {
