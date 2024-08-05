@@ -45,7 +45,7 @@ const HomeProfileCard = ({ navigation, isHomeNavigated, profileData }) => {
   } else {
     return (
       <>
-        <View style={{ height: "37%", backgroundColor: color.primary, width: '90%', borderRadius: 20, marginTop: 5 }}>
+        <View style={{ height: "37%", backgroundColor: COLORS.primary, width: '90%', borderRadius: 20, marginTop: 5 }}>
           <Box style={{ padding: 10 }}>
             <Pressable style={{ justifyContent: 'space-between', height: '100%' }}>
               <Box style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>

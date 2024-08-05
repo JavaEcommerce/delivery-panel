@@ -35,9 +35,9 @@ export default function BonusEarning() {
     },
   ];
 
-  useEffect(() => {
-    fetchBonusHistory();
-  }, []);
+//  useEffect(() => {
+//     fetchBonusHistory();
+//   }, []); 
 
   const onRefresh = () => {
     setRefreshing(true);

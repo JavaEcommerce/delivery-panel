@@ -86,6 +86,7 @@ export default function BonusCard({ item }) {
           {item.paymentStatus}
         </Text>
       </View>
+      <View><Text style={{fontWeight: typography.bold.fontWeight,fontSize:typography.mainHeading.fontSize}}>{item.bonusTitle!=null?item.bonusTitle:"Performance"}</Text></View>
       <View flexDirection={'row'} gap={2}>
         {item.paymentMethod=='upi'?<MaterialIcons name={paymentMode} size={24} color="black" />:<MaterialCommunityIcons name={paymentMode} size={24} color="black" />}
        

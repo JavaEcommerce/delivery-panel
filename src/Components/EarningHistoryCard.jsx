@@ -36,6 +36,7 @@ export default function EarningHistoryCard({ item }) {
                 </View>
                 <Text style={{ fontWeight: typography.bold.fontWeight, fontSize: typography.mainHeading.fontSize }}>${Math.abs(item.amountPaid)}</Text>
             </View>
+
         </View>
     )
 }

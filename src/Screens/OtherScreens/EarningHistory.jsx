@@ -10,14 +10,15 @@ import { useProfile } from '../../Context/ProfileContext';
 import color from '../../Contants/color';
 import EarningHistoryCard from '../../Components/EarningHistoryCard';
 
-
+const deliveryPersonId = 3;
 
 export default function EarningHistory() {
   const [filter, setFilter] = useState(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const { profileData } = useProfile();
-  const deliveryPersonId = profileData?.deliveryPersonId;
+  // const deliveryPersonId = profileData?.deliveryPersonId;
+
 
   const options = [
     {
@@ -34,9 +35,9 @@ export default function EarningHistory() {
     },
   ];
 
-  useEffect(() => {
-    fetchPaymentHistory();
-  }, []);
+  // useEffect(() => {
+  //   fetchPaymentHistory();
+  // }, []);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -46,14 +47,17 @@ export default function EarningHistory() {
   const fetchPaymentHistory = async ({ deliveryPersonId, pageNumber, pageSize }) => {
     try {
       const res = await axios.get(`${apiBaseUrl}${paymentHistory}${deliveryPersonId}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+   
       if (res?.data?.flatPaymentHistoryResponseList) {
         const data = res.data.flatPaymentHistoryResponseList;
+        
         return {
           log: data,
           totalPages: res.data.totalPages || 0,
         };
       }
-    } catch (error) {
+
+    }catch (error) {
       console.error('Error fetching payment history:', error);
       return {
         log: [],
