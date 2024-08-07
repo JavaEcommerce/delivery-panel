@@ -6,7 +6,8 @@ import typography from '../Contants/fonts';
 import axios from 'axios';
 import { useProfile } from '../Context/ProfileContext';
 import { apiBaseUrl, postAllOrder } from '../Contants/api';
-export default function AllOrderCard({ item }) {
+import routes from '../Contants/routes';
+export default function AllOrderCard({ item,navigation }) {
 
     const { profileData} = useProfile();
     const postOrder = async () => {
@@ -18,9 +19,14 @@ export default function AllOrderCard({ item }) {
                 deliveryPersonId: profileData.deliveryPersonId
             },
             assignmentType: "self"
+            
 
         }
+        
         const res = await axios.put(`${apiBaseUrl}${postAllOrder}${item.orderAssignmentId}`, object)
+        if(res.status === 200){
+        navigation.navigate(routes.ASSIGN_ORDERS)}
+    
     }
     return (
         <>
@@ -41,7 +47,7 @@ export default function AllOrderCard({ item }) {
                     </Box>
 
                     <Box style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
-                        <TouchableOpacity style={{ width: '100%' }} onPress={() => postOrder()}>
+                        <TouchableOpacity  style={{ width: '100%' }} onPress={() => postOrder()}>
                             <Box style={{ backgroundColor: color.primary, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', padding: 10, borderRadius: 20 }}>
                                 <Text style={{ color: "white", textAlign: 'center', fontSize: typography.heading.fontSize, fontWeight: typography.bold.fontWeight }}> Add to bucket </Text>
                             </Box>
