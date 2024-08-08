@@ -22,7 +22,7 @@ const AllOrders = () => {
   
 
 
-  const renderOrderItem = ({ item }) => (
+  const renderOrderItem = ({ item }) =>  (
 
     <AllOrderCard item={item} />
   );

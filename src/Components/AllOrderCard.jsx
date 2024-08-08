@@ -7,12 +7,12 @@ import axios from 'axios';
 import { useProfile } from '../Context/ProfileContext';
 import { apiBaseUrl, postAllOrder } from '../Contants/api';
 export default function AllOrderCard({ item }) {
-
+console.log(item,'00000')
     const { profileData} = useProfile();
     const postOrder = async () => {
         const object = {
             order: {
-                orderId: item?.order?.orderId
+                orderId: item?.orderId
             },
             deliveryPerson: {
                 deliveryPersonId: profileData.deliveryPersonId
@@ -28,16 +28,16 @@ export default function AllOrderCard({ item }) {
                 <Box style={{ height: 180, padding: 10, width: '100%', flexDirection: 'column', justifyContent: 'space-between' }}>
                     <Box style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Box style={{ backgroundColor: color.primary, padding: 5, width: '30%', borderRadius: 15 }}>
-                            <Text style={{ color: "white", textAlign: 'center', fontWeight: typography.h1.fontWeight }}>#{item?.order?.orderId}</Text>
+                            <Text style={{ color: "white", textAlign: 'center', fontWeight: typography.h1.fontWeight }}>#{item?.orderId}</Text>
                         </Box >
                     </Box>
                     <Box style={{ gap: 10, marginTop: 10 }}>
                         <Text style={{ color: "black", fontWeight: typography.bold.fontWeight, fontSize: typography.subtitle.fontSize }} numberOfLines={4}>
-                            🏠 : {item?.order.customerAddress?.houseNo ? `H-${item?.order?.customerAddress?.houseNo}` : ''}
-                            {item?.order?.customerAddress?.flatNo ? `, F-${item?.order?.customerAddress?.flatNo},` : ''}
-                            {item?.order?.customerAddress?.addressLine1}
+                            🏠 : {item?.customerAddress?.houseNo ? `H-${item?.customerAddress?.houseNo}` : ''}
+                            {item?.customerAddress?.flatNo ? `, F-${item?.customerAddress?.flatNo},` : ''}
+                            {item?.customerAddress?.addressLine1}
                         </Text>
-                        <Text style={{ color: "black", fontWeight: typography.bold.fontWeight }}>🕒 : {item?.order?.orderDate}</Text>
+                        <Text style={{ color: "black", fontWeight: typography.bold.fontWeight }}>🕒 : {item?.orderDate}</Text>
                     </Box>
 
                     <Box style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
