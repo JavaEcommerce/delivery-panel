@@ -19,7 +19,7 @@ function BottomTabNavi() {
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
-                tabBarStyle: { height: '10%' },
+                tabBarStyle: { height: '10%',  },
                 headerShown: false,
                 tabBarActiveTintColor: color.primary,
                 tabBarInActiveTintColor: 'black',
