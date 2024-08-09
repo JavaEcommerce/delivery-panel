@@ -40,7 +40,6 @@ const Profile = ({ navigation, route }) => {
     return (
       <SafeAreaView style={styles.errorContainer}>
         <Text>No profile data available.</Text>
-        
       </SafeAreaView>
     );
   } else {
@@ -51,7 +50,7 @@ const Profile = ({ navigation, route }) => {
           <Text style={{ fontSize: typography.heading.fontSize, fontWeight: typography.bold.fontWeight, }}> Setup Your Profile</Text>
           <Ionicons name="settings-outline" size={20} color="black" />
         </View>
-        <ScrollView showsVerticalScrollIndicator={false}  style={{width:'90%',}}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{ width: '90%', }}>
 
           <Box shadow={1} alignItems={'center'} gap={3} justifyContent={'center'}>
             <Pressable onPress={() => navigation.navigate(routes.PROFILE_PERSONAL_DETAILS, { profileData },)} style={styles.pressable}>
@@ -74,7 +73,7 @@ const Profile = ({ navigation, route }) => {
               <Text fontWeight={typography.bold.fontWeight}>Return Policy</Text>
               <FontAwesome name="angle-right" size={24} color="black" />
             </Pressable>
-            <Pressable style={styles.signOutPressable}>
+            <Pressable onPress={() => navigation.navigate(routes.LOGIN)} style={styles.signOutPressable}>
               <Text fontWeight={typography.bold.fontWeight} color={'white'}>SIGN OUT</Text>
               <Ionicons name="exit-outline" size={24} color="white" />
             </Pressable>
@@ -100,7 +99,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   errorContainer: {
-    backgroundColor:'white',
+    backgroundColor: 'white',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -122,7 +121,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 10,
-    marginBottom:20,
+    marginBottom: 20,
     alignItems: 'center',
     backgroundColor: 'rgba(249, 84, 74, 1)',
   },

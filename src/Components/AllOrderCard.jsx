@@ -7,7 +7,6 @@ import axios from 'axios';
 import { useProfile } from '../Context/ProfileContext';
 import { apiBaseUrl, postAllOrder } from '../Contants/api';
 export default function AllOrderCard({ item }) {
-console.log(item,'00000')
     const { profileData} = useProfile();
     const postOrder = async () => {
         const object = {
@@ -21,6 +20,7 @@ console.log(item,'00000')
 
         }
         const res = await axios.put(`${apiBaseUrl}${postAllOrder}${item.orderAssignmentId}`, object)
+        
     }
     return (
         <>

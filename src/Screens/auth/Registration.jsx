@@ -158,13 +158,6 @@ const Registration = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 20, borderRadius: 10 }}>
-            <Text style={{fontSize:typography.subtitle.fontSize}}>Already have an account?</Text>
-            <TouchableOpacity onPress={() => navigation.navigate(routes.LOGIN)}>
-              <Text style={{ color: COLORS.primary, fontWeight: 'bold', marginLeft: 10, fontSize:typography.subtitle.fontSize}}>Login</Text>
-            </TouchableOpacity>
-          </View>
-        
         </>
       );
 }

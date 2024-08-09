@@ -8,7 +8,7 @@ import axios from 'axios';
 import { apiBaseUrl, getAllOrders } from '../../Contants/api';
 import AllOrderCard from '../../Components/AllOrderCard';
 
-const AllOrders = () => {
+const AllOrders = ({navigation}) => {
   const [data, setData] = useState()
 
   const getOrderData = async () => {
@@ -24,7 +24,7 @@ const AllOrders = () => {
 
   const renderOrderItem = ({ item }) =>  (
 
-    <AllOrderCard item={item} />
+    <AllOrderCard item={item} navigation={navigation} />
   );
 
 
