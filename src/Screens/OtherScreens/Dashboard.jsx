@@ -21,7 +21,7 @@ export default function Dashboard() {
             <EarningCard />
           </View>
           <DashBoardChart />
-          <View gap={5}>
+          {/* <View gap={5}>
             <Text style={{ fontSize: typography.heading.fontSize, fontWeight: typography.bold.fontWeight }}>Withdraw </Text>
             <TextInput
               style={{ borderRadius: 10, borderBottomWidth: 1, borderColor: 'lightgray', padding: 20, fontSize: typography.h2.fontSize, }}
@@ -35,7 +35,7 @@ export default function Dashboard() {
             <Pressable onPress={() => console.log(amount)} bg={'black'} p={4} borderRadius={10} mb={5} justifyContent={'center'} alignItems={'center'} >
               <Text color={'white'} fontSize={typography.heading.fontSize} fontWeight={typography.bold.fontWeight}>Withdraw </Text>
             </Pressable>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </View>
