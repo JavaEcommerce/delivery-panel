@@ -46,7 +46,7 @@ const AllOrders = ({ navigation }) => {
       );
       if (res?.data?.allOrders) {
         const data = res?.data?.allOrders
-        // console.log(data,"jjjjjj")
+        console.log(data,"jjjjj")
         
         return {
           all: data,
@@ -97,6 +97,7 @@ const AllOrders = ({ navigation }) => {
   };
 
   const renderOrderItem = ({ item }) =>{
+    console.log(item,"assignment")
     return(
       <AllOrderCard item={item} navigation={navigation} />
     )
@@ -105,6 +106,7 @@ const AllOrders = ({ navigation }) => {
   const objectData = data?.pages.flatMap((page) => page.all) ;
   // const newdATA=data?.pages[0]?.all
   // console.log(data,'lllllll')
+  console.log(data?.pages[0]?.all,"gjakkll");
   return (
     <View style={styles.container}>
       <FlatList
