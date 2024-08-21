@@ -7,6 +7,7 @@ import DeliveryStatus from "../../Components/DeliveryStatus";
 import OrderDetailCard from "../../Components/OrderDetailCard";
 import { ScrollView } from "react-native-gesture-handler";
 import { Skeleton, View } from "native-base";
+import axiosInstance from "../../Utils/useAxios";
 
 export default function OrderDetailPage({ navigation, route }) {
   const { item } = route.params;
@@ -17,7 +18,7 @@ export default function OrderDetailPage({ navigation, route }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`${apiBaseUrl}${getOrderDetail}${orderId}`);
+        const res = await axiosInstance.get(`${getOrderDetail}${orderId}`);
         setData(res?.data);
       } catch (error) {
         console.log(error);

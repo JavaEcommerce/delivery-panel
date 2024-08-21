@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { addDeliveryPerson, apiBaseUrl, getProfileById } from '../Contants/api';
+import axiosInstance from '../Utils/useAxios';
 
 const ProfileContext = createContext();
 
@@ -19,7 +20,7 @@ export const ProfileProvider = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.get(`${apiBaseUrl}${getProfileById}3`);
+      const response = await axiosInstance.get(`${getProfileById}`);
       if (response?.data) {
         setProfileData(response.data);
       } else {
@@ -44,7 +45,7 @@ export const ProfileProvider = ({ children }) => {
 
   const addDeliveryPerson = async (personData) => {
     try {
-      const response = await axios.post(`${apiBaseUrl}${addDeliveryPerson}`, personData);
+      const response = await axiosInstance.post(`${addDeliveryPerson}`, personData);
       return response.data;
     } catch (error) {
       throw new Error(error.message || 'Failed to add delivery person');

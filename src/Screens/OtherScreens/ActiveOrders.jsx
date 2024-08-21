@@ -31,7 +31,7 @@ const ActiveOrders = ({ navigation }) => {
 
   const fetchActiveOrder = async ({ deliveryPersonId, pageNumber, pageSize }) => {
     try {
-      const res = await axios.get(`${apiBaseUrl}${getAllActiveOrders}${deliveryPersonId}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+      const res = await axiosInstance.get(`${getAllActiveOrders}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
       if (res.data && res.data.assignedOrders) {
         const data = res.data.assignedOrders;
         return {

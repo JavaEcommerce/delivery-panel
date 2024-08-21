@@ -7,6 +7,7 @@ import color from '../../Contants/color';
 import { Entypo } from '@expo/vector-icons';
 import { useProfile } from '../../Context/ProfileContext';
 import typography from '../../Contants/fonts';
+import axiosInstance from '../../Utils/useAxios';
 
 export default function PersonalDetails({ route, navigation }) {
   const { profileData, loading, error, refreshProfileData } = useProfile();
@@ -42,7 +43,7 @@ export default function PersonalDetails({ route, navigation }) {
     }
 
     try {
-      const res = await axios.put(`${apiBaseUrl}${updateProfileById}3`, updatedDetails)
+      const res = await axiosInstance.put(`${updateProfileById}3`, updatedDetails)
 
       alert('Profile updated successfully');
       navigation.navigate('My Profile', 'ok');

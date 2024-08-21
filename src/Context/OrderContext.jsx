@@ -2,13 +2,14 @@ import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { apiBaseUrl, getOrderHistory } from '../Contants/api';
 import { useInfiniteQuery } from '@tanstack/react-query'; // Import useInfiniteQuery
+import axiosInstance from '../Utils/useAxios';
 
 const OrderHistoryContext = createContext();
 const deliveryPersonId=3
 const OrderHistoryProvider = ({ children }) => {
   const fetchOrderHistory = async ({ pageParam = 0 }) => {
     try {
-      const res = await axios.get(`${apiBaseUrl}${getOrderHistory}?pageNumber=${pageParam}&pageSize=5`);
+      const res = await axiosInstance.get(`${getOrderHistory}?pageNumber=${pageParam}&pageSize=5`);
       return {
         orderItems: res?.data?.deliveryPersonWorkHistory,
         totalPages: res?.data?.totalPages || 0,

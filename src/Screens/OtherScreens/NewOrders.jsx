@@ -10,6 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import NewOrderCard from '../../Components/NewOrderCard';
 import LottieView from 'lottie-react-native';
 import typography from '../../Contants/fonts';
+import axiosInstance from '../../Utils/useAxios';
 const deliveryPersonId = 3;
 const NewOrders = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
@@ -17,7 +18,7 @@ const NewOrders = ({ navigation }) => {
 
   const getDataNewOrders = async ({ deliveryPersonId, pageNumber, pageSize }) => {
     try {
-      const res = await axios.get(`${apiBaseUrl}${getAllNewOrders}${deliveryPersonId}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+      const res = await axiosInstance.get(`${getAllNewOrders}${deliveryPersonId}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
       const data = res?.data?.newOrders;
       if (data && data?.length > 0) {
         return {

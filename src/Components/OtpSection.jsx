@@ -10,6 +10,7 @@ import routes from '../Contants/routes';
 import LottieView from 'lottie-react-native';
 import { Ionicons } from '@expo/vector-icons';
 import typography from '../Contants/fonts';
+import axiosInstance from '../Utils/useAxios';
 
 const { width, height } = Dimensions.get('window');
 
@@ -43,7 +44,7 @@ export default function OtpSection({ route, navigation }) {
                 orderAssignmentId: route.params.item.orderAssignmentId
             };
             try {
-                const sentOtp = await axios.post(`${apiBaseUrl}${authenticateOTP}`, payLoad);
+                const sentOtp = await axiosInstance.post(`${authenticateOTP}`, payLoad);
                 if (sentOtp.data.authenticated) {
                     alert('Order Confirmed');
                     navigation.navigate(routes.ASSIGN_ORDERS);
@@ -65,7 +66,7 @@ export default function OtpSection({ route, navigation }) {
         };
         try {
             setIsResendDisabled(true);
-            await axios.put(`${apiBaseUrl}${updateNewOrdersStatus}${id}`, updatedStatus);
+            await axiosInstance.put(`${updateNewOrdersStatus}${id}`, updatedStatus);
         } catch (error) {
             console.error(error);
         }

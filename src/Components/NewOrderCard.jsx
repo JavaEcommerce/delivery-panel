@@ -5,47 +5,52 @@ import color from '../Contants/color';
 import { apiBaseUrl,updateNewOrdersStatus } from '../Contants/api';
 import routes from '../Contants/routes';
 import typography from '../Contants/fonts';
+import axiosInstance from '../Utils/useAxios';
 export default function NewOrderCard({ item,navigation,refetch}) {
-    const handleRejectOrder = async (id) => {
-        const payload = { status: 'DeliveryPersonRejected' };
-        try {
-          const response = await fetch(`${apiBaseUrl}${updateNewOrdersStatus}${id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload),
-          });
-          if (!response.ok) {
+  const handleRejectOrder = async (id) => {
+    const payload = { status: 'DeliveryPersonRejected' };
+    try {
+        const response = await axiosInstance.put(
+            `${updateNewOrdersStatus}${id}`,
+            payload,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+        if (response.status !== 200) {
             throw new Error('Failed to update status');
-          }
-          refetch();
-        } catch (error) {
-          console.error('Error updating status:', error.message);
         }
-      };
+        refetch();
+    } catch (error) {
+        console.error('Error updating status:', error.message);
+    }
+};
 
-      
-    
-      const handleAcceptOrder = async (id) => {
-        const payload = { status: 'Assigned' };
-        try {
-          const response = await fetch(`${apiBaseUrl}${updateNewOrdersStatus}${id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload),
-          });
-          navigation.navigate(routes?.ASSIGN_ORDERS, { item: id });
-          if (!response.ok) {
-            throw new Error('Failed to update status');
+
+const handleAcceptOrder = async (id) => {
+  const payload = { status: 'Assigned' };
+  try {
+      const response = await axiosInstance.put(
+          `${updateNewOrdersStatus}${id}`,
+          payload,
+          {
+              headers: {
+                  'Content-Type': 'application/json',
+              },
           }
-          refetch();
-        } catch (error) {
-          console.error('Error updating status:', error.message);
-        }
-      };
+      );
+      navigation.navigate(routes?.ASSIGN_ORDERS, { item: id });
+      if (response.status !== 200) {
+          throw new Error('Failed to update status');
+      }
+      refetch();
+  } catch (error) {
+      console.error('Error updating status:', error.message);
+  }
+};
+
 
 
 

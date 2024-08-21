@@ -6,6 +6,7 @@ import typography from '../Contants/fonts';
 import axios from 'axios';
 import { useProfile } from '../Context/ProfileContext';
 import { apiBaseUrl, postAllOrder } from '../Contants/api';
+import axiosInstance from '../Utils/useAxios';
 export default function AllOrderCard({ item }) {
     const { profileData} = useProfile();
     const postOrder = async () => {
@@ -19,7 +20,7 @@ export default function AllOrderCard({ item }) {
             assignmentType: "self"
 
         }
-        const res = await axios.put(`${apiBaseUrl}${postAllOrder}${item.orderAssignmentId}`, object)
+        const res = await axiosInstance.put(`${postAllOrder}${item.orderAssignmentId}`, object)
         
     }
     return (

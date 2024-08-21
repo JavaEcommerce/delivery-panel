@@ -10,6 +10,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useProfile } from '../../Context/ProfileContext';
 import color from '../../Contants/color';
 import EarningHistoryCard from '../../Components/EarningHistoryCard';
+import axiosInstance from '../../Utils/useAxios';
 
 
 
@@ -46,7 +47,7 @@ export default function BonusEarning() {
 
   const fetchBonusHistory = async ({ deliveryPersonId, pageNumber, pageSize }) => {
     try {
-      const res = await axios.get(`${apiBaseUrl}${getBonus}${deliveryPersonId}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+      const res = await axiosInstance.get(`${getBonus}${deliveryPersonId}&pageNumber=${pageNumber}&pageSize=${pageSize}`);
       if (res?.data?.bonusPaymentHistoryResponseList) {
         const data = res?.data?.bonusPaymentHistoryResponseList;
         return {

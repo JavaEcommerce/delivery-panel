@@ -7,12 +7,13 @@ import typography from '../../Contants/fonts';
 import axios from 'axios';
 import { apiBaseUrl, getAllOrders } from '../../Contants/api';
 import AllOrderCard from '../../Components/AllOrderCard';
+import axiosInstance from '../../Utils/useAxios';
 
 const AllOrders = ({navigation}) => {
   const [data, setData] = useState()
 
   const getOrderData = async () => {
-    const res = await axios.get(`${apiBaseUrl}${getAllOrders}`)
+    const res = await axiosInstance.get(`${getAllOrders}`)
     setData(res?.data?.allOrders)
     
   }

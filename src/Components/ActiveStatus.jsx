@@ -4,6 +4,7 @@ import { Box, Switch } from 'native-base';
 import color from '../Contants/color';
 import { apiBaseUrl, updateStatusByProfileId } from '../Contants/api';
 import typography from '../Contants/fonts';
+import axiosInstance from '../Utils/useAxios';
 
 const ActiveStatus = ({ profile }) => {
 
@@ -14,41 +15,33 @@ const ActiveStatus = ({ profile }) => {
   const toggleOnline = async () => {
     const newStatus = isOnline ? 'STATUS_ONLINE' : 'STATUS_OFFLINE';
     const payload = { status: newStatus };
-    // setTimeout(()=>setIsOnline(previousState => !previousState),2000)
-    // setIsOnline(previousState => !previousState)
 
     try {
-      setDisable(true)
-      const response = await fetch(`${apiBaseUrl}${updateStatusByProfileId}3`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-        
-       
-      });
-      setDisable(false)
-      setIsOnline(previousState => !previousState)
- 
+        setDisable(true);
+        // Use axiosInstance to send the PUT request
+        const response = await axiosInstance.put(
+            `${updateStatusByProfileId}3`,
+            payload,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
+        setDisable(false);
+        setIsOnline(previousState => !previousState);
 
-      if (!response.ok) {
-        throw new Error('Failed to update status');
-
-      }
-      
-
-      // setDisable(true)      
+        if (response.status !== 200) {
+            throw new Error('Failed to update status');
+        }
     } catch (error) {
-      console.error('Error updating status:', error.message);
-      
-    }finally {
-      
-     // setTimeout(() => setDisable(false), 4000); // Re-enable the switch after 2 seconds
+        console.error('Error updating status:', error.message);
+    } finally {
+        // Optionally re-enable the switch after a delay
+        // setTimeout(() => setDisable(false), 4000);
     }
-    
-   
-  };
+};
+
   
     
   return (

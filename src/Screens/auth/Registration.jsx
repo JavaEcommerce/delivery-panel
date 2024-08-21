@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Modal, TouchableWithoutFeedback } from 'react-native'; // Import Picker
 import { Ionicons } from '@expo/vector-icons';
 import routes from '../../Contants/routes';
@@ -9,6 +9,7 @@ import { useProfile } from '../../Context/ProfileContext';
 import typography from '../../Contants/fonts';
 import { useCheckInternet } from '../../Context/CheckInternet';
 import NoInternet from '../../Components/NoInternet';
+import { AuthContext } from '../../Context/AuthContext';
 const Registration = ({ navigation }) => {
   const { addDeliveryPerson } = useProfile();
   const [dob, setDob] = useState('');
@@ -17,8 +18,11 @@ const Registration = ({ navigation }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const [mobileNumber, setMobileNumber] = useState('');
   const { isConnected } = useCheckInternet()
+  const { registerUser } = useContext(AuthContext)
   const handleDateSelect = (date) => {
     setDob(date);
   };
@@ -27,139 +31,149 @@ const Registration = ({ navigation }) => {
   };
   const handleRegister = async () => {
     const personData = {
-      firstName,
-      lastName,
-      email,
-      mobileNumber,
-      gender: selectedGender,
-      dob
-    };
+      email: email,
+      password: password,
+      phoneNo: mobileNumber
+    }
+    // console.log(personData, '====')
     try {
-      await addDeliveryPerson(personData);
+      await registerUser(personData)
       navigation.navigate(routes.HOME_TAB);
     } catch (error) {
       console.error('Registration failed:', error.message);
     }
   };
 
+
+
   return (
     <>
-      
-          <View style={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }}>
-            <View style={{ width: '50%', height: '30%', position: 'relative' }}>
-              <Image
-                source={require('../../Assets/deliveryPng.png')}
-                style={{ width: '100%', height: '100%' }}
-                resizeMode="contain"
-                alt='img'
+
+      <View style={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }}>
+        <View style={{ width: '50%', height: '30%', position: 'relative' }}>
+          <Image
+            source={require('../../Assets/deliveryPng.png')}
+            style={{ width: '100%', height: '100%' }}
+            resizeMode="contain"
+            alt='img'
+          />
+        </View>
+        <View style={{ width: '80%', height: '60%', alignItems: 'center', marginTop: -60, justifyContent: 'center', padding: 10, paddingTop: 30, borderRadius: 10 }}>
+          <View style={{ width: '100%', alignItems: 'center', padding: 20, borderRadius: 10 }}>
+            <View style={styles.inputContainer}>
+              <Ionicons name="person-outline" size={24} color={COLORS.primary} style={styles.icon} />
+              <TextInput
+                placeholder="First Name"
+                style={styles.input}
+                value={firstName}
+                onChangeText={setFirstName}
               />
             </View>
-            <View style={{ width: '80%', height: '60%', alignItems: 'center', marginTop: -60, justifyContent: 'center', padding: 10, paddingTop: 30, borderRadius: 10 }}>
-              <View style={{ width: '100%', alignItems: 'center', padding: 20, borderRadius: 10 }}>
-                <View style={styles.inputContainer}>
-                  <Ionicons name="person-outline" size={24} color={COLORS.primary} style={styles.icon} />
-                  <TextInput
-                    placeholder="First Name"
-                    style={styles.input}
-                    value={firstName}
-                    onChangeText={setFirstName}
-                  />
-                </View>
-                <View style={styles.inputContainer}>
-                  <Ionicons name="person-outline" size={24} color={COLORS.primary} style={styles.icon} />
-                  <TextInput
-                    placeholder="Last Name"
-                    style={styles.input}
-                    value={lastName}
-                    onChangeText={setLastName}
-                  />
-                </View>
-                <View style={styles.inputContainer}>
-                  <Ionicons name="mail-outline" size={24} color={COLORS.primary} style={styles.icon} />
-                  <TextInput
-                    placeholder="Email"
-                    style={styles.input}
-                    value={email}
-                    onChangeText={setEmail}
-                  />
-                </View>
-                <View style={styles.inputContainer}>
-                  <Ionicons name="call-outline" size={24} color={COLORS.primary} style={styles.icon} />
-                  <TextInput
-                    placeholder="Mobile Number"
-                    keyboardType="phone-pad"
-                    style={styles.input}
-                    value={mobileNumber}
-                    onChangeText={setMobileNumber}
-                  />
-                </View>
-                <View style={[styles.inputContainer, styles.genderInput]}>
-                  <Ionicons name="transgender-outline" size={24} color={COLORS.primary} style={styles.icon} />
-                  <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollViewContent}>
-                    <TouchableOpacity onPress={() => selectGender('Male')} style={styles.radioButton}>
-                      <View style={[styles.radioInner, selectedGender === 'Male' && styles.radioSelected]} />
-                      <Text style={styles.radioButtonLabel}>Male</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => selectGender('Female')} style={styles.radioButton}>
-                      <View style={[styles.radioInner, selectedGender === 'Female' && styles.radioSelected]} />
-                      <Text style={styles.radioButtonLabel}>Female</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => selectGender('Other')} style={styles.radioButton}>
-                      <View style={[styles.radioInner, selectedGender === 'Other' && styles.radioSelected]} />
-                      <Text style={styles.radioButtonLabel}>Other</Text>
-                    </TouchableOpacity>
-                  </ScrollView>
-                </View>
-
-                <View style={styles.inputContainer}>
-                  <Ionicons name="calendar-outline" size={24} color={COLORS.primary} style={styles.icon} onPress={() => setModalVisible(true)} />
-                  <TouchableOpacity onPress={() => setModalVisible(true)}>
-                    <TextInput
-                      placeholder="Date of Birth"
-                      editable={false}
-                      value={dob}
-                      style={styles.input}
-                    />
-                  </TouchableOpacity>
-                </View>
-                <Modal
-                  animationType="slide"
-                  transparent={true}
-                  visible={modalVisible}
-                  onRequestClose={() => {
-                    setModalVisible(!modalVisible);
-                  }}
-                >
-                  <TouchableWithoutFeedback onPress={() => setModalVisible(!modalVisible)}>
-                    <View style={styles.modalBackground}>
-                      <View style={styles.modalContainer}>
-                        <Text style={styles.modalTitle}>Select Date of Birth</Text>
-                        <DatePicker
-                          mode="calendar"
-                          onSelectedChange={(date) => handleDateSelect(date)}
-                          style={styles.datePicker}
-                        />
-                        <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
-                          <Text style={styles.closeButtonText}>Close</Text>
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                  </TouchableWithoutFeedback>
-                </Modal>
-                <TouchableOpacity onPress={handleRegister} style={styles.button}>
-                  <Text style={styles.buttonText}>Register</Text>
-                </TouchableOpacity>
-              </View>
+            <View style={styles.inputContainer}>
+              <Ionicons name="person-outline" size={24} color={COLORS.primary} style={styles.icon} />
+              <TextInput
+                placeholder="Last Name"
+                style={styles.input}
+                value={lastName}
+                onChangeText={setLastName}
+              />
             </View>
-            <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 20, borderRadius: 10 }}>
-              <Text>Already have an account?</Text>
-              <TouchableOpacity onPress={() => navigation.navigate(routes.LOGIN)}>
-                <Text style={{ color: COLORS.primary, fontWeight: 'bold', marginLeft: 10 }}>Login</Text>
+            <View style={styles.inputContainer}>
+              <Ionicons name="mail-outline" size={24} color={COLORS.primary} style={styles.icon} />
+              <TextInput
+                placeholder="Email"
+                style={styles.input}
+                value={email}
+                onChangeText={setEmail}
+              />
+            </View>
+            <View style={styles.inputContainer}>
+              <Ionicons name="call-outline" size={24} color={COLORS.primary} style={styles.icon} />
+              <TextInput
+                placeholder="Mobile Number"
+                keyboardType="phone-pad"
+                style={styles.input}
+                value={mobileNumber}
+                onChangeText={setMobileNumber}
+              />
+            </View>
+            <View style={styles.inputContainer}>
+              <Ionicons name="call-outline" size={24} color={COLORS.primary} style={styles.icon} />
+              <TextInput
+                placeholder="Password"
+                secureTextEntry={true}
+                style={styles.input}
+                value={password}
+                onChangeText={setPassword}
+              />
+            </View>
+            <View style={[styles.inputContainer, styles.genderInput]}>
+              <Ionicons name="transgender-outline" size={24} color={COLORS.primary} style={styles.icon} />
+              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollViewContent}>
+                <TouchableOpacity onPress={() => selectGender('Male')} style={styles.radioButton}>
+                  <View style={[styles.radioInner, selectedGender === 'Male' && styles.radioSelected]} />
+                  <Text style={styles.radioButtonLabel}>Male</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => selectGender('Female')} style={styles.radioButton}>
+                  <View style={[styles.radioInner, selectedGender === 'Female' && styles.radioSelected]} />
+                  <Text style={styles.radioButtonLabel}>Female</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => selectGender('Other')} style={styles.radioButton}>
+                  <View style={[styles.radioInner, selectedGender === 'Other' && styles.radioSelected]} />
+                  <Text style={styles.radioButtonLabel}>Other</Text>
+                </TouchableOpacity>
+              </ScrollView>
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Ionicons name="calendar-outline" size={24} color={COLORS.primary} style={styles.icon} onPress={() => setModalVisible(true)} />
+              <TouchableOpacity onPress={() => setModalVisible(true)}>
+                <TextInput
+                  placeholder="Date of Birth"
+                  editable={false}
+                  value={dob}
+                  style={styles.input}
+                />
               </TouchableOpacity>
             </View>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <TouchableWithoutFeedback onPress={() => setModalVisible(!modalVisible)}>
+                <View style={styles.modalBackground}>
+                  <View style={styles.modalContainer}>
+                    <Text style={styles.modalTitle}>Select Date of Birth</Text>
+                    <DatePicker
+                      mode="calendar"
+                      onSelectedChange={(date) => handleDateSelect(date)}
+                      style={styles.datePicker}
+                    />
+                    <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.closeButton}>
+                      <Text style={styles.closeButtonText}>Close</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </TouchableWithoutFeedback>
+            </Modal>
+            <TouchableOpacity onPress={handleRegister} style={styles.button}>
+              <Text style={styles.buttonText}>Register</Text>
+            </TouchableOpacity>
           </View>
-        </>
-      );
+        </View>
+        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 20, borderRadius: 10 }}>
+          <Text>Already have an account?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate(routes.LOGIN)}>
+            <Text style={{ color: COLORS.primary, fontWeight: 'bold', marginLeft: 10 }}>Login</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </>
+  );
 }
 
 const styles = StyleSheet.create({

@@ -1,4 +1,4 @@
-import { React, useContext, useRef } from 'react';
+import { React, useContext, useRef, useState } from 'react';
 import { ScrollView, View, Image, Text, TextInput, Animated, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Importing Ionicons from the Expo Icons library
 import routes from '../../Contants/routes';
@@ -8,22 +8,27 @@ import typography from '../../Contants/fonts';
 
 import CheckInternetProvider, { useCheckInternet } from '../../Context/CheckInternet';
 import NoInternet from '../../Components/NoInternet';
+import { AuthContext } from '../../Context/AuthContext';
 const Login = ({ navigation }) => {
-    const {
-        isConnected
-    } = useCheckInternet()
+    const { login } = useContext(AuthContext)
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const { isConnected } = useCheckInternet()
 
     const imageTranslateX = useRef(new Animated.Value(-30)).current;
 
     const handleLoginPress = () => {
+        const obj =
+        {
+            email: email.toLowerCase(),
+            password: password,
+        }
         Animated.timing(imageTranslateX, {
             toValue: 100,
             duration: 500,
             useNativeDriver: true,
         }).start();
-        setTimeout(() => {
-            navigation.navigate(routes.BOTTOM_TAB);
-        }, 500);
+        login(obj)
     };
 
     return (
@@ -44,6 +49,8 @@ const Login = ({ navigation }) => {
                             <Ionicons name="mail-outline" size={24} color={COLORS.primary} style={styles.icon} />
                             <TextInput
                                 placeholder="Email"
+                                value={email}
+                                onChangeText={setEmail}
                                 style={styles.input}
                             />
                         </View>
@@ -52,12 +59,14 @@ const Login = ({ navigation }) => {
                             <TextInput
                                 placeholder="Password"
                                 secureTextEntry={true}
+                                value={password}
+                                onChangeText={setPassword}
                                 style={styles.input}
                             />
                         </View>
                         <View style={{ width: '100%', }}>
                             <TouchableOpacity onPress={() => navigation.navigate(routes.FORGOT_PASSWORD)}>
-                                <Text style={{ color: 'black', textAlign: 'right', fontWeight: typography.h6.fontWeight, marginTop: 5, marginBottom: 15, fontSize:typography.subtitle.fontSize }} >Forgot Password ?</Text>
+                                <Text style={{ color: 'black', textAlign: 'right', fontWeight: typography.h6.fontWeight, marginTop: 5, marginBottom: 15, fontSize: typography.subtitle.fontSize }} >Forgot Password ?</Text>
                             </TouchableOpacity>
                         </View>
                         <TouchableOpacity onPress={handleLoginPress} style={styles.button}>
@@ -65,9 +74,9 @@ const Login = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                     <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 20, borderRadius: 10, }}>
-                        <Text style={{fontSize:typography.subtitle.fontSize}}> Don't have an account ? </Text>
+                        <Text style={{ fontSize: typography.subtitle.fontSize }}> Don't have an account ? </Text>
                         <TouchableOpacity onPress={() => navigation.navigate(routes.REGISTER)}>
-                            <Text style={{ color: COLORS.primary, fontWeight: typography.h6.fontWeight ,fontSize:typography.subtitle.fontSize, marginLeft: 10 }}>Sign Up</Text>
+                            <Text style={{ color: COLORS.primary, fontWeight: typography.h6.fontWeight, fontSize: typography.subtitle.fontSize, marginLeft: 10 }}>Sign Up</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

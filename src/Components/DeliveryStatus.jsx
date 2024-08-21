@@ -19,6 +19,7 @@ import axios from 'axios';
 import { TouchableOpacity, Alert } from "react-native"
 import OtpSection from "./OtpSection";
 import typography from "../Contants/fonts";
+import axiosInstance from "../Utils/useAxios";
 export default function DeliveryStatus({ item, navigation }) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -35,7 +36,7 @@ export default function DeliveryStatus({ item, navigation }) {
       }
       try {
         navigation.navigate(routes.OTP_SCREEN, { item }, { navigation });
-        const res = await axios.put(`${apiBaseUrl}${updateNewOrdersStatus}${id}`, updatedStatus);
+        const res = await axiosInstance.put(`${updateNewOrdersStatus}${id}`, updatedStatus);
       } catch (error) {
         alert('Failed to updating status', error);
         console.log(error);
@@ -46,7 +47,7 @@ export default function DeliveryStatus({ item, navigation }) {
         status: value
       }
       try {
-        const res = await axios.put(`${apiBaseUrl}${updateNewOrdersStatus}${id}`, updatedStatus);
+        const res = await axiosInstance.put(`${apiBaseUrl}${updateNewOrdersStatus}${id}`, updatedStatus);
         alert("Status Updated");
         navigation.navigate(routes.ASSIGN_ORDERS)
       } catch (error) {
