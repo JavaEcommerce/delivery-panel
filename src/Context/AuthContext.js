@@ -5,6 +5,7 @@ import { apiBaseUrl, signin, signup, logoutAuth } from '../Contants/api';
 import { useNavigation } from '@react-navigation/native';
 import { jwtDecode } from 'jwt-decode';
 import AuthNavigator from '../Navigations/AuthNavigation';
+import routes from '../Contants/routes';
 
 export const AuthContext = createContext();
 
@@ -23,9 +24,7 @@ export const AuthProvider = ({ children }) => {
             await AsyncStorage.setItem('authTokens', response?.data?.token);
             setUserInfo(jwtDecode(response?.data?.token));
             if (authTokens) {
-                return (
-                    <AuthNavigator />
-                )
+               navigation.navigate(routes.BOTTOM_TAB)
             }
         } catch (error) {
             console.error("Login error:", error);

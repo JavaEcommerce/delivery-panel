@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useProfile } from '../../Context/ProfileContext';
 import HomeProfileCard from '../../Components/HomeProfileCard';
 import typography from '../../Contants/fonts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Profile = ({ navigation, route }) => {
   const { profileData, loading, error, refreshProfileData } = useProfile();
 
@@ -19,7 +20,11 @@ const Profile = ({ navigation, route }) => {
       }
     }, [route.params])
   );
-
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('authTokens');
+    const getItem = await AsyncStorage.getItem('authTokens');
+    navigation.navigate(routes.LOGIN)
+  }
   if (loading) {
     return (
       <SafeAreaView style={styles.skeletonContainer}>
@@ -73,7 +78,7 @@ const Profile = ({ navigation, route }) => {
               <Text fontWeight={typography.bold.fontWeight}>Return Policy</Text>
               <FontAwesome name="angle-right" size={24} color="black" />
             </Pressable>
-            <Pressable onPress={() => navigation.navigate(routes.LOGIN)} style={styles.signOutPressable}>
+            <Pressable onPress={() => handleLogout()} style={styles.signOutPressable}>
               <Text fontWeight={typography.bold.fontWeight} color={'white'}>SIGN OUT</Text>
               <Ionicons name="exit-outline" size={24} color="white" />
             </Pressable>

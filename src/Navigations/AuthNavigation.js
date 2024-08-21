@@ -30,7 +30,7 @@ function AuthNavigator() {
       }
     };
     loadToken();
-  }, [authTokens]);
+  }, []);
 
   if (!initialRoute) {
     return null; // or a loading spinner
