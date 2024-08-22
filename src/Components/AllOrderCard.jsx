@@ -7,7 +7,10 @@ import axios from 'axios';
 import { useProfile } from '../Context/ProfileContext';
 import { apiBaseUrl, postAllOrder } from '../Contants/api';
 import axiosInstance from '../Utils/useAxios';
-export default function AllOrderCard({ item }) {
+
+import routes from '../Contants/routes';
+export default function AllOrderCard({ item,navigation }) {
+    console.log(item,"bjabskjc")
     const { profileData} = useProfile();
     const postOrder = async () => {
         const object = {
@@ -18,11 +21,16 @@ export default function AllOrderCard({ item }) {
                 deliveryPersonId: profileData.deliveryPersonId
             },
             assignmentType: "self"
+            
 
         }
-        const res = await axiosInstance.put(`${postAllOrder}${item.orderAssignmentId}`, object)
         
+        const res = await axiosInstance.put(`${postAllOrder}${item.orderAssignmentId}`, object)
+        if(res.status === 200){
+        navigation.navigate(routes.ASSIGN_ORDERS)}
+    
     }
+   
     return (
         <>
             <Box style={{ backgroundColor: 'white', borderWidth: .17, borderColor: color.primary, width: '90%', marginBottom: 15, borderRadius: Platform == 'IOS' ? 20 : 10, justifyContent: 'center', alignSelf: 'center' }}>
@@ -50,6 +58,7 @@ export default function AllOrderCard({ item }) {
                     </Box>
                 </Box>
             </Box>
+
         </>
     )
 }
