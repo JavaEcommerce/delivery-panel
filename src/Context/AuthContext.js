@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
             await AsyncStorage.setItem('authTokens', response?.data?.token);
             setUserInfo(jwtDecode(response?.data?.token));
             if (authTokens) {
-               navigation.navigate(routes.BOTTOM_TAB)
+                navigation.navigate(routes.BOTTOM_TAB)
             }
         } catch (error) {
             console.error("Login error:", error);
