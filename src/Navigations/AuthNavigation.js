@@ -9,14 +9,14 @@ import BottomTabNavi from './BottomTabNavi';
 import Onboarding from '../Screens/OtherScreens/Onboarding';
 import { useCheckInternet } from '../Context/CheckInternet';
 import NoInternet from '../Components/NoInternet';
-import { AuthContext } from '../Context/AuthContext';
+// import { AuthContext } from '../Context/AuthContext';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createStackNavigator();
 
 function AuthNavigator() {
   const { isConnected } = useCheckInternet();
-  const { authTokens, setAuthTokens,userInfo } = useContext(AuthContext);
+  // const { authTokens, setAuthTokens,userInfo } = useContext(AuthContext);
   const [initialRoute, setInitialRoute] = useState(null);
 
   useEffect(() => {

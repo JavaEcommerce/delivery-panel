@@ -5,7 +5,6 @@ import routes from '../../Contants/routes';
 import COLORS from '../../Contants/color';
 import { LinearGradient } from 'expo-linear-gradient';
 import typography from '../../Contants/fonts';
-
 import CheckInternetProvider, { useCheckInternet } from '../../Context/CheckInternet';
 import NoInternet from '../../Components/NoInternet';
 import { AuthContext } from '../../Context/AuthContext';
