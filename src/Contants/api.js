@@ -1,7 +1,7 @@
 
 import { API_BASE_URL } from '@env'
 // Base API URLs for different services
-export const apiBaseUrl = 'https://4tz1dlbqqblp.share.zrok.io';
+export const apiBaseUrl = 'https://7txzlgiouqyi.share.zrok.io';
 
 // Order Endpoints
 export const getAllNewOrders = "/orderAssignments/newOrders/";

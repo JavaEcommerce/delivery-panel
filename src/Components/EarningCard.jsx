@@ -6,7 +6,7 @@ export default function EarningCard() {
     return (
         <>
             <Text style={{ fontSize: typography.heading.fontSize, fontWeight: typography.bold.fontWeight }}>Earnings</Text>
-            <View flexDir={'row'} p={5} borderRadius={10} justifyContent={'space-between'} bg={'white'} borderWidth={.7} borderColor={'gray.300'}>
+            <View flexDir={'row'} p={5} borderRadius={10} justifyContent={'space-between'} bg={'white'} borderWidth={0.7} borderColor={'gray.300'}>
                 <View justifyContent={'center'} alignItems={'center'}  >
                     <Text fontSize={typography.h1.fontSize}>$250</Text>
                     <Text fontSize={typography.body.fontSize} color={'gray.400'}>Amount</Text>

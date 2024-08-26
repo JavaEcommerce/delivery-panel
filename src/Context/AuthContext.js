@@ -25,6 +25,7 @@ export const AuthProvider = ({ children }) => {
             setUserInfo(jwtDecode(response?.data?.token));
             if (authTokens) {
                navigation.navigate(routes.BOTTOM_TAB)
+               
             }
         } catch (error) {
             console.error("Login error:", error);

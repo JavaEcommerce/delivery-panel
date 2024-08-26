@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.1",
-    "@react-native-async-storage/async-storage": "^1.24.0",
+    "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-native-community/netinfo": "^11.3.2",
     "@react-native-picker/picker": "^2.7.6",
     "@react-navigation/bottom-tabs": "^6.5.20",
@@ -37,7 +37,7 @@
     "react-native-modern-datepicker": "^1.0.0-beta.91",
     "react-native-pager-view": "6.2.3",
     "react-native-safe-area-context": "4.8.2",
-    "react-native-svg": "^12.5.1",
+    "react-native-svg": "^15.2.0",
     "react-native-tab-view": "^3.5.2"
   },
   "devDependencies": {

@@ -9,7 +9,7 @@ import BottomTabNavi from './BottomTabNavi';
 import Onboarding from '../Screens/OtherScreens/Onboarding';
 import { useCheckInternet } from '../Context/CheckInternet';
 import NoInternet from '../Components/NoInternet';
-// import { AuthContext } from '../Context/AuthContext';
+import { AuthContext } from '../Context/AuthContext';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createStackNavigator();
